@@ -1,6 +1,6 @@
 const express = require("express");
 const connection = require("./models").connection;
-// const router = require("./routes");
+const router = require("./routes");
 var cors = require("cors");
 
 const app = express();
@@ -9,9 +9,9 @@ app.use(express.json());
 
 app.use(cors());
 
-let PORT = 8081;
+let PORT = 3031;
 
-// app.use("/api", router);
+app.use("/api", router);
 
 //reset Route
 app.get("/reset", (req, res) => {
