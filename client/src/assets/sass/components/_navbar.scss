@@ -19,6 +19,11 @@
     display: flex;
     flex-direction: column;
 
+    a {
+      color: $white;
+      text-decoration: none;
+    }
+
     &_option {
       display: flex;
       font-size: $font-20;

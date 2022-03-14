@@ -1,9 +1,11 @@
 import "./assets/sass/main.scss";
-import Navbar from "./components/Navbar";
+import { BrowserRouter } from "react-router-dom";
+import Main from "./Main";
+
 function App() {
   return (
-    <div className="App">
-      <Navbar />
+    <div>
+      <Main />
     </div>
   );
 }
