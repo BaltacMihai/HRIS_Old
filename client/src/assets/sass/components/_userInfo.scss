@@ -59,6 +59,12 @@
         padding-left: 1rem;
 
         width: 250px; //TODO: Change this!
+
+        &-loading {
+          @include loading(25px, 200px);
+
+          margin: 0 3rem;
+        }
       }
     }
 

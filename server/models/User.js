@@ -39,5 +39,13 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.ENUM("EMPLOYEE", "CEO", "SUPPORT"),
       allowNull: false,
     },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    daysOff: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
   });
 };

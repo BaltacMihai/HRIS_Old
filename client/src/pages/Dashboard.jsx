@@ -2,14 +2,14 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import UserInfo from "../components/Widgets/UserInfo";
 
-function Dashboard() {
+function Dashboard({ userId }) {
   return (
     <div className="page dashboard">
       <Navbar current="dashboard" />
       <div className="dashboard_content">
         <div className="row">
           <div className="col">
-            <UserInfo />
+            <UserInfo id={userId} />
             <div className="row">
               <div>My Tasks</div>
               <div>My Meetings</div>
