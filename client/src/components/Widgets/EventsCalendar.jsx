@@ -44,7 +44,7 @@ function EventsCalendar({ id }) {
         addEvent.classList.add("calendar_body_item-event");
         addEvent.style.backgroundColor = e.color;
 
-        addEvent.title = addEvent.title + " - " + e.name;
+        addEvent.title = addEvent.title + e.name + " - ";
       });
     }
   });
