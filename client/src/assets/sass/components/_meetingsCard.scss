@@ -1,0 +1,47 @@
+.meetings {
+  display: flex;
+
+  width: 90%;
+
+  padding: 1rem 0;
+
+  background-color: $grey-blue;
+  margin: 10px auto;
+  border-radius: $radius-10;
+
+  &_project_color {
+    background-color: #ffc400;
+    margin-left: 1rem;
+    width: 10px;
+
+    border-radius: $radius-25;
+  }
+  &_infos {
+    display: flex;
+    flex-direction: column;
+
+    width: 90%;
+
+    &_name {
+      font-size: 17.5px;
+      padding: 1rem;
+    }
+
+    &_details {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      padding: 0.5rem 1rem;
+
+      &_date {
+        display: flex;
+        align-items: center;
+
+        span {
+          margin: 0.5rem;
+        }
+      }
+    }
+  }
+}

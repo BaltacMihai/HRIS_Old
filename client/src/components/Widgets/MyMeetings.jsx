@@ -1,32 +1,37 @@
 import React from "react";
-import TaskCard from "../TaskCard";
+import MeetingsCard from "../MeetingsCard";
 
 function MyMeetings() {
   let events = [
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      date: "21.03.2022",
+      hour: "12:00",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      date: "21.03.2022",
+      hour: "12:00",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      date: "21.03.2022",
+      hour: "12:00",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      date: "21.03.2022",
+      hour: "12:00",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      date: "21.03.2022",
+      hour: "12:00",
+    },
+    {
+      name: "Create the Dashbord Design",
+      date: "21.03.2022",
+      hour: "12:00",
     },
   ];
 
@@ -42,7 +47,7 @@ function MyMeetings() {
 
 function mapTheTasks(tasks) {
   return tasks.map((e) => (
-    <TaskCard name={e.name} project={e.project} deadline={e.deadline} />
+    <MeetingsCard name={e.name} date={e.date} hour={e.hour} />
   ));
 }
 
