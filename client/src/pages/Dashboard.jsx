@@ -1,13 +1,14 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import UserInfo from "../components/Widgets/UserInfo";
+import EventsCalendar from "../components/Widgets/EventsCalendar";
 
 function Dashboard({ userId }) {
   return (
     <div className="page dashboard">
       <Navbar current="dashboard" />
       <div className="dashboard_content">
-        <div className="row">
+        <div className="row dashboard_content-row">
           <div className="col">
             <UserInfo id={userId} />
             <div className="row">
@@ -16,7 +17,7 @@ function Dashboard({ userId }) {
             </div>
           </div>
           <div className="col">
-            <div>Calendar</div>
+            <EventsCalendar />
             <div>My project</div>
           </div>
         </div>

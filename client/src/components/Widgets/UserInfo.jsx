@@ -12,7 +12,7 @@ function UserInfo({ id }) {
 
 function returnUserInfoCard(userInfo) {
   return (
-    <div className="userInfo">
+    <div className="widget userInfo">
       <div className="userInfo_header">
         <p className="userInfo_header_title">Personal Info</p>
         <div className="userInfo_header_editBtn">

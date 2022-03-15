@@ -1,5 +1,9 @@
 .dashboard {
   &_content {
     padding: 2vh 2vw;
+    width: 100%;
+    &-row {
+      justify-content: space-between;
+    }
   }
 }

@@ -1,0 +1,78 @@
+$size: 3vw;
+
+.events_calendar {
+  display: flex;
+  flex-direction: column;
+
+  &_header {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    align-items: center;
+    margin: 5% auto;
+    &_title {
+      font-size: 20px;
+    }
+  }
+  .calendar {
+    display: flex;
+    flex-direction: column;
+
+    width: $size * 7;
+
+    padding: 0 1rem;
+
+    &_header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 1rem 0;
+      background-color: #f3f7fd;
+      border-radius: $radius-10 $radius-10 0 0;
+
+      &_item {
+        flex: 0 0 $size;
+        text-align: center;
+      }
+    }
+
+    &_body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      &_item {
+        flex: 0 0 $size - 0.25;
+        margin: 10px 0;
+        text-align: center;
+
+        &-today {
+          font-weight: 900;
+        }
+
+        &-event {
+          text-decoration: none;
+          border-radius: $radius-10;
+
+          &-more {
+            background-color: transparent !important;
+            border: 0.05px solid #08243a;
+
+            // &::before {
+            //   content: "?";
+
+            //   position: relative;
+            //   left: 15px;
+            //   top: -5px;
+
+            //   background-color: #72a1e5;
+            //   padding: 2px 5px;
+
+            //   border-radius: 100%;
+            // }
+          }
+        }
+      }
+    }
+  }
+}

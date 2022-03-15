@@ -1,8 +1,6 @@
 .userInfo {
-  width: 50vw;
-  height: 40vh;
-  background-color: $white;
-  border-radius: $radius-25;
+  width: 60vw;
+
   display: flex;
   flex-direction: column;
 
@@ -11,14 +9,14 @@
     width: 90%;
     justify-content: space-between;
     align-items: center;
-    margin: 5% auto;
+    margin: 3% auto;
 
     &_title {
       font-size: 20px;
     }
     &_editBtn {
       font-size: 15px;
-      padding: 0.5rem;
+      padding: 0.5rem 1rem;
       border-radius: $radius-10;
       border: 0.5px solid $dark-blue;
       cursor: pointer;
