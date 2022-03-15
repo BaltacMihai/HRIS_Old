@@ -1,32 +1,24 @@
 import React from "react";
+import ProjectCard from "../ProjectCard";
 import TaskCard from "../TaskCard";
 
 function MyProjects() {
   let events = [
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      role: "Developer",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      role: "Developer",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      role: "Developer",
     },
     {
       name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
-    },
-    {
-      name: "Create the Dashbord Design",
-      project: "Licenta Ase",
-      deadline: "21.03.2022",
+      role: "Developer",
     },
   ];
 
@@ -41,9 +33,7 @@ function MyProjects() {
 }
 
 function mapTheTasks(tasks) {
-  return tasks.map((e) => (
-    <TaskCard name={e.name} project={e.project} deadline={e.deadline} />
-  ));
+  return tasks.map((e) => <ProjectCard name={e.name} role={e.role} />);
 }
 
 export default MyProjects;
