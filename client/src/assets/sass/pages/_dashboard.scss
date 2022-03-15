@@ -5,5 +5,8 @@
     &-row {
       justify-content: space-between;
     }
+    &-col {
+      align-items: stretch;
+    }
   }
 }

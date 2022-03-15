@@ -1,5 +1,7 @@
 // contains each self-contained component in its own .scss partial
-@import "navbar";
 @import "userInfo";
 @import "eventsCalendar";
-@import "widget";
+@import "myTasks";
+@import "myMeetings";
+@import "myProjects";
+@import "task";

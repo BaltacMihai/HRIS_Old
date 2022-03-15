@@ -1,0 +1,36 @@
+.task {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: baseline;
+
+  width: 90%;
+
+  padding: 1rem 0;
+
+  background-color: $grey-blue;
+  margin: 10px auto;
+  border-radius: $radius-10;
+
+  &_name {
+    font-size: 17.5px;
+    padding: 1rem;
+  }
+
+  &_project {
+    font-size: 16px;
+    font-weight: 900;
+    border-radius: 12px;
+
+    padding: 0.5em;
+    margin: 0 1em;
+
+    width: auto;
+
+    background-color: aqua;
+  }
+
+  &_infos {
+    padding: 1em;
+  }
+}
