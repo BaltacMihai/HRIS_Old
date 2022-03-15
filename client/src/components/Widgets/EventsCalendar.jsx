@@ -26,16 +26,6 @@ function EventsCalendar({ id }) {
     });
   }
 
-  // let events = [
-  //   { name: "Create The Navbars", color: "#FFC400", date: "12" },
-  //   { name: "Meeting With the board", color: "#72A1E5", date: "14" },
-  //   { name: "PoC To Be Done", color: "#72A1E5", date: "11" },
-  //   { name: "Create something", color: "#72A1E5", date: "21" },
-  //   { name: "Create New", color: "#FFC400", date: "21" },
-  //   { name: "Solution New", color: "#FFC400", date: "21" },
-  //   { name: "Solution New", color: "#FFC400", date: "29" },
-  // ];
-
   useEffect(() => {
     if (events) {
       events.sort(compareDates);
