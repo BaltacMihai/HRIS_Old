@@ -1,15 +1,15 @@
-export default function firstAndLastDayOfTheMonth(monthForNow) {
+export default function firstAndLastDayOfTheMonth(monthsFromNow) {
   let currentDate = new Date();
 
   let firstDay = new Date(
     currentDate.getFullYear(),
-    currentDate.getMonth() + monthForNow,
+    currentDate.getMonth() + monthsFromNow,
     1
   );
-  console.log(firstDay);
+
   let lastDay = new Date(
     currentDate.getFullYear(),
-    currentDate.getMonth() + 1 + monthForNow,
+    currentDate.getMonth() + 1 + monthsFromNow,
     0
   );
 

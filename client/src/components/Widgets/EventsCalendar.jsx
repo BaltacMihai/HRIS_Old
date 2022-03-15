@@ -3,39 +3,60 @@ import firstAndLastDayOfTheMonth from "../../utils/firstAndLastDayOfTheMonth";
 import compareDates from "../../utils/compareDates";
 import generateCurrentCalendarDates from "../../utils/generateCurrentCalendarDates";
 import generateSpaces from "../../utils/generateSpacesCalendar";
+import useEvents from "../../hooks/findEventsByIntervalAndUser";
+import generateDate from "../../utils/generateDate";
 
-function EventsCalendar() {
-  let events = [
-    { name: "Create The Navbars", color: "#FFC400", date: "12" },
-    { name: "Meeting With the board", color: "#72A1E5", date: "14" },
-    { name: "PoC To Be Done", color: "#72A1E5", date: "11" },
-    { name: "Create something", color: "#72A1E5", date: "21" },
-    { name: "Create New", color: "#FFC400", date: "21" },
-    { name: "Solution New", color: "#FFC400", date: "21" },
-    { name: "Solution New", color: "#FFC400", date: "29" },
-  ];
+function EventsCalendar({ id }) {
+  let event = useEvents(
+    id,
+    generateDate(firstAndLastDayOfTheMonth(0).firstDay),
+    generateDate(firstAndLastDayOfTheMonth(0).lastDay)
+  );
+  let events = null;
+
+  if (event && events == null) {
+    events = event.map((e) => {
+      let date = new Date(e.Event.endingDate);
+
+      return {
+        name: "[" + e.Event.type + "] " + e.Event.name,
+        color: e.Event.Project.color,
+        date: date.getDate(),
+      };
+    });
+  }
+
+  // let events = [
+  //   { name: "Create The Navbars", color: "#FFC400", date: "12" },
+  //   { name: "Meeting With the board", color: "#72A1E5", date: "14" },
+  //   { name: "PoC To Be Done", color: "#72A1E5", date: "11" },
+  //   { name: "Create something", color: "#72A1E5", date: "21" },
+  //   { name: "Create New", color: "#FFC400", date: "21" },
+  //   { name: "Solution New", color: "#FFC400", date: "21" },
+  //   { name: "Solution New", color: "#FFC400", date: "29" },
+  // ];
 
   useEffect(() => {
-    console.log(events);
+    if (events) {
+      events.sort(compareDates);
+      let currentDate = new Date();
+      let date = document.getElementById("day-" + currentDate.getDate());
+      date.classList.add("calendar_body_item-today");
 
-    events.sort(compareDates);
-    let currentDate = new Date();
-    let date = document.getElementById("day-" + currentDate.getDate());
-    date.classList.add("calendar_body_item-today");
+      events.forEach((e) => {
+        let addEvent = document.getElementById("day-" + e.date);
 
-    events.forEach((e) => {
-      let addEvent = document.getElementById("day-" + e.date);
+        addEvent.classList.replace(
+          "calendar_body_item-event",
+          "calendar_body_item-event-more"
+        );
 
-      addEvent.classList.replace(
-        "calendar_body_item-event",
-        "calendar_body_item-event-more"
-      );
+        addEvent.classList.add("calendar_body_item-event");
+        addEvent.style.backgroundColor = e.color;
 
-      addEvent.classList.add("calendar_body_item-event");
-      addEvent.style.backgroundColor = e.color;
-
-      addEvent.title = addEvent.title + " - " + e.name;
-    });
+        addEvent.title = addEvent.title + " - " + e.name;
+      });
+    }
   });
 
   return returnCalendarLayout();
@@ -72,7 +93,6 @@ function returnCalendarHeader() {
 function returnCalendarBody() {
   let firstDay = firstAndLastDayOfTheMonth(0).firstDay;
   let lastDay = firstAndLastDayOfTheMonth(0).lastDay;
-
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}

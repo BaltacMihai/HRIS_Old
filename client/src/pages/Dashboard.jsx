@@ -17,7 +17,7 @@ function Dashboard({ userId }) {
             </div>
           </div>
           <div className="col">
-            <EventsCalendar />
+            <EventsCalendar id={userId} />
             <div>My project</div>
           </div>
         </div>

@@ -7,12 +7,6 @@ const controller = {
     const { Op } = require("@sequelize/core");
     const { userId, startingDate, endingDate } = req.params;
 
-    // if (startingDate < endingDate) {
-    //   res
-    //     .status(400)
-    //     .send({ message: "Incorrect request", startingDate, endingDate });
-    // }
-
     if (userId < 0) {
       res.status(400).send({ message: "User doesn't exist" });
     }
