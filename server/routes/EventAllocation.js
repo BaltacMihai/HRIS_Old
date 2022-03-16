@@ -7,4 +7,9 @@ router.get(
   eventAllocationController.findEventsByIntervalAndUser
 );
 
+router.get(
+  "/:userId/:startingDate/:endingDate/:type",
+  eventAllocationController.findSpecificEventsByIntervalAndUser
+);
+
 module.exports = router;
