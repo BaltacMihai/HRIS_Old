@@ -53,6 +53,7 @@ function MyMeetings({ id }) {
 }
 
 function mapTheTasks(tasks) {
+  //TODO: Filter the meetings
   return tasks.map((e) => (
     <MeetingsCard
       name={e.name}
