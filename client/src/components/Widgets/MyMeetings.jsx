@@ -1,53 +1,66 @@
 import React from "react";
+import useMeetings from "../../hooks/findMeetingsByIntervalAndUser";
+import firstAndLastDayOfTheMonth from "../../utils/firstAndLastDayOfTheMonth";
+import generateDate from "../../utils/generateDate";
 import MeetingsCard from "../MeetingsCard";
 
-function MyMeetings() {
-  let events = [
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-    {
-      name: "Create the Dashbord Design",
-      date: "21.03.2022",
-      hour: "12:00",
-    },
-  ];
-
-  return (
-    <div className="widget myMeeting">
-      <div className="myMeeting_header">
-        <p className="myMeeting_header_title">My Meetings</p>
-      </div>
-      <div className="myMeeting_container">{mapTheTasks(events)}</div>
-    </div>
+function MyMeetings({ id }) {
+  let currentDate = new Date();
+  let event = useMeetings(
+    id,
+    generateDate(currentDate),
+    generateDate(firstAndLastDayOfTheMonth(0).lastDay)
   );
+  let events = null;
+
+  if (event && events == null) {
+    events = event.map((e) => {
+      let date = new Date(e.Event.endingDate);
+
+      return {
+        id: e.eventId,
+        name: e.Event.name,
+        color: e.Event.Project.color,
+        date:
+          date.getDate() +
+          "." +
+          (date.getMonth() + 1) +
+          "." +
+          date.getFullYear(),
+        hour: date.getHours() + ":" + date.getMinutes(),
+      };
+    });
+  }
+
+  if (events)
+    return (
+      <div className="widget myMeeting">
+        <div className="myMeeting_header">
+          <p className="myMeeting_header_title">My Meetings</p>
+        </div>
+        <div className="myMeeting_container">{mapTheTasks(events)}</div>
+      </div>
+    );
+  else {
+    return (
+      <div className="widget myMeeting">
+        <div className="myMeeting_header">
+          <p className="myMeeting_header_title">My Meetings</p>
+        </div>
+      </div>
+    );
+  }
 }
 
 function mapTheTasks(tasks) {
   return tasks.map((e) => (
-    <MeetingsCard name={e.name} date={e.date} hour={e.hour} />
+    <MeetingsCard
+      name={e.name}
+      date={e.date}
+      hour={e.hour}
+      id={e.id}
+      color={e.color}
+    />
   ));
 }
 
