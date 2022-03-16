@@ -1,7 +1,6 @@
 import React from "react";
 import useUsersProjects from "../../hooks/findUsersProjects";
 import ProjectCard from "../ProjectCard";
-import TaskCard from "../TaskCard";
 
 function MyProjects({ id }) {
   let event = useUsersProjects(id);
@@ -40,7 +39,9 @@ function MyProjects({ id }) {
 }
 
 function mapTheTasks(tasks) {
-  return tasks.map((e) => <ProjectCard name={e.name} role={e.role} />);
+  return tasks.map((e) => (
+    <ProjectCard name={e.name} role={e.role} color={e.color} id={e.id} />
+  ));
 }
 
 export default MyProjects;
