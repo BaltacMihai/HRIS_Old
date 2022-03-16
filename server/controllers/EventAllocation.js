@@ -21,20 +21,26 @@ const controller = {
           model: EventDB,
           attributes: ["type", "name", "endingDate"],
           where: {
-            endingDate: {
-              [Op.gt]: startingDate,
-            },
-            endingDate: {
-              [Op.lt]: endingDate,
-            },
+            [Op.and]: [
+              {
+                endingDate: {
+                  [Op.gt]: startingDate,
+                },
+              },
+              {
+                endingDate: {
+                  [Op.lt]: endingDate,
+                },
+              },
+            ],
           },
           include: [{ model: ProjectDB, attributes: ["color"] }],
         },
       ],
       attributes: ["eventId"],
     })
-      .then((user) => {
-        res.status(200).send(user);
+      .then((event) => {
+        res.status(200).send(event);
       })
       .catch((error) => {
         console.log(error);
@@ -59,23 +65,31 @@ const controller = {
           model: EventDB,
           attributes: ["type", "name", "endingDate"],
           where: {
-            endingDate: {
-              [Op.gt]: startingDate,
-            },
-            endingDate: {
-              [Op.lt]: endingDate,
-            },
-            type: {
-              [Op.eq]: type,
-            },
+            [Op.and]: [
+              {
+                endingDate: {
+                  [Op.gt]: startingDate,
+                },
+              },
+              {
+                endingDate: {
+                  [Op.lt]: endingDate,
+                },
+              },
+              {
+                type: {
+                  [Op.eq]: type,
+                },
+              },
+            ],
           },
           include: [{ model: ProjectDB, attributes: ["color", "name"] }],
         },
       ],
       attributes: ["eventId"],
     })
-      .then((user) => {
-        res.status(200).send(user);
+      .then((event) => {
+        res.status(200).send(event);
       })
       .catch((error) => {
         console.log(error);
