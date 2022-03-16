@@ -69,7 +69,7 @@ const controller = {
               [Op.eq]: type,
             },
           },
-          include: [{ model: ProjectDB, attributes: ["color"] }],
+          include: [{ model: ProjectDB, attributes: ["color", "name"] }],
         },
       ],
       attributes: ["eventId"],
