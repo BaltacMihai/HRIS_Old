@@ -11,7 +11,7 @@
   &_header {
     display: flex;
     padding-bottom: 10px;
-    border-bottom: 0.5px solid $bright-blue-transparent;
+    border-bottom: 0.5px solid $bright-blue;
 
     &_item {
       flex: 0 0 calc(100% / 6);
@@ -27,6 +27,7 @@
     &_entity {
       display: flex;
       padding: 1rem 0;
+      border-bottom: 0.5px solid #72a2e55b;
 
       &_info {
         flex: 0 0 calc(100% / 6);
