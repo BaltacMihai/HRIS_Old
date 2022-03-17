@@ -33,6 +33,10 @@
         flex: 0 0 calc(100% / 6);
 
         text-align: center;
+
+        &-actions {
+          cursor: pointer;
+        }
       }
     }
   }

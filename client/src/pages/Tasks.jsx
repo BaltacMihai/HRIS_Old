@@ -2,20 +2,20 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import TasksTable from "../components/TasksTable";
 
-function Tasks() {
+function Tasks({ userId }) {
   return (
     <div className="page tasks">
       <Navbar current="tasks" />
-      {returnContent()}
+      {returnContent(userId)}
     </div>
   );
 }
 
-function returnContent() {
+function returnContent(userId) {
   return (
     <div className="tasks_content">
       {returnActions()}
-      <TasksTable />
+      <TasksTable id={userId} />
     </div>
   );
 }

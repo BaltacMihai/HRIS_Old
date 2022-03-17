@@ -63,7 +63,7 @@ const controller = {
       include: [
         {
           model: EventDB,
-          attributes: ["type", "name", "endingDate"],
+          attributes: ["type", "name", "startingDate", "endingDate"],
           where: {
             [Op.and]: [
               {

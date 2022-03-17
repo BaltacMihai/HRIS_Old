@@ -15,10 +15,10 @@ function Main() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Dashboard userId={username} />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/meetings" element={<Meetings />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/calendar" element={<Calendar userId={username} />} />
+        <Route path="/meetings" element={<Meetings userId={username} />} />
+        <Route path="/projects" element={<Projects userId={username} />} />
+        <Route path="/tasks" element={<Tasks userId={username} />} />
       </Routes>
     </BrowserRouter>
   );

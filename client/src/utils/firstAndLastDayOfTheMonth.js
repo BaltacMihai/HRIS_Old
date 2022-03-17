@@ -1,4 +1,4 @@
-export default function firstAndLastDayOfTheMonth(monthsFromNow) {
+export default function firstAndLastDayOfTheMonth(monthsFromNow = 0) {
   let currentDate = new Date();
 
   let firstDay = new Date(
