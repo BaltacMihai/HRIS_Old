@@ -13,7 +13,7 @@ function TaskCard({ name, project, deadline, id, color }) {
         {project}
       </p>
       <div className="task_infos">
-        <div className="meetings_infos_details_date">
+        <div className="meetingsCard_infos_details_date">
           <span className="icon-calendar"></span>
           <p>{deadline}</p>
         </div>
