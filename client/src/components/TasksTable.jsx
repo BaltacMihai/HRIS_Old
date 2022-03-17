@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
 import firstAndLastDayOfTheMonth from "../utils/firstAndLastDayOfTheMonth";
 import generateDate from "../utils/generateDate";
@@ -71,11 +71,13 @@ function returnTableContent(tasks) {
       {tasks.map((e) => {
         return (
           <Entity
+            id={e.id}
             project={e.project}
             name={e.name}
             status={e.status}
             beggining={e.beggining}
             ending={e.ending}
+            color={e.color}
           />
         );
       })}
@@ -83,10 +85,21 @@ function returnTableContent(tasks) {
   );
 }
 
-function Entity({ project, name, status, beggining, ending }) {
+function Entity({ project, name, status, beggining, ending, color, id }) {
+  useEffect(() => {
+    let projectColor = document.getElementById(name + "-" + id);
+    projectColor.style.backgroundColor = color;
+  });
   return (
     <div className="task_table_content_entity">
-      <p className="task_table_content_entity_info">{project}</p>
+      <p className="task_table_content_entity_info">
+        <p
+          className="task_table_content_entity_info-project"
+          id={name + "-" + id}
+        >
+          {project}
+        </p>
+      </p>
       <p className="task_table_content_entity_info">{name}</p>
       <p className="task_table_content_entity_info">{status}</p>
       <p className="task_table_content_entity_info">{beggining}</p>
