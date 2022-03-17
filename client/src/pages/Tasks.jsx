@@ -6,10 +6,16 @@ function Tasks() {
   return (
     <div className="page tasks">
       <Navbar current="tasks" />
-      <div className="tasks_content">
-        {returnActions()}
-        <TasksTable />
-      </div>
+      {returnContent()}
+    </div>
+  );
+}
+
+function returnContent() {
+  return (
+    <div className="tasks_content">
+      {returnActions()}
+      <TasksTable />
     </div>
   );
 }
