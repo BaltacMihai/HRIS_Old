@@ -35,6 +35,10 @@ ProjectAllocation.belongsTo(User, {
   targetKey: "id",
 });
 
+Project.hasMany(ProjectAllocation, {
+  foreignKey: "projectId",
+  targetKey: "id",
+});
 ProjectAllocation.belongsTo(Project, {
   foreignKey: "projectId",
   targetKey: "id",

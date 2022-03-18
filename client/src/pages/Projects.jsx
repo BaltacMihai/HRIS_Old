@@ -69,7 +69,6 @@ function returnProjectsContent(myProjects) {
         <h2>Your Projects</h2>
         <div className="project_content_current_projects">
           {mapMyProjects(myProjects)}
-          {mapMyProjects(myProjects)}
         </div>
         <h2>Other Projects:</h2>
         <div className="project_content_current_projects">
