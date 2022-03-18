@@ -1,8 +1,21 @@
 import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
 
 function Projects({ userId }) {
+  let myProjects = GetMyProjects(userId);
+  let otherProjects = GetOtherProjects(userId);
+
+  return (
+    <div className="page projects">
+      <Navbar current={"projects"} />
+      {returnContent(myProjects, otherProjects)}
+    </div>
+  );
+}
+
+function GetMyProjects(userId) {
   let myProject = useUsersProjects(userId);
   let myProjects = null;
 
@@ -33,18 +46,50 @@ function Projects({ userId }) {
     });
   }
 
-  return (
-    <div className="page projects">
-      <Navbar current={"projects"} />
-      {returnContent(myProjects)}
-    </div>
-  );
+  return myProjects;
 }
-function returnContent(myProjects) {
+
+function GetOtherProjects(userId) {
+  let myProject = useOtherProjects(userId);
+  let myProjects = null;
+
+  console.log(myProject);
+
+  if (myProject && myProjects == null) {
+    myProjects = myProject.map((e) => {
+      let endingDate = new Date(e.endingDate);
+      let startingDate = new Date(e.startingDate);
+
+      return {
+        id: e.id,
+        name: e.name,
+
+        color: e.color,
+        role: "UnEnrolled",
+        startingDate:
+          startingDate.getDate() +
+          "." +
+          (startingDate.getMonth() + 1) +
+          "." +
+          startingDate.getFullYear(),
+        endingDate:
+          endingDate.getDate() +
+          "." +
+          (endingDate.getMonth() + 1) +
+          "." +
+          endingDate.getFullYear(),
+      };
+    });
+
+    return myProjects;
+  }
+}
+
+function returnContent(myProjects, otherProjects) {
   return (
     <div className="project_content">
       {returnActions()}
-      {returnProjectsContent(myProjects)}
+      {returnProjectsContent(myProjects, otherProjects)}
     </div>
   );
 }
@@ -62,8 +107,8 @@ function returnActions() {
   );
 }
 
-function returnProjectsContent(myProjects) {
-  if (myProjects)
+function returnProjectsContent(myProjects, otherProjects) {
+  if (myProjects && otherProjects)
     return (
       <div className="project_content_current">
         <h2>Your Projects</h2>
@@ -72,7 +117,7 @@ function returnProjectsContent(myProjects) {
         </div>
         <h2>Other Projects:</h2>
         <div className="project_content_current_projects">
-          {mapMyProjects(myProjects)}
+          {mapMyProjects(otherProjects)}
         </div>
       </div>
     );
