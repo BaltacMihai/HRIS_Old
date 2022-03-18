@@ -15,7 +15,12 @@ const controller = {
         userId: userId,
       },
 
-      include: [{ model: ProjectDB, attributes: ["id", "color", "name"] }],
+      include: [
+        {
+          model: ProjectDB,
+          attributes: ["id", "color", "name", "startingDate", "endingDate"],
+        },
+      ],
 
       attributes: ["type"],
     })

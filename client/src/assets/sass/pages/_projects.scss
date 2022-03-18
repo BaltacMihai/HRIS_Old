@@ -1,0 +1,112 @@
+.project {
+  &_content {
+    padding: 2vh 2vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &_actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 2vh 1vw;
+
+      &_filter {
+        display: flex;
+        align-items: center;
+
+        &_search {
+          display: flex;
+          align-items: center;
+          margin-right: 2rem;
+
+          input {
+            width: 23rem;
+            height: 3rem;
+
+            background: $white;
+            border: none;
+            box-sizing: border-box;
+            border-radius: $radius-10;
+
+            &:focus {
+              border: 1px solid $bright-blue;
+            }
+          }
+
+          .icon {
+            position: relative;
+            margin-left: -25px;
+
+            width: 16px;
+            height: 16px;
+
+            cursor: pointer;
+          }
+        }
+
+        &_quick {
+          font-size: 17.5px;
+          margin-left: 15px;
+
+          cursor: pointer;
+        }
+      }
+    }
+
+    &_current {
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        font-size: 25px;
+        padding: 1rem;
+
+        font-weight: 500;
+      }
+
+      &_projects {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        .project_item {
+          display: flex;
+          flex-direction: column;
+
+          background-color: $white;
+          border-radius: $radius-25;
+          margin: 1rem;
+
+          flex: 0 0 20%;
+          height: 30vh;
+
+          &_color {
+            padding: 1rem;
+            width: 80%;
+            height: 10vh;
+            margin: 1vh auto;
+            border-radius: $radius-25;
+          }
+
+          &_name {
+            font-size: 25px;
+            padding: 0.5rem 1.5rem;
+          }
+
+          &_role {
+            font-size: 17px;
+            padding: 0.5rem 1.5rem;
+          }
+
+          &_dates {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 1.5rem;
+          }
+        }
+      }
+    }
+  }
+}
