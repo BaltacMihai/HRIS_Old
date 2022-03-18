@@ -1,0 +1,60 @@
+.calendar {
+  &_content {
+    padding: 2vh 2vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    &_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 2vh 1vw;
+
+      &_title {
+        font-size: 25px;
+
+        font-weight: 500;
+      }
+
+      &_menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        background-color: $white;
+
+        width: 22.5vw;
+        height: 5vh;
+
+        border-radius: $radius-10;
+
+        &_item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          border-radius: $radius-10;
+
+          font-size: 20px;
+
+          width: 100%;
+          height: 5vh;
+
+          &:hover {
+            background-color: $bright-blue-transparent;
+          }
+
+          &-active {
+            background-color: $bright-blue;
+
+            &:hover {
+              background-color: $bright-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+}
