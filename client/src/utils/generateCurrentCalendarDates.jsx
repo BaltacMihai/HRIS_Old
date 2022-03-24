@@ -11,6 +11,13 @@ export default function GenerateCurrentCalendarDates(noOfDays) {
             id={"day-" + i}
             key={"day-" + i}
             onClick={(e) => {
+              for (let counter = 1; counter < noOfDays; counter++) {
+                console.log(document.getElementById("context_menu-" + counter));
+                document
+                  .getElementById("context_menu-" + counter)
+                  .classList.remove("context_menu-active");
+              }
+
               // let lastElement;
               // if (
               //   document.getElementsByClassName("context_menu-active")
