@@ -41,12 +41,12 @@ function Navbar({ current }) {
             <p>Projects</p>
           </div>
         </Link>
-        <Link to="/calendar">
+        {/* <Link to="/calendar">
           <div className="navbar_options_option" id="calendar">
             <span className="icon-calendar"></span>
             <p>Calendar</p>
           </div>
-        </Link>
+        </Link> */}
       </div>
     </div>
   );
