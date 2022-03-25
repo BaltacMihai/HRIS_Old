@@ -12,4 +12,5 @@ router.get(
   eventAllocationController.findSpecificEventsByIntervalAndUser
 );
 
+router.post("/post-free-day", eventAllocationController.postFreeDay);
 module.exports = router;

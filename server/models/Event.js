@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     },
 
     type: {
-      type: DataTypes.ENUM("TASK", "MEETING"),
+      type: DataTypes.ENUM("TASK", "MEETING", "FREE_DAY"),
       allowNull: false,
     },
   });

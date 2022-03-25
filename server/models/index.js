@@ -23,12 +23,22 @@ const EventAllocation = EventAllocationModel(db, Sequelize);
 
 // user
 
+Department.hasMany(User, {
+  foreignKey: "departmentId",
+  targetKey: "id",
+});
+
 User.belongsTo(Department, {
   foreignKey: "departmentId",
   targetKey: "id",
 });
 
 // projectAllocation
+
+User.hasMany(ProjectAllocation, {
+  foreignKey: "userId",
+  targetKey: "id",
+});
 
 ProjectAllocation.belongsTo(User, {
   foreignKey: "userId",
@@ -39,6 +49,7 @@ Project.hasMany(ProjectAllocation, {
   foreignKey: "projectId",
   targetKey: "id",
 });
+
 ProjectAllocation.belongsTo(Project, {
   foreignKey: "projectId",
   targetKey: "id",
@@ -49,8 +60,16 @@ Event.belongsTo(Project, {
   foreignKey: "projectId",
   targetKey: "id",
 });
+Project.hasMany(Event, {
+  foreignKey: "projectId",
+  targetKey: "id",
+});
 
 Event.belongsTo(Department, {
+  foreignKey: "departmentId",
+  targetKey: "id",
+});
+Department.hasMany(Event, {
   foreignKey: "departmentId",
   targetKey: "id",
 });
@@ -61,8 +80,16 @@ EventAllocation.belongsTo(User, {
   foreignKey: "userId",
   targetKey: "id",
 });
+User.hasMany(EventAllocation, {
+  foreignKey: "userId",
+  targetKey: "id",
+});
 
 EventAllocation.belongsTo(Event, {
+  foreignKey: "eventId",
+  targetKey: "id",
+});
+Event.hasMany(EventAllocation, {
   foreignKey: "eventId",
   targetKey: "id",
 });

@@ -96,6 +96,36 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+
+  postFreeDay: async (req, res) => {
+    var eventId = null;
+    EventDB.create({
+      name: "Off day",
+      projectId: 1,
+      description: "Free day",
+      departmentId: req.body.departmentId,
+      startingDate: req.body.startingDate,
+      endingDate: req.body.endingDate,
+      type: "FREE-DAY",
+    })
+      .then((event) => {
+        EventAllocationDB.create({
+          userId: req.body.userId,
+          eventId: event.id,
+        })
+          .then((event) => {
+            res.status(200).send(event);
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Server error" });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
