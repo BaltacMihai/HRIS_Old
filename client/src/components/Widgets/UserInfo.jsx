@@ -45,7 +45,7 @@ function returnUserInfoCard(userInfo) {
       <div className="userInfo_daysOf">
         <p>
           Days Off Left:
-          <span className="userInfo_daysOf_data"> 23 </span>
+          <span className="userInfo_daysOf_data"> {userInfo.daysOff} </span>
           days
         </p>
       </div>

@@ -98,7 +98,6 @@ const controller = {
   },
 
   postFreeDay: async (req, res) => {
-    var eventId = null;
     EventDB.create({
       name: "Off day",
       projectId: 1,
@@ -120,6 +119,20 @@ const controller = {
             console.log(error);
             res.status(500).send({ message: "Server error" });
           });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+
+  post: async (req, res) => {
+    EventAllocationDB.create({
+      userId: req.body.userId,
+      eventId: req.body.eventId,
+    })
+      .then((event) => {
+        res.status(200).send(event);
       })
       .catch((error) => {
         console.log(error);

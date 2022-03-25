@@ -19,6 +19,30 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+
+  put: async (req, res) => {
+    UserDB.update(
+      {
+        email: req.body.email,
+        facebook: req.body.facebook,
+        photo: req.body.photo,
+        phone: req.body.phone,
+        daysOff: req.body.daysOff,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
