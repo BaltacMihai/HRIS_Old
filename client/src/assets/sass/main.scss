@@ -2,21 +2,6 @@
 @import "base/module";
 @import "layout/module";
 @import "components/module";
-
 @import "pages/module";
 @import "themes/module";
 @import "utils/module";
-
-.context_menu {
-  display: none;
-
-  position: absolute;
-
-  z-index: 9999;
-
-  background-color: red;
-
-  &-active {
-    display: block;
-  }
-}

@@ -1,0 +1,43 @@
+.context_menu {
+  display: none;
+
+  position: absolute;
+
+  z-index: 9999;
+
+  background-color: $context-menu;
+
+  border-radius: $radius-10;
+
+  &-active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: max-content;
+
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
+
+  &_item {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 1rem 1.5rem;
+
+    &:first-child {
+      border-radius: $radius-10 $radius-10 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 $radius-10 $radius-10;
+    }
+
+    &:hover {
+      background-color: $bright-blue-transparent;
+    }
+
+    span {
+      margin-right: 15px;
+    }
+  }
+}

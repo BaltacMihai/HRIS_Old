@@ -11,22 +11,19 @@ export default function GenerateCurrentCalendarDates(noOfDays) {
             id={"day-" + i}
             key={"day-" + i}
             onClick={(e) => {
-              for (let counter = 1; counter < noOfDays; counter++) {
-                console.log(document.getElementById("context_menu-" + counter));
-                document
-                  .getElementById("context_menu-" + counter)
-                  .classList.remove("context_menu-active");
-              }
+              //TODO: Must find a better way to do this
+              removeContextMenu(noOfDays);
 
-              // let lastElement;
-              // if (
-              //   document.getElementsByClassName("context_menu-active")
-              // )
-              //   lastElement = document.getElementsByClassName(
-              //     "context_menu-active"
-              //   );
+              let dashboard = document.getElementsByClassName("dashboard");
 
-              // lastElement[0].classList.remove("context_menu-active");
+              dashboard[0].addEventListener("click", (e) => {
+                removeContextMenu(noOfDays);
+              });
+
+              document
+                .getElementById("day-" + i)
+                .classList.add("calendar_body_item-selected");
+
               document
                 .getElementById("context_menu-" + i)
                 .classList.add("context_menu-active");
@@ -44,16 +41,38 @@ export default function GenerateCurrentCalendarDates(noOfDays) {
   });
 }
 
+function removeContextMenu(noOfDays) {
+  for (let counter = 1; counter < noOfDays; counter++) {
+    document
+      .getElementById("context_menu-" + counter)
+      .classList.remove("context_menu-active");
+
+    document
+      .getElementById("day-" + counter)
+      .classList.remove("calendar_body_item-selected");
+  }
+}
+
 function ContextMenu({ number, xPos, yPos }) {
   return (
     <div
       className="context_menu"
-      style={{ top: xPos, left: yPos }}
+      style={{ top: xPos, right: yPos }}
       id={"context_menu-" + number}
     >
-      <div className="context_menu_item">Add Meeting</div>
-      <div className="context_menu_item">Add Task</div>
-      <div className="context_menu_item">Take vacation</div>
+      <div className="context_menu_item">
+        <span className="icon-calendar"></span>
+        <p>Take vacation</p>
+      </div>
+      <div className="context_menu_item">
+        <span className="icon-users"></span>
+
+        <p>Add Meeting</p>
+      </div>
+      <div className="context_menu_item">
+        <span className="icon-briefcase"></span>
+        <p>Add Task</p>
+      </div>
     </div>
   );
 }
