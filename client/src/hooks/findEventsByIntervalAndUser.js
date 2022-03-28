@@ -7,8 +7,10 @@ export default function useEvents(userId, startingDate, endingDate) {
     userId +
     "/" +
     startingDate +
+    " 00:00:00" +
     "/" +
-    endingDate;
+    endingDate +
+    " 23:59:59";
 
   console.log(event);
 

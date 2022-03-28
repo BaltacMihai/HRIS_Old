@@ -7,8 +7,10 @@ export default function useMeetings(userId, startingDate, endingDate) {
     userId +
     "/" +
     startingDate +
+    " 00:00:00" +
     "/" +
     endingDate +
+    " 23:59:59" +
     "/MEETING";
 
   console.log(event);
