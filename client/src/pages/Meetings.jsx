@@ -1,7 +1,6 @@
 import React from "react";
 import MeetingsTable from "../components/MeetingsTable";
 import Navbar from "../components/Navbar";
-import TasksTable from "../components/TasksTable";
 
 function Meetings({ userId }) {
   return (

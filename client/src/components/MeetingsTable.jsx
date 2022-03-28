@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import useMeetings from "../hooks/findMeetingsByIntervalAndUser";
-import firstAndLastDayOfTheMonth from "../utils/firstAndLastDayOfTheMonth";
-import generateDate from "../utils/generateDate";
+import generateMonthDates from "../utils/dates/generateMonthDates";
+import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 
 function MeetingsTable({ id }) {
   let currentDate = new Date();
   let task = useMeetings(
     id,
-    generateDate(currentDate),
-    generateDate(firstAndLastDayOfTheMonth().lastDay)
+    formatDateForDatabase(currentDate),
+    formatDateForDatabase(generateMonthDates().lastDay)
   );
   let tasks = null;
 

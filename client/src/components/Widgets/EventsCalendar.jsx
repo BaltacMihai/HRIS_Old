@@ -1,16 +1,16 @@
 import React, { useEffect } from "react";
-import firstAndLastDayOfTheMonth from "../../utils/firstAndLastDayOfTheMonth";
-import compareDates from "../../utils/compareDates";
-import generateCurrentCalendarDates from "../../utils/generateCurrentCalendarDates";
-import generateSpaces from "../../utils/generateSpacesCalendar";
+import compareDates from "../../utils/dates/compareDates";
+import generateCurrentCalendarDates from "./Dates/generateCurrentCalendarDates";
+import generateSpaces from "./Dates/generateSpacesCalendar";
 import useEvents from "../../hooks/findEventsByIntervalAndUser";
-import generateDate from "../../utils/generateDate";
+import generateMonthDates from "../../utils/dates/generateMonthDates";
+import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 
 function EventsCalendar({ id }) {
   let event = useEvents(
     id,
-    generateDate(firstAndLastDayOfTheMonth(0).firstDay),
-    generateDate(firstAndLastDayOfTheMonth(0).lastDay)
+    formatDateForDatabase(generateMonthDates().firstDay),
+    formatDateForDatabase(generateMonthDates().lastDay)
   );
   let events = null;
 
@@ -81,8 +81,8 @@ function returnCalendarHeader() {
 }
 
 function returnCalendarBody(id) {
-  let firstDay = firstAndLastDayOfTheMonth(0).firstDay;
-  let lastDay = firstAndLastDayOfTheMonth(0).lastDay;
+  let firstDay = generateMonthDates().firstDay;
+  let lastDay = generateMonthDates().lastDay;
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}

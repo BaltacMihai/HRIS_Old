@@ -1,15 +1,15 @@
 import React from "react";
 import useMeetings from "../../hooks/findMeetingsByIntervalAndUser";
-import firstAndLastDayOfTheMonth from "../../utils/firstAndLastDayOfTheMonth";
-import generateDate from "../../utils/generateDate";
+import generateMonthDates from "../../utils/dates/generateMonthDates";
 import MeetingsCard from "../MeetingsCard";
+import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 
 function MyMeetings({ id }) {
   let currentDate = new Date();
   let event = useMeetings(
     id,
-    generateDate(currentDate),
-    generateDate(firstAndLastDayOfTheMonth(0).lastDay)
+    formatDateForDatabase(currentDate),
+    formatDateForDatabase(generateMonthDates().lastDay)
   );
   let events = null;
 

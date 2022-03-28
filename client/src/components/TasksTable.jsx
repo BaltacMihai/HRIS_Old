@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
-import firstAndLastDayOfTheMonth from "../utils/firstAndLastDayOfTheMonth";
-import generateDate from "../utils/generateDate";
+import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import generateMonthDates from "../utils/dates/generateMonthDates";
 
 function TasksTable({ id }) {
   let currentDate = new Date();
   let task = useTasks(
     id,
-    generateDate(currentDate),
-    generateDate(firstAndLastDayOfTheMonth().lastDay)
+    formatDateForDatabase(currentDate),
+    formatDateForDatabase(generateMonthDates().lastDay)
   );
   let tasks = null;
 

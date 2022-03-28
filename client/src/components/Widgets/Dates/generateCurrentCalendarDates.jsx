@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useFreeDay from "../hooks/postFreeDay";
+import useFreeDay from "../../../hooks/postFreeDay";
 
 export default function GenerateCurrentCalendarDates(id, noOfDays) {
   let xPos;
