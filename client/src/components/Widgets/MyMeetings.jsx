@@ -3,6 +3,9 @@ import useMeetings from "../../hooks/findMeetingsByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
 import MeetingsCard from "../MeetingsCard";
 import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
+import formatDateForUser from "../../utils/dates/formatDateForUser";
+import formatHourForUser from "../../utils/dates/formatHourForUser";
+import formatDates from "../../utils/dates/formatDates";
 
 function MyMeetings({ id }) {
   let currentDate = new Date();
@@ -21,13 +24,8 @@ function MyMeetings({ id }) {
         id: e.eventId,
         name: e.Event.name,
         color: e.Event.Project.color,
-        date:
-          date.getDate() +
-          "." +
-          (date.getMonth() + 1) +
-          "." +
-          date.getFullYear(),
-        hour: date.getHours() + ":" + date.getMinutes(),
+        date: formatDates.user.date(date),
+        hour: formatDates.user.hour(date),
       };
     });
   }

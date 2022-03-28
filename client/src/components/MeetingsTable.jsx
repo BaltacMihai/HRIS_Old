@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import useMeetings from "../hooks/findMeetingsByIntervalAndUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import formatDateForUser from "../utils/dates/formatDateForUser";
+import formatHourForUser from "../utils/dates/formatHourForUser";
 
 function MeetingsTable({ id }) {
   let currentDate = new Date();
@@ -21,13 +23,8 @@ function MeetingsTable({ id }) {
         project: e.Event.Project.name,
         name: e.Event.name,
         color: e.Event.Project.color,
-        day:
-          date.getDate() +
-          "." +
-          (date.getMonth() + 1) +
-          "." +
-          date.getFullYear(),
-        hour: date.getHours() + ":" + date.getMinutes(),
+        day: formatDateForUser(date),
+        hour: formatHourForUser(date),
       };
     });
   }

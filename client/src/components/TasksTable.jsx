@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 
 function TasksTable({ id }) {
@@ -22,18 +23,8 @@ function TasksTable({ id }) {
         name: e.Event.name,
         project: e.Event.Project.name,
         color: e.Event.Project.color,
-        ending:
-          endingDate.getDate() +
-          "." +
-          (endingDate.getMonth() + 1) +
-          "." +
-          endingDate.getFullYear(),
-        beggining:
-          startingDate.getDate() +
-          "." +
-          (startingDate.getMonth() + 1) +
-          "." +
-          startingDate.getFullYear(),
+        ending: formatDateForUser(startingDate),
+        beggining: formatDateForUser(endingDate),
         status: "Pending", //TODO: When reset the db, to include the status for the tasks
       };
     });
