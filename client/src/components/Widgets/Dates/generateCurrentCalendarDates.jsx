@@ -5,7 +5,7 @@ import {
   removeContextCalendar,
 } from "../../ContextMenu/ContextCalendar";
 
-export default function GenerateCurrentCalendarDates(id, noOfDays) {
+export default function GenerateCurrentCalendarDates(id, setRefresh, noOfDays) {
   let xPos;
   let yPos;
   return [...Array(noOfDays)].map((e, i) => {
@@ -39,7 +39,13 @@ export default function GenerateCurrentCalendarDates(id, noOfDays) {
           >
             {i}
           </abbr>
-          <ContextCalendar number={i} xPos={xPos} yPos={yPos} id={id} />
+          <ContextCalendar
+            number={i}
+            xPos={xPos}
+            yPos={yPos}
+            id={id}
+            refresh={setRefresh}
+          />
         </div>
       );
     }

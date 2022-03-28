@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import compareDates from "../../utils/dates/compareDates";
 import generateCurrentCalendarDates from "./Dates/generateCurrentCalendarDates";
 import generateSpaces from "./Dates/generateSpacesCalendar";
@@ -7,12 +7,15 @@ import generateMonthDates from "../../utils/dates/generateMonthDates";
 import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 
 function EventsCalendar({ id }) {
+  const [refresh, setRefresh] = useState(null);
+
   let event = useEvents(
     id,
     formatDateForDatabase(generateMonthDates().firstDay),
     formatDateForDatabase(generateMonthDates().lastDay)
   );
   let events = null;
+  if (refresh != null) event = null;
 
   if (event && events == null) {
     events = event.map((e) => {
@@ -49,10 +52,10 @@ function EventsCalendar({ id }) {
     }
   });
 
-  return returnCalendarLayout(id);
+  return returnCalendarLayout(id, setRefresh);
 }
 
-function returnCalendarLayout(id) {
+function returnCalendarLayout(id, setRefresh) {
   return (
     <div className="widget events_calendar">
       <div className="events_calendar_header">
@@ -60,7 +63,7 @@ function returnCalendarLayout(id) {
       </div>
       <div className=" calendar">
         {returnCalendarHeader()}
-        {returnCalendarBody(id)}
+        {returnCalendarBody(id, setRefresh)}
       </div>
     </div>
   );
@@ -80,13 +83,13 @@ function returnCalendarHeader() {
   );
 }
 
-function returnCalendarBody(id) {
+function returnCalendarBody(id, setRefresh) {
   let firstDay = generateMonthDates().firstDay;
   let lastDay = generateMonthDates().lastDay;
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}
-      {generateCurrentCalendarDates(id, lastDay.getDate() + 1)}
+      {generateCurrentCalendarDates(id, setRefresh, lastDay.getDate() + 1)}
       {generateSpaces(lastDay.getDay())}
     </div>
   );

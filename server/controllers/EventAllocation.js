@@ -1,6 +1,7 @@
 const EventAllocationDB = require("./../models").EventAllocation;
 const EventDB = require("./../models").Event;
 const ProjectDB = require("../models").Project;
+const UserDB = require("./../models").User;
 
 const controller = {
   findEventsByIntervalAndUser: async (req, res) => {
@@ -100,12 +101,12 @@ const controller = {
   postFreeDay: async (req, res) => {
     EventDB.create({
       name: "Off day",
-      projectId: 1,
+      projectId: 0,
       description: "Free day",
       departmentId: req.body.departmentId,
       startingDate: req.body.startingDate,
       endingDate: req.body.endingDate,
-      type: "FREE-DAY",
+      type: "FREE_DAY",
     })
       .then((event) => {
         EventAllocationDB.create({
@@ -113,7 +114,34 @@ const controller = {
           eventId: event.id,
         })
           .then((event) => {
-            res.status(200).send(event);
+            UserDB.findOne({
+              where: {
+                id: req.body.userId,
+              },
+            })
+              .then((event) => {
+                UserDB.update(
+                  {
+                    daysOff: event.daysOff - 1,
+                  },
+                  {
+                    where: {
+                      id: req.body.userId,
+                    },
+                  }
+                )
+                  .then((event) => {
+                    res.status(200).send(event);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    res.status(500).send({ message: "Server error" });
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(500).send({ message: "Server error" });
+              });
           })
           .catch((error) => {
             console.log(error);

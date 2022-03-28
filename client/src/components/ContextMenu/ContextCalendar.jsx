@@ -1,13 +1,20 @@
 import React from "react";
+import FreeDay from "../../hooks/postFreeDay";
+import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 
-function ContextCalendar({ id, number, xPos, yPos }) {
+export function ContextCalendar({ id, number, xPos, yPos, refresh }) {
   return (
     <div
       className="context_menu"
       style={{ top: xPos, right: yPos }}
       id={"context_menu-" + number}
     >
-      <div className="context_menu_item" onClick={(e) => {}}>
+      <div
+        className="context_menu_item"
+        onClick={(e) => {
+          GetFreeDay(id, number, refresh);
+        }}
+      >
         <span className="icon-calendar"></span>
         <p>Take vacation</p>
       </div>
@@ -24,7 +31,7 @@ function ContextCalendar({ id, number, xPos, yPos }) {
   );
 }
 
-function removeContextCalendar(noOfDays) {
+export function removeContextCalendar(noOfDays) {
   for (let counter = 1; counter < noOfDays; counter++) {
     document
       .getElementById("context_menu-" + counter)
@@ -36,4 +43,17 @@ function removeContextCalendar(noOfDays) {
   }
 }
 
-export { ContextCalendar, removeContextCalendar };
+async function GetFreeDay(id, date, refresh) {
+  console.log(date);
+  let currentDate = new Date();
+
+  let newDate = new Date(
+    currentDate.getFullYear(),
+    currentDate.getMonth(),
+    date
+  );
+
+  let freeDay = await FreeDay(id, 0, formatDateForDatabase(newDate));
+
+  window.location.reload();
+}
