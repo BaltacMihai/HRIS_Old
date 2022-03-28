@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 export default function useOtherProjects(userId) {
   const [event, setEvent] = useState(null);
   const URL = "http://localhost:3031/api/projects/not-user/" + userId;
-  console.log(event);
 
   useEffect(() => {
     if (event == null)

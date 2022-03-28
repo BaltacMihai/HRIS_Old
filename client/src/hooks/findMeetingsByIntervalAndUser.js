@@ -13,8 +13,6 @@ export default function useMeetings(userId, startingDate, endingDate) {
     " 23:59:59" +
     "/MEETING";
 
-  console.log(event);
-
   useEffect(() => {
     if (event == null)
       fetch(URL, {

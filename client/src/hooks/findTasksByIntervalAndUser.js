@@ -11,8 +11,6 @@ export default function useTasks(userId, startingDate, endingDate) {
     endingDate +
     "/TASK";
 
-  console.log(event);
-
   useEffect(() => {
     if (event == null)
       fetch(URL, {

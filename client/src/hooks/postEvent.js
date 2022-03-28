@@ -25,7 +25,6 @@ export default function usePostEvent(date) {
       })
         .then((res) => res.json())
         .then((result) => {
-          console.log(result);
           setInfos(result);
         })
         .catch((error) => {

@@ -12,8 +12,6 @@ export default function useEvents(userId, startingDate, endingDate) {
     endingDate +
     " 23:59:59";
 
-  console.log(event);
-
   useEffect(() => {
     if (event == null)
       fetch(URL, {
