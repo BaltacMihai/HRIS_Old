@@ -7,6 +7,7 @@ import Calendar from "./pages/Calendar";
 import Dashboard from "./pages/Dashboard";
 import Meetings from "./pages/Meetings";
 import Tasks from "./pages/Tasks";
+import Task from "./pages/Task";
 
 function Main() {
   const username = 1;
@@ -19,6 +20,7 @@ function Main() {
         <Route path="/meetings" element={<Meetings userId={username} />} />
         <Route path="/projects" element={<Projects userId={username} />} />
         <Route path="/tasks" element={<Tasks userId={username} />} />
+        <Route path="/task/:taskId" element={<Task />} />
       </Routes>
     </BrowserRouter>
   );
