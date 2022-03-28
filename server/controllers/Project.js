@@ -2,11 +2,14 @@ const ProjectDB = require("../models").Project;
 const ProjectAllocationDB = require("./../models").ProjectAllocation;
 
 // VERY IMPORTANT: We can see the project only where there is at least one connection
+
+//#TODO: Find a way to skip the project that has the userId = id
 const controller = {
   findProjectsWhereUserIsntEnrolled: async (req, res) => {
     const { Op } = require("@sequelize/core");
     const { id } = req.params;
 
+    console.log(id);
     if (id < 0) {
       res.status(400).send({ message: "User doesn't exist" });
     }
