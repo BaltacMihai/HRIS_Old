@@ -1,6 +1,7 @@
 import { useState } from "react";
+import useFreeDay from "../hooks/postFreeDay";
 
-export default function GenerateCurrentCalendarDates(noOfDays) {
+export default function GenerateCurrentCalendarDates(id, noOfDays) {
   let xPos;
   let yPos;
   return [...Array(noOfDays)].map((e, i) => {
@@ -34,7 +35,7 @@ export default function GenerateCurrentCalendarDates(noOfDays) {
           >
             {i}
           </abbr>
-          <ContextMenu number={i} xPos={xPos} yPos={yPos} />
+          <ContextMenu number={i} xPos={xPos} yPos={yPos} id={id} />
         </div>
       );
     }
@@ -53,14 +54,15 @@ function removeContextMenu(noOfDays) {
   }
 }
 
-function ContextMenu({ number, xPos, yPos }) {
+function ContextMenu({ id, number, xPos, yPos }) {
+  //useFreeDay(1, "22-03-2022");
   return (
     <div
       className="context_menu"
       style={{ top: xPos, right: yPos }}
       id={"context_menu-" + number}
     >
-      <div className="context_menu_item">
+      <div className="context_menu_item" onClick={(e) => {}}>
         <span className="icon-calendar"></span>
         <p>Take vacation</p>
       </div>

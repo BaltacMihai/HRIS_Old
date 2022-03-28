@@ -49,10 +49,10 @@ function EventsCalendar({ id }) {
     }
   });
 
-  return returnCalendarLayout();
+  return returnCalendarLayout(id);
 }
 
-function returnCalendarLayout() {
+function returnCalendarLayout(id) {
   return (
     <div className="widget events_calendar">
       <div className="events_calendar_header">
@@ -60,7 +60,7 @@ function returnCalendarLayout() {
       </div>
       <div className=" calendar">
         {returnCalendarHeader()}
-        {returnCalendarBody()}
+        {returnCalendarBody(id)}
       </div>
     </div>
   );
@@ -80,13 +80,13 @@ function returnCalendarHeader() {
   );
 }
 
-function returnCalendarBody() {
+function returnCalendarBody(id) {
   let firstDay = firstAndLastDayOfTheMonth(0).firstDay;
   let lastDay = firstAndLastDayOfTheMonth(0).lastDay;
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}
-      {generateCurrentCalendarDates(lastDay.getDate() + 1)}
+      {generateCurrentCalendarDates(id, lastDay.getDate() + 1)}
       {generateSpaces(lastDay.getDay())}
     </div>
   );

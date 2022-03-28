@@ -3,7 +3,7 @@ import getUserById from "../../hooks/User";
 
 function UserInfo({ id }) {
   const userInfo = getUserById(id);
-  console.log(userInfo);
+
   if (userInfo != undefined)
     if (userInfo.length > 0) return returnUserInfoCard(userInfo[0]);
     else return returnLoadingInfoCard();
