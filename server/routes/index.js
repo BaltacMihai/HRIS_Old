@@ -9,6 +9,7 @@ const EventAllocationRouter = require("./EventAllocation");
 const projectRouter = require("./Project");
 const projectAllocationRouter = require("./ProjectAllocation");
 const userRouter = require("./User");
+const commentRouter = require("./Comment");
 
 router.use("/departments", departmentRouter);
 router.use("/events", eventRouter);
@@ -16,5 +17,6 @@ router.use("/events-allocation", EventAllocationRouter);
 router.use("/projects", projectRouter);
 router.use("/project-allocation", projectAllocationRouter);
 router.use("/users", userRouter);
+router.use("/comment", commentRouter);
 
 module.exports = router;

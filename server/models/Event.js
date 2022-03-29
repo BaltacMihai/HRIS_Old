@@ -30,7 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false,
     },
-
+    label: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     type: {
       type: DataTypes.ENUM("TASK", "MEETING", "FREE_DAY"),
       allowNull: false,

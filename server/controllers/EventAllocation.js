@@ -107,6 +107,7 @@ const controller = {
       startingDate: req.body.startingDate,
       endingDate: req.body.endingDate,
       type: "FREE_DAY",
+      label: "FREE_DAY",
     })
       .then((event) => {
         EventAllocationDB.create({
