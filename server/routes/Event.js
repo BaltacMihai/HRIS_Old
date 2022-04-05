@@ -3,6 +3,7 @@ const router = express.Router();
 const eventController = require("./../controllers").Event;
 
 router.post("/post", eventController.postEvent);
+router.get("/:type/:eventId", eventController.getEvent);
 // {
 //     "name": "Event",
 // "projectId" : "1",
