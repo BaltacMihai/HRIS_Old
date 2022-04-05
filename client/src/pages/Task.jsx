@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import Select from "react-select";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useEvent from "../hooks/findEventsById";
@@ -35,7 +36,6 @@ function returnTaskContent(taskData) {
   return (
     <div className="task_page_content">
       <p className="task_title">{taskData.name}</p>
-
       <div className="task_content">
         <div className="left">
           <div className="task_infos">
@@ -133,7 +133,12 @@ function returnTaskContent(taskData) {
               <span className="icon-users"></span>
               <p>See Members</p>
             </div>
-            <div className="option">
+            <div
+              className="option"
+              onClick={(e) => {
+                displayStatusModal("flex");
+              }}
+            >
               <span className="icon-price-tags"></span>
               <p>Change Status</p>
             </div>
@@ -141,31 +146,60 @@ function returnTaskContent(taskData) {
         </div>
       </div>
       {/* <div className="modal" id="seeMembers"></div> */}
+      {returnStatusModal(taskData.id, taskData.label)}
+    </div>
+  );
+}
+function returnStatusModal(projectId, defaultValue) {
+  const options = [
+    { value: "New", label: "New" },
+    { value: "Doing", label: "Doing" },
+    { value: "Done", label: "Done" },
+    { value: "Closed", label: "Closed" },
+  ];
 
-      <div className="modal" id="changeStatus">
-        <div className="modal_content">
-          <span className="icon-cross close"></span>
+  return (
+    <div className="modal" id="changeStatus">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("none");
+          }}
+        ></span>
 
-          <div className="modal_label">
-            <label for="status">
-              <p>Select the status: </p>
-            </label>
+        <div className="modal_label">
+          <label for="status">
+            <p>Select the status: </p>
+          </label>
 
-            <select name="status" id="status">
-              <option value="new">New</option>
-              <option value="doing">Doing</option>
-              <option value="done">Done</option>
-            </select>
-          </div>
+          <Select
+            id="status"
+            name="status"
+            options={options}
+            defaultValue={defaultValue}
+          />
+        </div>
 
-          <div className="modal_actions">
-            <p className="cancel">Cancel</p>
-            <p className="accept">Accept</p>
-          </div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("none");
+            }}
+          >
+            Cancel
+          </p>
+          <p className="accept">Accept</p>
         </div>
       </div>
     </div>
   );
+}
+function displayStatusModal(type) {
+  let statusModal = document.getElementById("changeStatus");
+
+  statusModal.style.display = type;
 }
 
 function returnLoading() {

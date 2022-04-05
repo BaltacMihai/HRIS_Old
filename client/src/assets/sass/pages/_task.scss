@@ -145,7 +145,7 @@
     height: 100%;
     background-color: $bright-blue-transparent;
 
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
 
@@ -163,26 +163,38 @@
       .close {
         text-align: end;
         font-size: 20px;
-        margin-bottom: 2.5vh;
+        margin-bottom: 1.5vh;
+        cursor: pointer;
       }
       .modal_label {
         font-size: 20px;
 
-        select {
-          width: 100%;
-          font-size: 17.5px;
-          padding: 0.5rem 1rem;
-
+        #status {
           margin: 2.5vh 0;
-
-          option {
-            padding: 0.5rem 1rem;
-          }
         }
       }
 
       .modal_actions {
         font-size: 20px;
+        margin-top: 3vh;
+
+        display: flex;
+        justify-content: space-between;
+
+        p {
+          border-radius: $radius-10;
+          padding: 0.5rem 1rem;
+
+          cursor: pointer;
+        }
+        .cancel {
+          border: 1px solid red;
+          color: red;
+        }
+        .accept {
+          background-color: green;
+          color: $white;
+        }
       }
     }
   }
