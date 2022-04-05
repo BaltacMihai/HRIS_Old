@@ -1,0 +1,129 @@
+.task_page {
+  &_content {
+    margin: 2vh 1.75vw;
+    padding: 3vh 4vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+    border-radius: $radius-25;
+
+    .task_title {
+      font-size: 35px;
+    }
+
+    .task_content {
+      display: flex;
+      width: 100%;
+
+      .left {
+        flex: 0 0 70%;
+
+        .task_infos {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 20px;
+          font-weight: 600;
+
+          &_project {
+            padding: 0.5rem 1.5rem;
+            border-radius: $radius-10;
+            background-color: aqua;
+          }
+        }
+
+        .task_description,
+        .task_comment {
+          display: flex;
+          flex-direction: column;
+          margin: 3vh 0;
+          &_label {
+            display: flex;
+            align-items: center;
+            font-size: 17.5px;
+
+            &_text {
+              margin-left: 1rem;
+            }
+          }
+
+          textarea {
+            margin-top: 1rem;
+            width: calc(100% - 2rem);
+
+            padding: 1rem;
+            border-radius: $radius-10;
+            background-color: $grey-blue;
+
+            font-size: 15px;
+            line-height: 25px;
+
+            height: 20vh;
+            resize: none;
+            border: none;
+          }
+          .task_comment_data {
+            overflow-y: scroll;
+          }
+        }
+      }
+
+      .right {
+        flex: 0 0 30%;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-left: 7.5vw;
+
+        .task_status {
+          display: flex;
+          flex-direction: column;
+          margin-bottom: 10vh;
+
+          .task_status_text {
+            font-size: 30px;
+          }
+
+          .task_status_info {
+            font-size: 20px;
+            border-radius: $radius-10;
+            background-color: green;
+            padding: 0.5rem 1.5rem;
+            color: $white;
+            width: auto;
+          }
+        }
+
+        .task_actions {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+
+          .task_actions_text {
+            font-size: 30px;
+          }
+
+          .option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: max-content;
+            padding: 0.5rem 1.5rem;
+            background-color: $dark-blue;
+            color: $white;
+            margin: 1.5vh 0;
+            border-radius: $radius-10;
+            cursor: pointer;
+            font-size: 20px;
+
+            span {
+              margin-right: 1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
