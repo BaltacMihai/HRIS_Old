@@ -115,7 +115,10 @@ function returnTaskContent(taskData) {
         <div className="right">
           <div className="task_status">
             <p className="task_status_text">Status</p>
-            <p className="task_status_info"> {taskData.label}</p>
+            <p className={"task_status_info " + taskData.label}>
+              {" "}
+              {taskData.label}
+            </p>
           </div>
           <div className="task_actions">
             <p className="task_actions_text">More Actions</p>
