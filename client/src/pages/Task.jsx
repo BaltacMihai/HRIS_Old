@@ -140,6 +140,30 @@ function returnTaskContent(taskData) {
           </div>
         </div>
       </div>
+      {/* <div className="modal" id="seeMembers"></div> */}
+
+      <div className="modal" id="changeStatus">
+        <div className="modal_content">
+          <span className="icon-cross close"></span>
+
+          <div className="modal_label">
+            <label for="status">
+              <p>Select the status: </p>
+            </label>
+
+            <select name="status" id="status">
+              <option value="new">New</option>
+              <option value="doing">Doing</option>
+              <option value="done">Done</option>
+            </select>
+          </div>
+
+          <div className="modal_actions">
+            <p className="cancel">Cancel</p>
+            <p className="accept">Accept</p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
