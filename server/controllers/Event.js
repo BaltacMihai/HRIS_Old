@@ -21,12 +21,12 @@ const controller = {
       });
   },
   getEvent: async (req, res) => {
-    const { eventId, type } = req.params;
+    const { type, eventId } = req.params;
 
     if (eventId < 0) {
       res.status(400).send({ message: "Project doesn't exist" });
     }
-    EventDB.findOne({
+    await EventDB.findOne({
       where: {
         id: eventId,
         type: type,
