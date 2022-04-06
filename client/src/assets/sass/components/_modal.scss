@@ -15,13 +15,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 1rem;
+    padding: 1rem 2rem;
     border-radius: $radius-10;
 
     background-color: $white;
 
     width: 25%;
-
+    .title {
+      font-size: 25px;
+    }
     .close {
       text-align: end;
       font-size: 20px;
@@ -30,12 +32,23 @@
     }
     .modal_label {
       font-size: 20px;
+      display: flex;
+      flex-direction: column;
+      margin-top: 2rem;
+      label {
+        margin-bottom: 0.5rem;
+      }
 
-      select {
+      select,
+      input,
+      textarea {
         width: 100%;
         font-size: 17.5px;
-        padding: 0.5rem 1rem;
-
+        padding: 0.5rem;
+        background-color: $grey-blue;
+        border-radius: 5px;
+        resize: none;
+        border: none;
         #status {
           margin: 2.5vh 0;
 
@@ -44,11 +57,30 @@
           }
         }
       }
+      input,
+      textarea {
+        width: 92%;
+        font-size: 17.5px;
+        padding: 0.5rem 1rem;
+      }
+    }
+    .fieldset {
+      display: flex;
+      margin-top: 1rem;
+      align-content: center;
+      justify-content: space-between;
+
+      .modal_label {
+        flex: 0 0 53%;
+        input {
+          width: 75%;
+        }
+      }
     }
 
     .modal_actions {
       font-size: 20px;
-      margin-top: 3vh;
+      margin-top: 4vh;
 
       display: flex;
       justify-content: space-between;

@@ -47,7 +47,72 @@ function returnAddModal() {
             displayStatusModal("addMeeting", "none");
           }}
         ></span>
-        <div className="members"></div>
+
+        <div className="title">Add Meeting</div>
+        <div className="modal_label">
+          <label htmlFor="meeting_name">Name</label>
+          <input type="text" name="meeting_name" id="meeting_name" />
+        </div>
+        <div className="modal_label">
+          <label htmlFor="meeting_descritpion">Description</label>
+          <textarea
+            name="meeting_description"
+            id="meeting_descritpion"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <div className="modal_label">
+          <label htmlFor="meeting_project">Project</label>
+          <select name="meeting_project" id="meeting_project">
+            <option value="New">New</option>
+            <option value="Doing">Doing</option>
+            <option value="Done">Done</option>
+            <option value="Closed">Closed</option>
+          </select>
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="meeting_starting_date">Date</label>
+
+            <input
+              type="date"
+              name="meeting_starting_date"
+              id="meeting_starting_date"
+            />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_starting_hour">Hour</label>
+
+            <input
+              type="time"
+              name="meeting_starting_hour"
+              id="meeting_starting_hour"
+            />
+          </div>
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="meeting_ending_date">Date</label>
+
+            <input
+              type="date"
+              name="meeting_ending_date"
+              id="meeting_ending_date"
+            />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_ending_hour">Hour</label>
+
+            <input
+              type="time"
+              name="meeting_ending_hour"
+              id="meeting_ending_hour"
+            />
+          </div>
+        </div>
         <div className="modal_actions">
           <p
             className="cancel"
@@ -57,6 +122,7 @@ function returnAddModal() {
           >
             Cancel
           </p>
+          <p className="accept">Submit</p>
         </div>
       </div>
     </div>
