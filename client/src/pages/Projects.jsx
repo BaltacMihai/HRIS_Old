@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
 import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
+import formatDateForUser from "../utils/dates/formatDateForUser";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -30,18 +31,8 @@ function GetMyProjects(userId) {
 
         color: e.Project.color,
         role: e.type,
-        startingDate:
-          startingDate.getDate() +
-          "." +
-          (startingDate.getMonth() + 1) +
-          "." +
-          startingDate.getFullYear(),
-        endingDate:
-          endingDate.getDate() +
-          "." +
-          (endingDate.getMonth() + 1) +
-          "." +
-          endingDate.getFullYear(),
+        startingDate: formatDateForUser(startingDate),
+        endingDate: formatDateForUser(endingDate),
       };
     });
   }
@@ -66,21 +57,10 @@ function GetOtherProjects(userId) {
 
         color: e.color,
         role: "UnEnrolled",
-        startingDate:
-          startingDate.getDate() +
-          "." +
-          (startingDate.getMonth() + 1) +
-          "." +
-          startingDate.getFullYear(),
-        endingDate:
-          endingDate.getDate() +
-          "." +
-          (endingDate.getMonth() + 1) +
-          "." +
-          endingDate.getFullYear(),
+        startingDate: formatDateForUser(startingDate),
+        endingDate: formatDateForUser(endingDate),
       };
     });
-
     return myProjects;
   }
 }
