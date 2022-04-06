@@ -7,6 +7,7 @@ import formatDateForUser from "../utils/dates/formatDateForUser";
 import useModifyTask from "../hooks/putEventLabel";
 import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
+import submitNewMember from "../hooks/postEventAllocationUsername";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -155,7 +156,7 @@ function returnMeetingContent(taskData, members) {
       </div>
 
       {returnStatusModal(taskData.id, taskData.label)}
-      {returnMembersModal(members)}
+      {returnMembersModal(taskData.id, members)}
     </div>
   );
 }
@@ -213,7 +214,7 @@ function displayStatusModal(location, type) {
   statusModal.style.display = type;
 }
 
-function returnMembersModal(members) {
+function returnMembersModal(eventId, members) {
   let generatedMembers = members.map((e) => {
     return {
       photo: e.User.photo
@@ -235,11 +236,20 @@ function returnMembersModal(members) {
         <div className="modal_label modal_label-icon">
           <input
             type="text"
-            name="task_name"
-            id="task_name"
+            name="add_memeber"
+            id="add_memeber"
             placeholder="Write username"
           />
-          <span className="icon-plus icon"></span>
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              let body = {
+                username: document.getElementById("add_memeber").value,
+                eventId: eventId,
+              };
+              submitNewMember(body);
+            }}
+          ></span>
         </div>
         <div className="members">
           {generatedMembers.map((member) => {
