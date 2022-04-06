@@ -26,7 +26,7 @@ function Dashboard({ userId }) {
           </div>
         </div>
       </div>
-      {returnAddModal()}
+      {returnAddModal(userId)}
       {returnAddTask()}
     </div>
   );
@@ -38,7 +38,7 @@ function displayStatusModal(location, type) {
   statusModal.style.display = type;
 }
 
-function returnAddModal() {
+function returnAddModal(userId) {
   return (
     <div className="modal" id="addMeeting">
       <div className="modal_content">
@@ -131,6 +131,7 @@ function returnAddModal() {
             className="accept"
             onClick={(e) => {
               let generateEvent = {
+                userId: userId,
                 title: document.getElementById("meeting_name").value,
                 description: document.getElementById("meeting_description")
                   .value,
