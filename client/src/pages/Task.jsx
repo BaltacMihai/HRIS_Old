@@ -232,6 +232,7 @@ function returnMembersModal(members) {
             displayStatusModal("seeMembers", "none");
           }}
         ></span>
+
         <div className="members">
           {generatedMembers.map((member) => {
             return (
