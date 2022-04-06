@@ -6,6 +6,7 @@ import MyTasks from "../components/Widgets/MyTasks";
 import MyMeetings from "../components/Widgets/MyMeetings";
 import MyProjects from "../components/Widgets/MyProjects";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import submitNewMeeting from "../hooks/postEventAndAllocate";
 
 function Dashboard({ userId }) {
   return (
@@ -70,10 +71,8 @@ function returnAddModal(userId) {
         <div className="modal_label">
           <label htmlFor="meeting_project">Project</label>
           <select name="meeting_project" id="meeting_project">
-            <option value="New">New</option>
-            <option value="Doing">Doing</option>
-            <option value="Done">Done</option>
-            <option value="Closed">Closed</option>
+            <option value="2">Dare To Speak</option>
+            <option value="3">Academia Sperantei</option>
           </select>
         </div>
 
@@ -132,11 +131,11 @@ function returnAddModal(userId) {
             onClick={(e) => {
               let generateEvent = {
                 userId: userId,
-                title: document.getElementById("meeting_name").value,
+                name: document.getElementById("meeting_name").value,
                 description: document.getElementById("meeting_description")
                   .value,
                 label: document.getElementById("meeting_link").value,
-                project: document.getElementById("meeting_project").value,
+                projectId: document.getElementById("meeting_project").value,
                 startingDate:
                   formatDateForDatabase(
                     document.getElementById("meeting_starting_date").value
@@ -149,9 +148,11 @@ function returnAddModal(userId) {
                   ) +
                   " " +
                   document.getElementById("meeting_ending_hour").value,
+                type: "MEETING",
               };
 
               console.log(generateEvent);
+              submitNewMeeting(generateEvent);
             }}
           >
             Submit
