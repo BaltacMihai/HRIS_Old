@@ -20,7 +20,6 @@ function TaskCard({ name, project, deadline, id, color }) {
             <span className="icon-calendar"></span>
             <p>{deadline}</p>
           </div>
-          {/* TODO: Here I need to post the user */}
         </div>
       </div>
     </Link>

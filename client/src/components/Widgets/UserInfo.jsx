@@ -15,9 +15,9 @@ function returnUserInfoCard(userInfo) {
     <div className="widget userInfo">
       <div className="userInfo_header">
         <p className="userInfo_header_title">Personal Info</p>
-        <div className="userInfo_header_editBtn">
+        {/* <div className="userInfo_header_editBtn">
           <p>Edit Info</p>
-        </div>
+        </div> */}
       </div>
       <div className="userInfo_container">
         <div className="userInfo_container_infos">

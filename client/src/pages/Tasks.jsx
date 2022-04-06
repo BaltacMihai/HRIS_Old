@@ -31,13 +31,13 @@ function displayStatusModal(location, type) {
 function returnActions() {
   return (
     <div className="tasks_content_actions">
-      <div className="tasks_content_actions_filter">
+      {/* <div className="tasks_content_actions_filter">
         <div className="tasks_content_actions_filter_search">
           <input type="text" />
           <span className="icon-search icon"></span>
         </div>
         <p className="tasks_content_actions_filter_quick">Quick Filters</p>
-      </div>
+      </div> */}
       <div
         className="tasks_content_actions_add"
         onClick={(e) => {

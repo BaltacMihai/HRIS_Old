@@ -68,7 +68,7 @@ function GetOtherProjects(userId) {
 function returnContent(myProjects, otherProjects) {
   return (
     <div className="project_content">
-      {returnActions()}
+      {/* {returnActions()} */}
       {returnProjectsContent(myProjects, otherProjects)}
     </div>
   );
@@ -95,10 +95,10 @@ function returnProjectsContent(myProjects, otherProjects) {
         <div className="project_content_current_projects">
           {mapMyProjects(myProjects)}
         </div>
-        <h2>Other Projects:</h2>
+        {/* <h2>Other Projects:</h2>
         <div className="project_content_current_projects">
           {mapMyProjects(otherProjects)}
-        </div>
+        </div> */}
       </div>
     );
   else {

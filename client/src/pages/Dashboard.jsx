@@ -71,8 +71,9 @@ function returnAddModal(userId) {
         <div className="modal_label">
           <label htmlFor="meeting_project">Project</label>
           <select name="meeting_project" id="meeting_project">
-            <option value="2">Dare To Speak</option>
-            <option value="3">Academia Sperantei</option>
+            <option value="2">ING</option>
+            <option value="3">Vodafone</option>
+            <option value="4">JTI</option>
           </select>
         </div>
 
