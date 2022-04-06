@@ -4,6 +4,33 @@ const ProjectDB = require("../models").Project;
 const UserDB = require("./../models").User;
 
 const controller = {
+  findEventsById: async (req, res) => {
+    const { eventId } = req.params;
+
+    if (eventId < 0) {
+      res.status(400).send({ message: "Event doesn't exist" });
+    }
+
+    EventAllocationDB.findAll({
+      where: {
+        eventId: eventId,
+      },
+      attributes: [],
+      include: [
+        {
+          model: UserDB,
+          attributes: ["photo", "name"],
+        },
+      ],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   findEventsByIntervalAndUser: async (req, res) => {
     const { Op } = require("@sequelize/core");
     const { userId, startingDate, endingDate } = req.params;

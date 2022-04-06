@@ -27,5 +27,6 @@ router.post("/post", eventAllocationController.post);
 // "eventId" : "5"
 
 // }
+router.get("/get/:eventId", eventAllocationController.findEventsById);
 
 module.exports = router;
