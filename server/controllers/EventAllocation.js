@@ -195,6 +195,31 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  postByUsername: async (req, res) => {
+    let userId = await UserDB.findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
+      .then((user) => {
+        return user.id;
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+    EventAllocationDB.create({
+      userId: userId,
+      eventId: req.body.eventId,
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
