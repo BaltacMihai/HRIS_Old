@@ -7,6 +7,7 @@ import formatDateForUser from "../utils/dates/formatDateForUser";
 import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
 import formatHourForUser from "../utils/dates/formatHourForUser";
+import submitNewMember from "../hooks/postEventAllocationUsername";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -157,7 +158,7 @@ function returnTaskContent(taskData, members) {
       </div>
 
       {returnStatusModal(taskData.id, taskData.label)}
-      {returnMembersModal(members)}
+      {returnMembersModal(taskData.id, members)}
     </div>
   );
 }
@@ -215,7 +216,7 @@ function displayStatusModal(location, type) {
   statusModal.style.display = type;
 }
 
-function returnMembersModal(members) {
+function returnMembersModal(eventId, members) {
   let generatedMembers = members.map((e) => {
     return {
       photo: e.User.photo
@@ -234,6 +235,24 @@ function returnMembersModal(members) {
             displayStatusModal("seeMembers", "none");
           }}
         ></span>
+        <div className="modal_label modal_label-icon">
+          <input
+            type="text"
+            name="add_memeber"
+            id="add_memeber"
+            placeholder="Write username"
+          />
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              let body = {
+                username: document.getElementById("add_memeber").value,
+                eventId: eventId,
+              };
+              submitNewMember(body);
+            }}
+          ></span>
+        </div>
         <div className="members">
           {generatedMembers.map((member) => {
             return (
@@ -248,7 +267,7 @@ function returnMembersModal(members) {
             );
           })}
         </div>
-        <div className="modal_actions">
+        <div className="modal_actions  modal_actions-one">
           <p
             className="cancel"
             onClick={(e) => {
