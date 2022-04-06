@@ -232,7 +232,15 @@ function returnMembersModal(members) {
             displayStatusModal("seeMembers", "none");
           }}
         ></span>
-
+        <div className="modal_label modal_label-icon">
+          <input
+            type="text"
+            name="task_name"
+            id="task_name"
+            placeholder="Write username"
+          />
+          <span className="icon-plus icon"></span>
+        </div>
         <div className="members">
           {generatedMembers.map((member) => {
             return (

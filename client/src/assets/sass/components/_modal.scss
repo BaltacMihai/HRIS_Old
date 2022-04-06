@@ -66,6 +66,19 @@
       textarea {
         height: 15vh;
       }
+
+      &-icon {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        .icon {
+          position: relative;
+          cursor: pointer;
+          z-index: 99;
+          left: -2rem;
+        }
+      }
     }
     .fieldset {
       display: flex;
