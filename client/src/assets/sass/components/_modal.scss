@@ -100,6 +100,9 @@
 
       display: flex;
       justify-content: space-between;
+      &-one {
+        justify-content: center;
+      }
 
       p {
         border-radius: $radius-10;

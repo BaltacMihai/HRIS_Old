@@ -255,7 +255,7 @@ function returnMembersModal(members) {
             );
           })}
         </div>
-        <div className="modal_actions">
+        <div className="modal_actions modal_actions-one">
           <p
             className="cancel"
             onClick={(e) => {
