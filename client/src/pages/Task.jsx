@@ -131,14 +131,19 @@ function returnTaskContent(taskData) {
               <p>See Documents</p>
             </div> */
             }
-            <div className="option">
+            <div
+              className="option"
+              onClick={(e) => {
+                displayStatusModal("seeMembers", "flex");
+              }}
+            >
               <span className="icon-users"></span>
               <p>See Members</p>
             </div>
             <div
               className="option"
               onClick={(e) => {
-                displayStatusModal("flex");
+                displayStatusModal("changeStatus", "flex");
               }}
             >
               <span className="icon-price-tags"></span>
@@ -147,8 +152,9 @@ function returnTaskContent(taskData) {
           </div>
         </div>
       </div>
-      {/* <div className="modal" id="seeMembers"></div> */}
+
       {returnStatusModal(taskData.id, taskData.label)}
+      {returnMembersModal(taskData.id)}
     </div>
   );
 }
@@ -159,7 +165,7 @@ function returnStatusModal(projectId, defaultValue) {
         <span
           className="icon-cross close"
           onClick={(e) => {
-            displayStatusModal("none");
+            displayStatusModal("changeStatus", "none");
           }}
         ></span>
 
@@ -180,7 +186,7 @@ function returnStatusModal(projectId, defaultValue) {
           <p
             className="cancel"
             onClick={(e) => {
-              displayStatusModal("none");
+              displayStatusModal("changeStatus", "none");
             }}
           >
             Cancel
@@ -200,10 +206,86 @@ function returnStatusModal(projectId, defaultValue) {
     </div>
   );
 }
-function displayStatusModal(type) {
-  let statusModal = document.getElementById("changeStatus");
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
 
   statusModal.style.display = type;
+}
+
+function returnMembersModal(projectId) {
+  let members = [
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+    {
+      photo:
+        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
+      name: "Baltac Mihai-Cristian",
+    },
+  ];
+  return (
+    <div className="modal" id="seeMembers">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("seeMembers", "none");
+          }}
+        ></span>
+        <div className="members">
+          {members.map((member) => {
+            return (
+              <div className="member">
+                <img
+                  src={member.photo}
+                  alt={member.name + " photo"}
+                  className="member_photo"
+                />
+                <p className="member_name">{member.name}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("seeMembers", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function returnLoading() {
