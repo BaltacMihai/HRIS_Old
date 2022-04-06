@@ -6,23 +6,25 @@ import useEvent from "../hooks/findEventsById";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import useModifyTask from "../hooks/putEventLabel";
 import modifyTask from "../hooks/putEventLabel";
+import useMembers from "../hooks/findMembersOfEvent";
 
 function Task({ userId }) {
   let { taskId } = useParams();
   let data = useEvent("TASK", taskId);
+  let members = useMembers(taskId);
 
   useEffect(() => {
-    if (data) {
+    if (data && members) {
       let projectColor = document.getElementById(data.name + "-" + data.id);
       projectColor.style.backgroundColor = data.Project.color;
     }
   });
 
-  if (data) {
+  if (data && members) {
     return (
       <div className="page task_page">
         <Navbar current="tasks" />
-        {returnTaskContent(data)}
+        {returnTaskContent(data, members)}
       </div>
     );
   } else
@@ -34,7 +36,7 @@ function Task({ userId }) {
     );
 }
 
-function returnTaskContent(taskData) {
+function returnTaskContent(taskData, members) {
   return (
     <div className="task_page_content">
       <p className="task_title">{taskData.name}</p>
@@ -154,7 +156,7 @@ function returnTaskContent(taskData) {
       </div>
 
       {returnStatusModal(taskData.id, taskData.label)}
-      {returnMembersModal(taskData.id)}
+      {returnMembersModal(members)}
     </div>
   );
 }
@@ -212,44 +214,16 @@ function displayStatusModal(location, type) {
   statusModal.style.display = type;
 }
 
-function returnMembersModal(projectId) {
-  let members = [
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-    {
-      photo:
-        "https://upload.wikimedia.org/wikipedia/en/e/ee/Unknown-person.gif",
-      name: "Baltac Mihai-Cristian",
-    },
-  ];
+function returnMembersModal(members) {
+  let generatedMembers = members.map((e) => {
+    return {
+      photo: e.User.photo
+        ? e.User.photo
+        : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg",
+      name: e.User.name,
+    };
+  });
+
   return (
     <div className="modal" id="seeMembers">
       <div className="modal_content">
@@ -260,7 +234,7 @@ function returnMembersModal(projectId) {
           }}
         ></span>
         <div className="members">
-          {members.map((member) => {
+          {generatedMembers.map((member) => {
             return (
               <div className="member">
                 <img
