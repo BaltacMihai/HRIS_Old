@@ -101,6 +101,10 @@
             }
             &.Doing {
               background-color: yellow;
+              color: black;
+            }
+            &.Done {
+              background-color: blue;
             }
           }
         }
@@ -169,8 +173,18 @@
       .modal_label {
         font-size: 20px;
 
-        #status {
-          margin: 2.5vh 0;
+        select {
+          width: 100%;
+          font-size: 17.5px;
+          padding: 0.5rem 1rem;
+
+          #status {
+            margin: 2.5vh 0;
+
+            option {
+              padding: 0.5rem 1rem;
+            }
+          }
         }
       }
 

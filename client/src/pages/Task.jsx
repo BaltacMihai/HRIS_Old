@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useEvent from "../hooks/findEventsById";
 import formatDateForUser from "../utils/dates/formatDateForUser";
+import useModifyTask from "../hooks/putEventLabel";
+import modifyTask from "../hooks/putEventLabel";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -151,13 +153,6 @@ function returnTaskContent(taskData) {
   );
 }
 function returnStatusModal(projectId, defaultValue) {
-  const options = [
-    { value: "New", label: "New" },
-    { value: "Doing", label: "Doing" },
-    { value: "Done", label: "Done" },
-    { value: "Closed", label: "Closed" },
-  ];
-
   return (
     <div className="modal" id="changeStatus">
       <div className="modal_content">
@@ -169,16 +164,16 @@ function returnStatusModal(projectId, defaultValue) {
         ></span>
 
         <div className="modal_label">
-          <label for="status">
+          <label htmlFor="status">
             <p>Select the status: </p>
           </label>
 
-          <Select
-            id="status"
-            name="status"
-            options={options}
-            defaultValue={defaultValue}
-          />
+          <select name="status" id="status">
+            <option value="New">New</option>
+            <option value="Doing">Doing</option>
+            <option value="Done">Done</option>
+            <option value="Closed">Closed</option>
+          </select>
         </div>
 
         <div className="modal_actions">
@@ -190,7 +185,16 @@ function returnStatusModal(projectId, defaultValue) {
           >
             Cancel
           </p>
-          <p className="accept">Accept</p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              let select = document.getElementById("status");
+              let option = select.options[select.selectedIndex];
+              let respounse = modifyTask(projectId, option.value);
+            }}
+          >
+            Accept
+          </p>
         </div>
       </div>
     </div>
