@@ -29,7 +29,12 @@ export function ContextCalendar({ id, number, xPos, yPos, refresh }) {
 
         <p>Add Meeting</p>
       </div>
-      <div className="context_menu_item">
+      <div
+        className="context_menu_item"
+        onClick={(e) => {
+          displayModal("addTask", "flex");
+        }}
+      >
         <span className="icon-briefcase"></span>
         <p>Add Task</p>
       </div>

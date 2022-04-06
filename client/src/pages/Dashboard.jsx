@@ -25,7 +25,8 @@ function Dashboard({ userId }) {
           </div>
         </div>
       </div>
-      {returnMembersModal()}
+      {returnAddModal()}
+      {returnAddTask()}
     </div>
   );
 }
@@ -36,7 +37,7 @@ function displayStatusModal(location, type) {
   statusModal.style.display = type;
 }
 
-function returnMembersModal() {
+function returnAddModal() {
   return (
     <div className="modal" id="addMeeting">
       <div className="modal_content">
@@ -52,6 +53,32 @@ function returnMembersModal() {
             className="cancel"
             onClick={(e) => {
               displayStatusModal("addMeeting", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function returnAddTask() {
+  return (
+    <div className="modal" id="addTask">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("addTask", "none");
+          }}
+        ></span>
+        <div className="members"></div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("addTask", "none");
             }}
           >
             Cancel
