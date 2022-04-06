@@ -4,14 +4,16 @@ import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useEvent from "../hooks/findEventsById";
 import formatDateForUser from "../utils/dates/formatDateForUser";
-import useModifyTask from "../hooks/putEventLabel";
 import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
+import formatHourForUser from "../utils/dates/formatHourForUser";
 
 function Meeting({ userId }) {
-  let { taskId } = useParams();
-  let data = useEvent("TASK", taskId);
-  let members = useMembers(taskId);
+  let { meetingId } = useParams();
+  console.log(meetingId);
+
+  let data = useEvent("MEETING", meetingId);
+  let members = useMembers(meetingId);
 
   useEffect(() => {
     if (data && members) {
@@ -23,14 +25,14 @@ function Meeting({ userId }) {
   if (data && members) {
     return (
       <div className="page task_page">
-        <Navbar current="tasks" />
+        <Navbar current="meetings" />
         {returnTaskContent(data, members)}
       </div>
     );
   } else
     return (
       <div className="page task_page">
-        <Navbar current="tasks" />
+        <Navbar current="meetings" />
         {returnLoading()}
       </div>
     );
@@ -50,11 +52,22 @@ function returnTaskContent(taskData, members) {
               {taskData.Project.name}
             </p>
             <p className="task_infos_deadline">
-              Due date:{" "}
-              <span>
-                {formatDateForUser(taskData.endingDate)}
-                {}
-              </span>
+              <div className="mr-5">
+                <span className="icon-calendar icon"></span> Date:{" "}
+                <span className="task_infos_deadline_info">
+                  {formatDateForUser(taskData.endingDate)}
+                  {}
+                </span>
+              </div>
+              <div>
+                <p className="task_infos_deadline">
+                  <span className="icon-clock icon"></span> Hour:{" "}
+                  <span className="task_infos_deadline_info">
+                    {formatHourForUser(taskData.startingDate)}-
+                    {formatHourForUser(taskData.endingDate)}
+                  </span>
+                </p>
+              </div>
             </p>
           </div>
 
@@ -117,13 +130,6 @@ function returnTaskContent(taskData, members) {
           }
         </div>
         <div className="right">
-          <div className="task_status">
-            <p className="task_status_text">Status</p>
-            <p className={"task_status_info " + taskData.label}>
-              {" "}
-              {taskData.label}
-            </p>
-          </div>
           <div className="task_actions">
             <p className="task_actions_text">More Actions</p>
             {
@@ -142,15 +148,10 @@ function returnTaskContent(taskData, members) {
               <span className="icon-users"></span>
               <p>See Members</p>
             </div>
-            <div
-              className="option"
-              onClick={(e) => {
-                displayStatusModal("changeStatus", "flex");
-              }}
-            >
-              <span className="icon-price-tags"></span>
-              <p>Change Status</p>
-            </div>
+            <a className="option" href={taskData.label} target="_blank">
+              <span className="icon-link"></span>
+              <p>Access Link</p>
+            </a>
           </div>
         </div>
       </div>

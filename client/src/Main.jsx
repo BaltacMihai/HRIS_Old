@@ -23,7 +23,7 @@ function Main() {
         <Route path="/tasks" element={<Tasks userId={username} />} />
         <Route path="/task/:taskId" element={<Task userId={username} />} />
         <Route
-          path="/meeting/:meeting"
+          path="/meeting/:meetingId"
           element={<Meeting userId={username} />}
         />
       </Routes>

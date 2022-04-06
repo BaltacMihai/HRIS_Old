@@ -24,7 +24,19 @@
           align-items: center;
           justify-content: space-between;
           font-size: 20px;
-          font-weight: 600;
+          &_deadline {
+            display: flex;
+            align-items: center;
+
+            .icon {
+              margin-right: 0.5rem;
+            }
+
+            &_info {
+              margin-left: 0.5rem;
+              font-weight: 600;
+            }
+          }
 
           &_project {
             padding: 0.5rem 1.5rem;

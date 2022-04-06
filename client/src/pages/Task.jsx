@@ -24,7 +24,7 @@ function Task({ userId }) {
     return (
       <div className="page task_page">
         <Navbar current="tasks" />
-        {returnTaskContent(data, members)}
+        {returnMeetingContent(data, members)}
       </div>
     );
   } else
@@ -36,7 +36,7 @@ function Task({ userId }) {
     );
 }
 
-function returnTaskContent(taskData, members) {
+function returnMeetingContent(taskData, members) {
   return (
     <div className="task_page_content">
       <p className="task_title">{taskData.name}</p>
@@ -50,10 +50,9 @@ function returnTaskContent(taskData, members) {
               {taskData.Project.name}
             </p>
             <p className="task_infos_deadline">
-              Due date:{" "}
-              <span>
+              <span className="icon-calendar icon"></span> Due date:{" "}
+              <span className="task_infos_deadline_info">
                 {formatDateForUser(taskData.endingDate)}
-                {}
               </span>
             </p>
           </div>
@@ -272,6 +271,7 @@ function returnLoading() {
           <div className="task_infos">
             <p className="task_infos_project">Dare To Speak</p>
             <p className="task_infos_deadline">
+              <span className="icon-link"></span>
               Due date: <span>23.03.2022</span>
             </p>
           </div>
