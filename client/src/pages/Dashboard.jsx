@@ -63,6 +63,10 @@ function returnAddModal() {
           ></textarea>
         </div>
         <div className="modal_label">
+          <label htmlFor="meeting_link">Link</label>
+          <input type="text" name="meeting_link" id="meeting_link" />
+        </div>
+        <div className="modal_label">
           <label htmlFor="meeting_project">Project</label>
           <select name="meeting_project" id="meeting_project">
             <option value="New">New</option>
@@ -74,7 +78,7 @@ function returnAddModal() {
 
         <div className=" fieldset">
           <div className="modal_label">
-            <label htmlFor="meeting_starting_date">Date</label>
+            <label htmlFor="meeting_starting_date">Starting Date</label>
 
             <input
               type="date"
@@ -83,7 +87,7 @@ function returnAddModal() {
             />
           </div>
           <div className="modal_label">
-            <label htmlFor="meeting_starting_hour">Hour</label>
+            <label htmlFor="meeting_starting_hour">Starting Hour</label>
 
             <input
               type="time"
@@ -95,7 +99,7 @@ function returnAddModal() {
 
         <div className=" fieldset">
           <div className="modal_label">
-            <label htmlFor="meeting_ending_date">Date</label>
+            <label htmlFor="meeting_ending_date">Ending Date</label>
 
             <input
               type="date"
@@ -104,7 +108,7 @@ function returnAddModal() {
             />
           </div>
           <div className="modal_label">
-            <label htmlFor="meeting_ending_hour">Hour</label>
+            <label htmlFor="meeting_ending_hour">Ending Hour</label>
 
             <input
               type="time"
