@@ -41,6 +41,27 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+
+  putEventLabel: async (req, res) => {
+    await EventDB.update(
+      {
+        label: req.body.label,
+      },
+      {
+        where: {
+          id: req.body.id,
+          type: req.body.type,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
