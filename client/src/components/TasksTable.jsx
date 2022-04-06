@@ -25,7 +25,7 @@ function TasksTable({ id }) {
         color: e.Event.Project.color,
         ending: formatDateForUser(startingDate),
         beggining: formatDateForUser(endingDate),
-        status: "Pending", //TODO: When reset the db, to include the status for the tasks
+        status: e.Event.label,
       };
     });
   }
