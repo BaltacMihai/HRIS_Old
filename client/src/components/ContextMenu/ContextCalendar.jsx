@@ -1,6 +1,7 @@
 import React from "react";
 import FreeDay from "../../hooks/postFreeDay";
 import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
+import displayModal from "../../utils/displayModal";
 
 export function ContextCalendar({ id, number, xPos, yPos, refresh }) {
   return (
@@ -18,7 +19,12 @@ export function ContextCalendar({ id, number, xPos, yPos, refresh }) {
         <span className="icon-calendar"></span>
         <p>Take vacation</p>
       </div>
-      <div className="context_menu_item">
+      <div
+        className="context_menu_item"
+        onClick={(e) => {
+          displayModal("addMeeting", "flex");
+        }}
+      >
         <span className="icon-users"></span>
 
         <p>Add Meeting</p>

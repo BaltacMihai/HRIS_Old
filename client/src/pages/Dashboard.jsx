@@ -25,8 +25,40 @@ function Dashboard({ userId }) {
           </div>
         </div>
       </div>
+      {returnMembersModal()}
     </div>
   );
 }
 
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
+
+  statusModal.style.display = type;
+}
+
+function returnMembersModal() {
+  return (
+    <div className="modal" id="addMeeting">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("addMeeting", "none");
+          }}
+        ></span>
+        <div className="members"></div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("addMeeting", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 export default Dashboard;
