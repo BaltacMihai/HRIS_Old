@@ -5,6 +5,7 @@ import EventsCalendar from "../components/Widgets/EventsCalendar";
 import MyTasks from "../components/Widgets/MyTasks";
 import MyMeetings from "../components/Widgets/MyMeetings";
 import MyProjects from "../components/Widgets/MyProjects";
+import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 
 function Dashboard({ userId }) {
   return (
@@ -54,10 +55,10 @@ function returnAddModal() {
           <input type="text" name="meeting_name" id="meeting_name" />
         </div>
         <div className="modal_label">
-          <label htmlFor="meeting_descritpion">Description</label>
+          <label htmlFor="meeting_description">Description</label>
           <textarea
             name="meeting_description"
-            id="meeting_descritpion"
+            id="meeting_description"
             cols="30"
             rows="10"
           ></textarea>
@@ -126,7 +127,34 @@ function returnAddModal() {
           >
             Cancel
           </p>
-          <p className="accept">Submit</p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              let generateEvent = {
+                title: document.getElementById("meeting_name").value,
+                description: document.getElementById("meeting_description")
+                  .value,
+                label: document.getElementById("meeting_link").value,
+                project: document.getElementById("meeting_project").value,
+                startingDate:
+                  formatDateForDatabase(
+                    document.getElementById("meeting_starting_date").value
+                  ) +
+                  " " +
+                  document.getElementById("meeting_starting_hour").value,
+                endingDate:
+                  formatDateForDatabase(
+                    document.getElementById("meeting_ending_date").value
+                  ) +
+                  " " +
+                  document.getElementById("meeting_ending_hour").value,
+              };
+
+              console.log(generateEvent);
+            }}
+          >
+            Submit
+          </p>
         </div>
       </div>
     </div>
