@@ -269,7 +269,6 @@ function returnMembersModal(eventId, members) {
         </div>
         <div className="members">
           {generatedMembers.map((member) => {
-            console.log(member);
             return (
               <div className="member">
                 <div className="member_infos">

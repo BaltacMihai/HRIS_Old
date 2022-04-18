@@ -9,6 +9,7 @@ import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
 import submitNewMember from "../hooks/postEventAllocationUsername";
 import deleteEvent from "../hooks/deleteEventById";
+import deleteEventAllocation from "../hooks/deleteEventAllocation";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -228,6 +229,7 @@ function displayStatusModal(location, type) {
 function returnMembersModal(eventId, members) {
   let generatedMembers = members.map((e) => {
     return {
+      id: e.User.id,
       photo: e.User.photo
         ? e.User.photo
         : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg",
@@ -266,12 +268,21 @@ function returnMembersModal(eventId, members) {
           {generatedMembers.map((member) => {
             return (
               <div className="member">
-                <img
-                  src={member.photo}
-                  alt={member.name + " photo"}
-                  className="member_photo"
-                />
-                <p className="member_name">{member.name}</p>
+                <div className="member_infos">
+                  <img
+                    src={member.photo}
+                    alt={member.name + " photo"}
+                    className="member_infos_photo"
+                  />
+                  <p className="member_infos_name">{member.name}</p>
+                </div>
+
+                <span
+                  className="actions icon-cross"
+                  onClick={(e) => {
+                    deleteEventAllocation(eventId, member.id);
+                  }}
+                ></span>
               </div>
             );
           })}
