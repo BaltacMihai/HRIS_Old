@@ -106,6 +106,33 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+
+  deleteEvent: async (req, res) => {
+    const { eventId } = req.params;
+    await EventAllocationDB.destroy({
+      where: {
+        eventId: eventId,
+      },
+    })
+      .then(() => {
+        EventDB.destroy({
+          where: {
+            id: eventId,
+          },
+        })
+          .then((event) => {
+            res.sendStatus(200).send(event);
+          })
+          .catch((error) => {
+            console.log(error);
+            res.sendStatus(500).send({ message: "Server error" });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.sendStatus(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
