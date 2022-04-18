@@ -8,7 +8,7 @@ function TasksTable({ id }) {
   let currentDate = new Date();
   let task = useTasks(
     id,
-    formatDateForDatabase(currentDate),
+    formatDateForDatabase(currentDate) - 1,
     formatDateForDatabase(generateMonthDates().lastDay)
   );
   let tasks = null;

@@ -9,7 +9,7 @@ function MeetingsTable({ id }) {
   let currentDate = new Date();
   let task = useMeetings(
     id,
-    formatDateForDatabase(currentDate),
+    formatDateForDatabase(currentDate) - 1,
     formatDateForDatabase(generateMonthDates().lastDay)
   );
   let tasks = null;
