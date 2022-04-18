@@ -8,6 +8,7 @@ import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import submitNewMember from "../hooks/postEventAllocationUsername";
+import deleteEvent from "../hooks/deleteEventById";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -153,12 +154,22 @@ function returnTaskContent(taskData, members) {
               <span className="icon-link"></span>
               <p>Access Link</p>
             </a>
+            <div
+              className="option"
+              onClick={(e) => {
+                displayStatusModal("seeDeleteModal", "flex");
+              }}
+            >
+              <span className="icon-bin2"></span>
+              <p>Delete Meeting</p>
+            </div>
           </div>
         </div>
       </div>
 
       {returnStatusModal(taskData.id, taskData.label)}
       {returnMembersModal(taskData.id, members)}
+      {returnDeleteModal(taskData.id)}
     </div>
   );
 }
@@ -275,6 +286,42 @@ function returnMembersModal(eventId, members) {
             }}
           >
             Cancel
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function returnDeleteModal(eventId) {
+  return (
+    <div className="modal" id="seeDeleteModal">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("seeDeleteModal", "none");
+          }}
+        ></span>
+        <p className="title"> Are you sure you want to delete this meeting?</p>
+        <p className="text_body">This action is irreversible</p>
+
+        <div className="modal_actions ">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("seeDeleteModal", "none");
+            }}
+          >
+            Cancel
+          </p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              deleteEvent(eventId);
+            }}
+          >
+            Yes
           </p>
         </div>
       </div>

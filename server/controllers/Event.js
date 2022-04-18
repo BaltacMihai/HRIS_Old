@@ -121,16 +121,16 @@ const controller = {
           },
         })
           .then((event) => {
-            res.sendStatus(200).send(event);
+            res.status(200).send(event.toString());
           })
           .catch((error) => {
             console.log(error);
-            res.sendStatus(500).send({ message: "Server error" });
+            res.status(500).send({ message: "Server error" });
           });
       })
       .catch((error) => {
         console.log(error);
-        res.sendStatus(500).send({ message: "Server error" });
+        res.status(500).send({ message: "Server error" });
       });
   },
 };
