@@ -13,6 +13,7 @@ import deleteEventAllocation from "../hooks/deleteEventAllocation";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import formatDateForInput from "../utils/dates/formatDateForInput";
+import putEvent from "../hooks/putEvent";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -182,7 +183,7 @@ function returnMeetingContent(taskData, members) {
       {returnStatusModal(taskData.id, taskData.label)}
       {returnMembersModal(taskData.id, members)}
       {returnDeleteModal(taskData.id)}
-      {returnModifyTask(
+      {ReturnModifyTask(
         taskData.id,
         taskData.name,
         taskData.description,
@@ -192,8 +193,8 @@ function returnMeetingContent(taskData, members) {
     </div>
   );
 }
-function returnModifyTask(
-  userId,
+function ReturnModifyTask(
+  eventId,
   title,
   description,
   startingDate,
@@ -221,7 +222,12 @@ function returnModifyTask(
         <div className="title">Modify Task</div>
         <div className="modal_label">
           <label htmlFor="task_name">Name</label>
-          <input type="text" name="task_name" id="task_name" value={title} />
+          <input
+            type="text"
+            name="task_name"
+            id="task_name"
+            defaultValue={title}
+          />
         </div>
         <div className="modal_label">
           <label htmlFor="task_description">Description</label>
@@ -230,7 +236,7 @@ function returnModifyTask(
             id="task_description"
             cols="30"
             rows="10"
-            value={description}
+            defaultValue={description}
           ></textarea>
         </div>
 
@@ -242,7 +248,7 @@ function returnModifyTask(
               type="date"
               name="task_starting_date"
               id="task_starting_date"
-              value={generatedStartingDate.date}
+              defaultValue={generatedStartingDate.date}
             />
           </div>
           <div className="modal_label">
@@ -252,7 +258,7 @@ function returnModifyTask(
               type="time"
               name="task_starting_hour"
               id="task_starting_hour"
-              value={generatedStartingDate.hour}
+              defaultValue={generatedStartingDate.hour}
             />
           </div>
         </div>
@@ -265,7 +271,7 @@ function returnModifyTask(
               type="date"
               name="task_ending_date"
               id="task_ending_date"
-              value={generatedEndingDate.date}
+              defaultValue={generatedEndingDate.date}
             />
           </div>
           <div className="modal_label">
@@ -275,7 +281,7 @@ function returnModifyTask(
               type="time"
               name="task_ending_hour"
               id="task_ending_hour"
-              value={generatedEndingDate.hour}
+              defaultValue={generatedEndingDate.hour}
             />
           </div>
         </div>
@@ -292,11 +298,9 @@ function returnModifyTask(
             className="accept"
             onClick={(e) => {
               let generateEvent = {
-                userId: userId,
                 name: document.getElementById("task_name").value,
                 description: document.getElementById("task_description").value,
-                label: document.getElementById("task_link").value,
-                projectId: document.getElementById("task_project").value,
+
                 startingDate:
                   formatDateForDatabase(
                     document.getElementById("task_starting_date").value
@@ -309,9 +313,10 @@ function returnModifyTask(
                   ) +
                   " " +
                   document.getElementById("task_ending_hour").value,
+                id: eventId,
                 type: "TASK",
               };
-
+              putEvent(generateEvent);
               console.log(generateEvent);
             }}
           >
