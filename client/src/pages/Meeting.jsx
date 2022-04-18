@@ -9,6 +9,7 @@ import useMembers from "../hooks/findMembersOfEvent";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import submitNewMember from "../hooks/postEventAllocationUsername";
 import deleteEvent from "../hooks/deleteEventById";
+import deleteEventAllocation from "../hooks/deleteEventAllocation";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -229,7 +230,9 @@ function displayStatusModal(location, type) {
 
 function returnMembersModal(eventId, members) {
   let generatedMembers = members.map((e) => {
+    console.log(e);
     return {
+      id: e.User.id,
       photo: e.User.photo
         ? e.User.photo
         : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg",
@@ -266,14 +269,24 @@ function returnMembersModal(eventId, members) {
         </div>
         <div className="members">
           {generatedMembers.map((member) => {
+            console.log(member);
             return (
               <div className="member">
-                <img
-                  src={member.photo}
-                  alt={member.name + " photo"}
-                  className="member_photo"
-                />
-                <p className="member_name">{member.name}</p>
+                <div className="member_infos">
+                  <img
+                    src={member.photo}
+                    alt={member.name + " photo"}
+                    className="member_infos_photo"
+                  />
+                  <p className="member_infos_name">{member.name}</p>
+                </div>
+
+                <span
+                  className="actions icon-cross"
+                  onClick={(e) => {
+                    deleteEventAllocation(eventId, member.id);
+                  }}
+                ></span>
               </div>
             );
           })}

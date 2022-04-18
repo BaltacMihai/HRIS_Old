@@ -19,7 +19,7 @@ const controller = {
       include: [
         {
           model: UserDB,
-          attributes: ["photo", "name"],
+          attributes: ["id", "photo", "name"],
         },
       ],
     })
@@ -214,6 +214,22 @@ const controller = {
     })
       .then((event) => {
         res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  delete: async (req, res) => {
+    const { eventId, userId } = req.params;
+    EventAllocationDB.destroy({
+      where: {
+        eventId: eventId,
+        userId: userId,
+      },
+    })
+      .then((event) => {
+        res.status(200).send(event.toString());
       })
       .catch((error) => {
         console.log(error);

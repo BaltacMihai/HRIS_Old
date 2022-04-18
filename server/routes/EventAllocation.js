@@ -18,5 +18,6 @@ router.post("/post", eventAllocationController.post);
 
 router.get("/get/:eventId", eventAllocationController.findEventsById);
 router.post("/post-username", eventAllocationController.postByUsername);
+router.delete("/delete/:eventId/:userId", eventAllocationController.delete);
 
 module.exports = router;
