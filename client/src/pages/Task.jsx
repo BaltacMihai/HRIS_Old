@@ -10,6 +10,9 @@ import useMembers from "../hooks/findMembersOfEvent";
 import submitNewMember from "../hooks/postEventAllocationUsername";
 import deleteEvent from "../hooks/deleteEventById";
 import deleteEventAllocation from "../hooks/deleteEventAllocation";
+import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import formatHourForUser from "../utils/dates/formatHourForUser";
+import formatDateForInput from "../utils/dates/formatDateForInput";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -138,6 +141,15 @@ function returnMeetingContent(taskData, members) {
             <div
               className="option"
               onClick={(e) => {
+                displayStatusModal("modifyTask", "flex");
+              }}
+            >
+              <span className="icon-pencil"></span>
+              <p>Modify Task</p>
+            </div>
+            <div
+              className="option"
+              onClick={(e) => {
                 displayStatusModal("seeMembers", "flex");
               }}
             >
@@ -166,12 +178,151 @@ function returnMeetingContent(taskData, members) {
         </div>
       </div>
 
+      {console.log(taskData)}
       {returnStatusModal(taskData.id, taskData.label)}
       {returnMembersModal(taskData.id, members)}
       {returnDeleteModal(taskData.id)}
+      {returnModifyTask(
+        taskData.id,
+        taskData.name,
+        taskData.description,
+        taskData.startingDate,
+        taskData.endingDate
+      )}
     </div>
   );
 }
+function returnModifyTask(
+  userId,
+  title,
+  description,
+  startingDate,
+  endingDate
+) {
+  let generatedStartingDate = {
+    date: formatDateForInput(startingDate),
+    hour: formatHourForUser(startingDate),
+  };
+  let generatedEndingDate = {
+    date: formatDateForInput(endingDate),
+    hour: formatHourForUser(endingDate),
+  };
+
+  return (
+    <div className="modal" id="modifyTask">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("modifyTask", "none");
+          }}
+        ></span>
+
+        <div className="title">Modify Task</div>
+        <div className="modal_label">
+          <label htmlFor="task_name">Name</label>
+          <input type="text" name="task_name" id="task_name" value={title} />
+        </div>
+        <div className="modal_label">
+          <label htmlFor="task_description">Description</label>
+          <textarea
+            name="task_description"
+            id="task_description"
+            cols="30"
+            rows="10"
+            value={description}
+          ></textarea>
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="task_starting_date">Starting Date</label>
+
+            <input
+              type="date"
+              name="task_starting_date"
+              id="task_starting_date"
+              value={generatedStartingDate.date}
+            />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_starting_hour">Starting Hour</label>
+
+            <input
+              type="time"
+              name="task_starting_hour"
+              id="task_starting_hour"
+              value={generatedStartingDate.hour}
+            />
+          </div>
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="task_ending_date">Ending Date</label>
+
+            <input
+              type="date"
+              name="task_ending_date"
+              id="task_ending_date"
+              value={generatedEndingDate.date}
+            />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_ending_hour">Ending Hour</label>
+
+            <input
+              type="time"
+              name="task_ending_hour"
+              id="task_ending_hour"
+              value={generatedEndingDate.hour}
+            />
+          </div>
+        </div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("modifyTask", "none");
+            }}
+          >
+            Cancel
+          </p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              let generateEvent = {
+                userId: userId,
+                name: document.getElementById("task_name").value,
+                description: document.getElementById("task_description").value,
+                label: document.getElementById("task_link").value,
+                projectId: document.getElementById("task_project").value,
+                startingDate:
+                  formatDateForDatabase(
+                    document.getElementById("task_starting_date").value
+                  ) +
+                  " " +
+                  document.getElementById("task_starting_hour").value,
+                endingDate:
+                  formatDateForDatabase(
+                    document.getElementById("task_ending_date").value
+                  ) +
+                  " " +
+                  document.getElementById("task_ending_hour").value,
+                type: "TASK",
+              };
+
+              console.log(generateEvent);
+            }}
+          >
+            Submit
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function returnStatusModal(projectId, defaultValue) {
   return (
     <div className="modal" id="changeStatus">
