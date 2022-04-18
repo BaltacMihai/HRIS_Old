@@ -106,7 +106,29 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
-
+  putEvent: async (req, res) => {
+    await EventDB.update(
+      {
+        name: req.body.name,
+        description: req.body.description,
+        startingDate: req.body.startingDate,
+        endingDate: req.body.endingDate,
+      },
+      {
+        where: {
+          id: req.body.id,
+          type: req.body.type,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   deleteEvent: async (req, res) => {
     const { eventId } = req.params;
     await EventAllocationDB.destroy({
