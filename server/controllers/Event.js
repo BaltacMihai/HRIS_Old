@@ -113,6 +113,7 @@ const controller = {
         description: req.body.description,
         startingDate: req.body.startingDate,
         endingDate: req.body.endingDate,
+        label: req.body.label,
       },
       {
         where: {

@@ -183,7 +183,7 @@ function returnMeetingContent(taskData, members) {
       {returnStatusModal(taskData.id, taskData.label)}
       {returnMembersModal(taskData.id, members)}
       {returnDeleteModal(taskData.id)}
-      {ReturnModifyTask(
+      {returnModifyTask(
         taskData.id,
         taskData.name,
         taskData.description,
@@ -193,7 +193,7 @@ function returnMeetingContent(taskData, members) {
     </div>
   );
 }
-function ReturnModifyTask(
+function returnModifyTask(
   eventId,
   title,
   description,
@@ -315,6 +315,7 @@ function ReturnModifyTask(
                   document.getElementById("task_ending_hour").value,
                 id: eventId,
                 type: "TASK",
+                label: "New",
               };
               putEvent(generateEvent);
               console.log(generateEvent);
