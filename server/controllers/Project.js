@@ -1,13 +1,15 @@
+const Sequelize = require("sequelize");
 const ProjectDB = require("../models").Project;
 const ProjectAllocationDB = require("./../models").ProjectAllocation;
 const UserDB = require("./../models").User;
+const DepartmentDB = require("./../models").Department;
 
 // VERY IMPORTANT: We can see the project only where there is at least one connection
 
 //#TODO: Find a way to skip the project that has the userId = id
 const controller = {
   findProjectsWhereUserIsntEnrolled: async (req, res) => {
-    const { Op } = require("@sequelize/core");
+    const { Op, Sequelize } = require("@sequelize/core");
     const { id } = req.params;
 
     console.log(id);
@@ -101,6 +103,38 @@ const controller = {
             });
           });
       })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  findProjectsDepartments: async (req, res) => {
+    const { projectId } = req.params;
+    await ProjectAllocationDB.findAll({
+      where: {
+        projectId: projectId,
+        type: "TEAM_LEAD",
+      },
+      include: [
+        {
+          model: UserDB,
+
+          attributes: ["name"],
+          include: [
+            {
+              model: DepartmentDB,
+
+              attributes: ["icon", "name"],
+            },
+          ],
+        },
+      ],
+      attributes: [],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+
       .catch((error) => {
         console.log(error);
         res.status(500).send({ message: "Server error" });

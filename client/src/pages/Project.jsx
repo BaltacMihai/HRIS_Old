@@ -89,10 +89,10 @@ function returnProjectStats(projectInfo) {
       <p className="card_description">{projectInfo.description}.</p>
       <div className="row">
         <p className="card_item">
-          Period: <strong>{projectInfo.period}</strong>
+          Project Manager : <strong> {projectInfo.projectManag}</strong>
         </p>
         <p className="card_item">
-          Project Manager: <strong>{projectInfo.projectManag}</strong>
+          Period : <strong> {projectInfo.period}</strong>
         </p>
       </div>
     </div>

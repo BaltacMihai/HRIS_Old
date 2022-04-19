@@ -8,5 +8,9 @@ router.get(
 );
 
 router.get("/:projectId", projectController.findProjects);
+router.get(
+  "/:projectId/departments",
+  projectController.findProjectsDepartments
+);
 
 module.exports = router;
