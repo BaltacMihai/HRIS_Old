@@ -1,0 +1,96 @@
+.project_page {
+  &_content {
+    margin: 2vh 1.75vw;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .task_title {
+      font-size: 35px;
+    }
+
+    .card,
+    .section {
+      display: flex;
+      justify-content: space-around;
+      flex-direction: column;
+    }
+    .card {
+      padding: 3vh 4vw;
+      background-color: $white;
+      border-radius: $radius-25;
+
+      &_title {
+        font-size: 35px;
+        margin-bottom: 1rem;
+        p {
+          width: fit-content;
+          padding: 0.5rem 2rem;
+          border-radius: $radius-10;
+        }
+      }
+
+      &_description {
+        font-size: 20px;
+        margin-bottom: 2rem;
+      }
+
+      .row {
+        font-size: 17.5px;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+
+    .section {
+      .title {
+        font-size: 30px;
+        padding: 3vh 4vw;
+      }
+
+      .row {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+
+        overflow: auto;
+        max-height: 65vh;
+
+        .department {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          height: 30vh;
+          width: 20vw;
+          margin-bottom: 3vh;
+
+          margin-left: 1.25vw;
+
+          background-color: $white;
+          border-radius: $radius-25;
+
+          &_logo {
+            $size: 100px;
+
+            width: $size;
+            height: $size;
+            object-fit: contain;
+          }
+
+          &_name {
+            font-size: 25px;
+            margin: 2vh 0;
+            font-weight: 900;
+          }
+
+          &_teamLead {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}

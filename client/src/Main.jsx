@@ -9,6 +9,7 @@ import Meetings from "./pages/Meetings";
 import Tasks from "./pages/Tasks";
 import Task from "./pages/Task";
 import Meeting from "./pages/Meeting";
+import Project from "./pages/Project";
 
 function Main() {
   const username = 1;
@@ -25,6 +26,10 @@ function Main() {
         <Route
           path="/meeting/:meetingId"
           element={<Meeting userId={username} />}
+        />
+        <Route
+          path="/project/:projectId"
+          element={<Project userId={username} />}
         />
       </Routes>
     </BrowserRouter>
