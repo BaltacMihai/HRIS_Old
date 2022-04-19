@@ -7,4 +7,6 @@ router.get(
   projectController.findProjectsWhereUserIsntEnrolled
 );
 
+router.get("/:projectId", projectController.findProjects);
+
 module.exports = router;

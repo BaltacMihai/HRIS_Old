@@ -37,6 +37,23 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  findProjects: async (req, res) => {
+    const { projectId } = req.params;
+
+    ProjectDB.findAll({
+      attributes: ["id", "color", "name", "startingDate", "endingDate"],
+      where: {
+        id: projectId,
+      },
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
