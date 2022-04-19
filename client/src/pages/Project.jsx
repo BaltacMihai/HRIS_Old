@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useProject from "../hooks/useProject";
+import useProjectDepartments from "../hooks/useProjectDepartments";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 
 function Project({ userId }) {
@@ -9,8 +10,11 @@ function Project({ userId }) {
   console.log(projectId);
 
   let rawProjectInfo = useProject(projectId);
-  console.log(rawProjectInfo);
+  let rawProjectDepartments = useProjectDepartments(projectId);
+  console.log(rawProjectDepartments);
+
   let projectInfo = null;
+  let departments = null;
 
   if (rawProjectInfo && projectInfo == null) {
     projectInfo = {
@@ -24,29 +28,15 @@ function Project({ userId }) {
       projectManag: rawProjectInfo.projectManag,
     };
   }
-
-  let departments = [
-    {
-      logo: "https://img.icons8.com/external-outline-juicy-fish/344/external-it-devops-outline-outline-juicy-fish.png",
-      name: "IT",
-      teamLead: "Baltac Mihai-Cristian",
-    },
-    {
-      logo: "https://img.icons8.com/external-sbts2018-outline-sbts2018/344/external-design-design-thinking2-sbts2018-outline-sbts2018-1.png",
-      name: "Design",
-      teamLead: "Baltac Mihai-Cristian",
-    },
-    {
-      logo: "https://img.icons8.com/external-justicon-lineal-justicon/344/external-marketing-marketing-and-growth-justicon-lineal-justicon.png",
-      name: "Marketing",
-      teamLead: "Baltac Mihai-Cristian",
-    },
-    {
-      logo: "",
-      name: "",
-      teamLead: "",
-    },
-  ];
+  if (rawProjectDepartments && departments == null) {
+    departments = rawProjectDepartments?.map((e) => {
+      return {
+        logo: e.User.Department.icon,
+        name: e.User.Department.name,
+        teamLead: e.User.name,
+      };
+    });
+  }
 
   useEffect(() => {
     if (projectInfo) {
@@ -55,7 +45,7 @@ function Project({ userId }) {
     }
   });
 
-  if (projectInfo)
+  if (projectInfo && departments)
     return (
       <div className="page project_page">
         <Navbar current="projects" />
