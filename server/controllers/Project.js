@@ -1,5 +1,6 @@
 const ProjectDB = require("../models").Project;
 const ProjectAllocationDB = require("./../models").ProjectAllocation;
+const UserDB = require("./../models").User;
 
 // VERY IMPORTANT: We can see the project only where there is at least one connection
 
@@ -40,14 +41,65 @@ const controller = {
   findProjects: async (req, res) => {
     const { projectId } = req.params;
 
-    ProjectDB.findAll({
-      attributes: ["id", "color", "name", "startingDate", "endingDate"],
+    ProjectDB.findOne({
+      attributes: [
+        "id",
+        "color",
+        "name",
+        "startingDate",
+        "endingDate",
+        "description",
+      ],
       where: {
         id: projectId,
       },
     })
-      .then((event) => {
-        res.status(200).send(event);
+      .then((project) => {
+        ProjectAllocationDB.findOne({
+          where: {
+            projectId: projectId,
+            type: "PROJECT_MANAGER",
+          },
+        })
+          .then((pjAllocation) => {
+            UserDB.findOne({
+              where: {
+                id: pjAllocation.userId,
+              },
+            })
+              .then((user) => {
+                res.status(200).send({
+                  name: project.name,
+                  description: project.description,
+                  color: project.color,
+                  startingDate: project.startingDate,
+                  endingDate: project.endingDate,
+                  projectManag: user.name,
+                });
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(200).send({
+                  name: project.name,
+                  description: project.description,
+                  color: project.color,
+                  startingDate: project.startingDate,
+                  endingDate: project.endingDate,
+                  projectManag: "None",
+                });
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(200).send({
+              name: project.name,
+              description: project.description,
+              color: project.color,
+              startingDate: project.startingDate,
+              endingDate: project.endingDate,
+              projectManag: "None",
+            });
+          });
       })
       .catch((error) => {
         console.log(error);

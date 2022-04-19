@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import useProject from "../hooks/useProject";
+import formatDateForUser from "../utils/dates/formatDateForUser";
 
 function Project({ userId }) {
   let { projectId } = useParams();
   console.log(projectId);
 
-  let projectInfo = {
-    title: "ING",
-    description:
-      " Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad sit dolorem suscipit non adipisci, eligendi consequuntur sunt et repellendus nobis doloremque ratione nesciunt! Quo, quis.",
-    color: "#ffa500",
-    period: "07.03.2022 - 21.04.2022",
-    projectManag: "Baltac Mihai-Cristian",
-  };
+  let rawProjectInfo = useProject(projectId);
+  console.log(rawProjectInfo);
+  let projectInfo = null;
+
+  if (rawProjectInfo && projectInfo == null) {
+    projectInfo = {
+      title: rawProjectInfo.name,
+      description: rawProjectInfo.description,
+      color: rawProjectInfo.color,
+      period:
+        formatDateForUser(rawProjectInfo.startingDate) +
+        " - " +
+        formatDateForUser(rawProjectInfo.endingDate),
+      projectManag: rawProjectInfo.projectManag,
+    };
+  }
+
   let departments = [
     {
       logo: "https://img.icons8.com/external-outline-juicy-fish/344/external-it-devops-outline-outline-juicy-fish.png",
@@ -44,12 +55,20 @@ function Project({ userId }) {
     }
   });
 
-  return (
-    <div className="page project_page">
-      <Navbar current="projects" />
-      {returnProjectPage(projectInfo, departments)}
-    </div>
-  );
+  if (projectInfo)
+    return (
+      <div className="page project_page">
+        <Navbar current="projects" />
+        {returnProjectPage(projectInfo, departments)}
+      </div>
+    );
+  else {
+    return (
+      <div className="page project_page">
+        <Navbar current="projects" />
+      </div>
+    );
+  }
 }
 
 function returnProjectPage(projectInfo, departments) {
