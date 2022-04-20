@@ -4,24 +4,54 @@ import TasksTable from "../components/TasksTable";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
+import { useParams } from "react-router-dom";
+import TasksTableDepPj from "../components/TaskTableDepPj";
 
 function Tasks({ userId }) {
+  let { projectId, departmentId } = useParams();
+  let tableDetails;
+  if (projectId && departmentId) {
+    tableDetails = {
+      type: "Project",
+      userId: userId,
+      projectId: projectId,
+      departmentId: departmentId,
+    };
+  } else {
+    tableDetails = {
+      type: "User",
+      userId: userId,
+    };
+  }
   return (
     <div className="page tasks">
       <Navbar current="tasks" />
-      {returnContent(userId)}
+      {returnContent(tableDetails)}
     </div>
   );
 }
 
-function returnContent(userId) {
-  return (
-    <div className="tasks_content">
-      {returnActions()}
-      <TasksTable id={userId} />
-      {returnAddTask(userId)}
-    </div>
-  );
+function returnContent(tableDetails) {
+  if (tableDetails.type == "User")
+    return (
+      <div className="tasks_content">
+        {returnActions()}
+        <TasksTable id={tableDetails.userId} />
+        {returnAddTask(tableDetails.userId)}
+      </div>
+    );
+  else if (tableDetails.type == "Project") {
+    return (
+      <div className="meetings_content">
+        {returnActions()}
+        <TasksTableDepPj
+          projectId={tableDetails.projectId}
+          departmentId={tableDetails.departmentId}
+        />
+        {returnAddTask(tableDetails.userId)}
+      </div>
+    );
+  }
 }
 function displayStatusModal(location, type) {
   let statusModal = document.getElementById(location);

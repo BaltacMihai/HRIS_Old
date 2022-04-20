@@ -40,6 +40,10 @@ function Main() {
           path="/meetings/:projectId/:departmentId"
           element={<Meetings userId={username} />}
         />
+        <Route
+          path="/tasks/:projectId/:departmentId"
+          element={<Tasks userId={username} />}
+        />
       </Routes>
     </BrowserRouter>
   );

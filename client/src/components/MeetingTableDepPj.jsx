@@ -6,7 +6,6 @@ import formatHourForUser from "../utils/dates/formatHourForUser";
 import useEventDepPj from "../hooks/useEventDepPj";
 
 function MeetingsTableDepPj({ projectId, departmentId }) {
-  let currentDate = new Date();
   let task = useEventDepPj(projectId, departmentId, "MEETING");
 
   console.log(task);
