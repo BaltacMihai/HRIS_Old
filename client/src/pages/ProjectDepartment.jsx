@@ -1,16 +1,58 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import useProject from "../hooks/useProject";
+import useProjectDepartment from "../hooks/useProjectDepartment";
 
 function ProjectDepartment() {
   let { projectId, departmentId } = useParams();
 
-  let departmentStats = {
-    project: "ING",
-    color: "#ffa500",
-    name: "IT",
-    teamLead: "Baltac Mihai-Cristian",
-  };
+  let rawDepartmentStats = useProjectDepartment(projectId, departmentId);
+  let rawProjectInfo = useProject(projectId);
+
+  console.log(rawProjectInfo, rawDepartmentStats);
+
+  let departmentStats = null;
+
+  if (rawProjectInfo && rawDepartmentStats && departmentStats == null) {
+    departmentStats = {
+      project: rawProjectInfo.name,
+      color: rawProjectInfo.color,
+      name: rawDepartmentStats[0].User.Department.name,
+      teamLead: rawDepartmentStats[0].User.name,
+    };
+  } else {
+    departmentStats = {
+      project: "ING",
+      color: "#ffa500",
+      name: "IT",
+      teamLead: "Baltac Mihai-Cristian",
+    };
+  }
+
+  let members = null;
+
+  if (rawDepartmentStats && members == null) {
+    members = rawDepartmentStats.map((member) => {
+      return {
+        photo: member.User.photo,
+        name: member.User.name,
+      };
+    });
+  } else {
+    members = [
+      {
+        photo:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg",
+        name: "Baltac Mihai-Cristian",
+      },
+      {
+        photo:
+          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg",
+        name: "Baltac Mihai-Cristian",
+      },
+    ];
+  }
 
   useEffect(() => {
     if (departmentStats) {
@@ -22,19 +64,19 @@ function ProjectDepartment() {
   return (
     <div className="page project_page department_page">
       <Navbar current="projects" />
-      {returnProjectPage(departmentStats)}
+      {returnProjectPage(departmentStats, members)}
     </div>
   );
 }
 
-function returnProjectPage(departmentStats) {
+function returnProjectPage(departmentStats, members) {
   return (
     <div className="project_page_content">
       {returnDepartmentStats(departmentStats)}
 
       <div className="row">
         {returnEvents()}
-        {returnMembers()}
+        {returnMembers(members)}
       </div>
     </div>
   );
@@ -88,29 +130,14 @@ function returnEvents() {
   );
 }
 
-function returnMembers(departments) {
+function returnMembers(members) {
   return (
     <div className="section">
       <p className="title">Members</p>
       <div className="column">
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
-        {returnMember()}
+        {members?.map((e) => {
+          return returnMember(e);
+        })}
       </div>
     </div>
   );
@@ -122,14 +149,13 @@ function returnMember(member) {
       <img
         className="member_card_photo"
         src={
-          //   member.photo
-          //     ? member.photo
-          //     :
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg"
+          member.photo
+            ? member.photo
+            : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg"
         }
       ></img>
 
-      <p className="member_card_name">Baltac Mihai-Cristian</p>
+      <p className="member_card_name">{member.name}</p>
     </div>
   );
 }

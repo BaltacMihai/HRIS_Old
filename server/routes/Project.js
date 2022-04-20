@@ -12,9 +12,5 @@ router.get(
   "/:projectId/departments",
   projectController.findProjectsDepartments
 );
-router.get(
-  "/:projectId/department/:departmentId",
-  projectController.findProjectDepartmentInfos
-);
 
 module.exports = router;

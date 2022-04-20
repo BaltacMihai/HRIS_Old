@@ -13,9 +13,8 @@
 
       .member_card {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        width: max-content;
+        min-width: 10vw;
 
         padding: 1.5vh 2vw;
         background-color: $white;

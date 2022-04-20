@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useProject from "../hooks/useProject";
 import useProjectDepartments from "../hooks/useProjectDepartments";
@@ -31,6 +31,7 @@ function Project({ userId }) {
   if (rawProjectDepartments && departments == null) {
     departments = rawProjectDepartments?.map((e) => {
       return {
+        id: e.User.Department.id,
         logo: e.User.Department.icon,
         name: e.User.Department.name,
         teamLead: e.User.name,
@@ -49,7 +50,7 @@ function Project({ userId }) {
     return (
       <div className="page project_page">
         <Navbar current="projects" />
-        {returnProjectPage(projectInfo, departments)}
+        {returnProjectPage(projectInfo, departments, projectId)}
       </div>
     );
   else {
@@ -61,11 +62,11 @@ function Project({ userId }) {
   }
 }
 
-function returnProjectPage(projectInfo, departments) {
+function returnProjectPage(projectInfo, departments, projectId) {
   return (
     <div className="project_page_content">
       {returnProjectStats(projectInfo)}
-      {returnDepartaments(departments)}
+      {returnDepartaments(departments, projectId)}
     </div>
   );
 }
@@ -89,30 +90,34 @@ function returnProjectStats(projectInfo) {
   );
 }
 
-function returnDepartaments(departments) {
+function returnDepartaments(departments, projectId) {
   return (
     <div className="section">
       <p className="title">Departments</p>
       <div className="row">
         {departments?.map((e) => {
-          return returnDepartment(e);
+          return returnDepartment(e, projectId);
         })}
       </div>
     </div>
   );
 }
 
-function returnDepartment(department) {
+function returnDepartment(department, projectId) {
+  let location = "/project/" + projectId + "/department/" + department.id;
+
   return (
-    <div className="department">
-      <img
-        src={department.logo}
-        alt={department.name + " department logo"}
-        className="department_logo"
-      />
-      <p className="department_name">{department.name}</p>
-      <div className="department_teamLead">{department.teamLead}</div>
-    </div>
+    <Link to={location}>
+      <div className="department">
+        <img
+          src={department.logo}
+          alt={department.name + " department logo"}
+          className="department_logo"
+        />
+        <p className="department_name">{department.name}</p>
+        <div className="department_teamLead">{department.teamLead}</div>
+      </div>
+    </Link>
   );
 }
 

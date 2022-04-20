@@ -1,5 +1,7 @@
 const ProjectAllocationDB = require("./../models").ProjectAllocation;
 const ProjectDB = require("../models").Project;
+const UserDB = require("./../models").User;
+const DepartmentDB = require("./../models").Department;
 
 const controller = {
   findUsersProjects: async (req, res) => {
@@ -27,6 +29,46 @@ const controller = {
       .then((event) => {
         res.status(200).send(event);
       })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  findDepartmentProject: async (req, res) => {
+    const { Op } = require("@sequelize/core");
+    const { projectId, departmentId } = req.params;
+
+    await ProjectAllocationDB.findAll({
+      where: {
+        projectId: projectId,
+        type: {
+          [Op.ne]: "PROJECT_MANAGER",
+        },
+      },
+      include: [
+        {
+          model: UserDB,
+
+          attributes: ["name", "photo"],
+          where: {
+            departmentId: departmentId,
+          },
+          include: [
+            {
+              model: DepartmentDB,
+
+              attributes: ["name"],
+            },
+          ],
+        },
+      ],
+      attributes: ["type"],
+      order: [["type", "DESC"]],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+
       .catch((error) => {
         console.log(error);
         res.status(500).send({ message: "Server error" });
