@@ -1,0 +1,43 @@
+.department_page.project_page {
+  .row {
+    display: flex;
+    justify-content: space-between;
+  }
+  .section {
+    justify-content: start;
+    .column {
+      max-height: 60vh;
+      overflow-y: auto;
+      margin: 1vh 1.75vw;
+      flex-direction: column;
+
+      .member_card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: max-content;
+
+        padding: 1.5vh 2vw;
+        background-color: $white;
+        border-radius: $radius-10;
+
+        margin: 1vh 0.5vw;
+
+        &_photo {
+          $size: 50px;
+
+          width: $size;
+          height: $size;
+          object-fit: cover;
+
+          border-radius: 100%;
+          margin-right: 1vw;
+        }
+      }
+    }
+
+    .row {
+      height: auto;
+    }
+  }
+}

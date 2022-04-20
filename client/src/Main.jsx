@@ -10,6 +10,7 @@ import Tasks from "./pages/Tasks";
 import Task from "./pages/Task";
 import Meeting from "./pages/Meeting";
 import Project from "./pages/Project";
+import ProjectDepartment from "./pages/ProjectDepartment";
 
 function Main() {
   const username = 1;
@@ -30,6 +31,10 @@ function Main() {
         <Route
           path="/project/:projectId"
           element={<Project userId={username} />}
+        />
+        <Route
+          path="/project/:projectId/department/:departmentId"
+          element={<ProjectDepartment userId={username} />}
         />
       </Routes>
     </BrowserRouter>
