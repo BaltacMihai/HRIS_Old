@@ -4,24 +4,55 @@ import Navbar from "../components/Navbar";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
+import { useParams } from "react-router-dom";
+import MeetingsTableDepPj from "../components/MeetingTableDepPj";
 
 function Meetings({ userId }) {
+  let { projectId, departmentId } = useParams();
+  let tableDetails;
+
+  if (projectId && departmentId) {
+    tableDetails = {
+      type: "Project",
+      userId: userId,
+      projectId: projectId,
+      departmentId: departmentId,
+    };
+  } else {
+    tableDetails = {
+      type: "User",
+      userId: userId,
+    };
+  }
   return (
     <div className="page meetings">
       <Navbar current="meetings" />
-      {returnContent(userId)}
+      {returnContent(tableDetails)}
     </div>
   );
 }
 
-function returnContent(userId) {
-  return (
-    <div className="meetings_content">
-      {returnActions()}
-      <MeetingsTable id={userId} />
-      {returnAddModal(userId)}
-    </div>
-  );
+function returnContent(tableDetails) {
+  if (tableDetails.type == "User")
+    return (
+      <div className="meetings_content">
+        {returnActions()}
+        <MeetingsTable id={tableDetails.userId} />
+        {returnAddModal(tableDetails.userId)}
+      </div>
+    );
+  else if (tableDetails.type == "Project") {
+    return (
+      <div className="meetings_content">
+        {returnActions()}
+        <MeetingsTableDepPj
+          projectId={tableDetails.projectId}
+          departmentId={tableDetails.departmentId}
+        />
+        {returnAddModal(tableDetails.userId)}
+      </div>
+    );
+  }
 }
 
 function returnActions() {

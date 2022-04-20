@@ -85,6 +85,30 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  getEventsOfSpecificDepartmentAndProject: async (req, res) => {
+    const { departmentId, projectId, type } = req.params;
+    const { Op } = require("@sequelize/core");
+
+    if (projectId < 0) {
+      res.status(400).send({ message: "Project doesn't exist" });
+    }
+    await EventDB.findAll({
+      where: {
+        projectId: projectId,
+        departmentId: departmentId,
+        type: type,
+      },
+      include: [{ model: ProjectDB, attributes: ["color", "name"] }],
+      attributes: ["type", "name", "startingDate", "endingDate", "label"],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 
   putEventLabel: async (req, res) => {
     await EventDB.update(

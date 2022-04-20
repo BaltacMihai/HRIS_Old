@@ -8,5 +8,9 @@ router.put("/put/label", eventController.putEventLabel);
 router.post("/post-and-allocate", eventController.postEventAndAllocateOnIt);
 router.delete("/delete/:eventId", eventController.deleteEvent);
 router.put("/put", eventController.putEvent);
+router.get(
+  "/department/:departmentId/project/:projectId/:type",
+  eventController.getEventsOfSpecificDepartmentAndProject
+);
 
 module.exports = router;

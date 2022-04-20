@@ -36,6 +36,10 @@ function Main() {
           path="/project/:projectId/department/:departmentId"
           element={<ProjectDepartment userId={username} />}
         />
+        <Route
+          path="/meetings/:projectId/:departmentId"
+          element={<Meetings userId={username} />}
+        />
       </Routes>
     </BrowserRouter>
   );
