@@ -140,6 +140,40 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  findProjectDepartmentInfos: async (req, res) => {
+    const { projectId, departmentId } = req.params;
+    await ProjectAllocationDB.findAll({
+      where: {
+        projectId: projectId,
+      },
+      include: [
+        {
+          model: UserDB,
+
+          attributes: ["name", "photo"],
+          where: {
+            departmentId: departmentId,
+          },
+          include: [
+            {
+              model: DepartmentDB,
+
+              attributes: ["name"],
+            },
+          ],
+        },
+      ],
+      attributes: [],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
