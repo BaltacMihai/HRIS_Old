@@ -331,6 +331,7 @@ function returnAddTask(tableDetails) {
                     " " +
                     document.getElementById("task_ending_hour").value,
                   type: "TASK",
+                  departmentId: tableDetails.departmentId,
                 };
 
                 console.log(generateEvent);

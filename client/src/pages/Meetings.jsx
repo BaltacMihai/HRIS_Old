@@ -322,6 +322,7 @@ function returnAddModal(tableDetails) {
                     " " +
                     document.getElementById("meeting_ending_hour").value,
                   type: "MEETING",
+                  departmentId: tableDetails.departmentId,
                 };
 
                 console.log(generateEvent);

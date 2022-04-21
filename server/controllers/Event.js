@@ -23,18 +23,23 @@ const controller = {
       });
   },
   postEventAndAllocateOnIt: async (req, res) => {
-    let departmentId = await UserDB.findOne({
-      where: {
-        id: req.body.userId,
-      },
-    })
-      .then((user) => {
-        return user.departmentId;
+    let departmentId = null;
+
+    if (req.body.departmentId) departmentId = req.body.departmentId;
+    else
+      departmentId = await UserDB.findOne({
+        where: {
+          id: req.body.userId,
+        },
       })
-      .catch((error) => {
-        console.log(error);
-        res.status(500).send({ message: "Server error" });
-      });
+        .then((user) => {
+          return user.departmentId;
+        })
+        .catch((error) => {
+          console.log(error);
+          res.status(500).send({ message: "Server error" });
+        });
+
     let eventId = await EventDB.create({
       name: req.body.name,
       projectId: req.body.projectId,
