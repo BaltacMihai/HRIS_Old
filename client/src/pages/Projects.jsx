@@ -3,7 +3,10 @@ import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
+import postProject from "../hooks/postProject";
+import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
+import displayModal from "../utils/displayModal";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -12,7 +15,7 @@ function Projects({ userId }) {
   return (
     <div className="page projects">
       <Navbar current={"projects"} />
-      {returnContent(myProjects, otherProjects)}
+      {returnContent(myProjects, otherProjects, userId)}
     </div>
   );
 }
@@ -66,11 +69,12 @@ function GetOtherProjects(userId) {
   }
 }
 
-function returnContent(myProjects, otherProjects) {
+function returnContent(myProjects, otherProjects, userId) {
   return (
     <div className="project_content">
       {/* {returnActions()} */}
       {returnProjectsContent(myProjects, otherProjects)}
+      {returnAddProject(userId)}
     </div>
   );
 }
@@ -92,7 +96,15 @@ function returnProjectsContent(myProjects, otherProjects) {
   if (myProjects && otherProjects)
     return (
       <div className="project_content_current">
-        <h2>Your Projects</h2>
+        <div className="header">
+          <h2>Your Projects</h2>
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              displayStatusModal("addProject", "flex");
+            }}
+          ></span>
+        </div>
         <div className="project_content_current_projects">
           {mapMyProjects(myProjects)}
         </div>
@@ -147,5 +159,116 @@ function ProjectItem({ name, role, color, id, startingDate, endingDate }) {
       </div>
     </Link>
   );
+}
+
+function returnAddProject(userId) {
+  return (
+    <div className="modal" id="addProject">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("addProject", "none");
+          }}
+        ></span>
+
+        <div className="title">Add Project</div>
+        <div className="modal_label">
+          <label htmlFor="task_name">Name</label>
+          <input type="text" name="task_name" id="task_name" />
+        </div>
+        <div className="modal_label">
+          <label htmlFor="task_description">Description</label>
+          <textarea
+            name="task_description"
+            id="task_description"
+            cols="30"
+            rows="10"
+          ></textarea>
+        </div>
+        <div className="modal_label">
+          <label htmlFor="project_color">Color</label>
+          <input type="color" name="project_color" id="project_color" />
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="task_starting_date">Starting Date</label>
+
+            <input
+              type="date"
+              name="task_starting_date"
+              id="task_starting_date"
+            />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_starting_hour">Starting Hour</label>
+
+            <input
+              type="time"
+              name="task_starting_hour"
+              id="task_starting_hour"
+            />
+          </div>
+        </div>
+
+        <div className=" fieldset">
+          <div className="modal_label">
+            <label htmlFor="task_ending_date">Ending Date</label>
+
+            <input type="date" name="task_ending_date" id="task_ending_date" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_ending_hour">Ending Hour</label>
+
+            <input type="time" name="task_ending_hour" id="task_ending_hour" />
+          </div>
+        </div>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("addProject", "none");
+            }}
+          >
+            Cancel
+          </p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              let generateEvent = {
+                userId: userId,
+                name: document.getElementById("task_name").value,
+                description: document.getElementById("task_description").value,
+                color: document.getElementById("project_color").value,
+
+                startingDate:
+                  formatDateForDatabase(
+                    document.getElementById("task_starting_date").value
+                  ) +
+                  " " +
+                  document.getElementById("task_starting_hour").value,
+                endingDate:
+                  formatDateForDatabase(
+                    document.getElementById("task_ending_date").value
+                  ) +
+                  " " +
+                  document.getElementById("task_ending_hour").value,
+              };
+              postProject(generateEvent);
+              console.log(generateEvent);
+            }}
+          >
+            Submit
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
+
+  statusModal.style.display = type;
 }
 export default Projects;

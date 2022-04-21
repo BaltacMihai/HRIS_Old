@@ -170,6 +170,33 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  postProject: async (req, res) => {
+    ProjectDB.create({
+      name: req.body.name,
+      description: req.body.description,
+      color: req.body.color,
+      startingDate: req.body.startingDate,
+      endingDate: req.body.endingDate,
+    })
+      .then((project) => {
+        ProjectAllocationDB.create({
+          projectId: project.id,
+          userId: req.body.userId,
+          type: "CEO",
+        })
+          .then((pjAllocation) => {
+            res.status(200).send(pjAllocation);
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Server error" });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
