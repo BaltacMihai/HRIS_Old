@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
@@ -133,8 +134,10 @@ function ProjectItem({ name, role, color, id, startingDate, endingDate }) {
     let projectColor = document.getElementById(name + "-" + id);
     projectColor.style.backgroundColor = color;
   });
+  let location = "/project/" + id;
+
   return (
-    <div className="project_item">
+    <Link to={location} className="project_item">
       <div className="project_item_color" id={name + "-" + id}></div>
       <p className="project_item_name">{name}</p>
       <p className="project_item_role">Role: {role}</p>
@@ -142,7 +145,7 @@ function ProjectItem({ name, role, color, id, startingDate, endingDate }) {
         <div className="project_item_dates_date">{startingDate}</div>
         <div className="project_item_dates_date">{endingDate}</div>
       </div>
-    </div>
+    </Link>
   );
 }
 export default Projects;
