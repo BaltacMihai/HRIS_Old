@@ -197,6 +197,29 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  putProject: async (req, res) => {
+    ProjectDB.update(
+      {
+        name: req.body.name,
+        description: req.body.description,
+        color: req.body.color,
+        startingDate: req.body.startingDate,
+        endingDate: req.body.endingDate,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((project) => {
+        res.status(200).send(project);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

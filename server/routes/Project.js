@@ -14,4 +14,5 @@ router.get(
   projectController.findProjectsDepartments
 );
 router.post("/post", projectController.postProject);
+router.put("/put", projectController.putProject);
 module.exports = router;
