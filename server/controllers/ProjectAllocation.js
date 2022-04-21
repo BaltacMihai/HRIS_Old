@@ -74,6 +74,33 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+
+  postByUsername: async (req, res) => {
+    let userId = await UserDB.findOne({
+      where: {
+        username: req.body.username,
+      },
+    })
+      .then((user) => {
+        return user.id;
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+    ProjectAllocationDB.create({
+      userId: userId,
+      projectId: req.body.projectId,
+      type: req.body.type,
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

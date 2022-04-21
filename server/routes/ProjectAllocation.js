@@ -8,5 +8,6 @@ router.get(
   "/:projectId/department/:departmentId",
   projectAllocationController.findDepartmentProject
 );
+router.post("/post/username", projectAllocationController.postByUsername);
 
 module.exports = router;

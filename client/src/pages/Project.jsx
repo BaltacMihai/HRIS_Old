@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartments from "../hooks/useProjectDepartments";
 import formatDateForUser from "../utils/dates/formatDateForUser";
@@ -67,24 +68,105 @@ function returnProjectPage(projectInfo, departments, projectId) {
     <div className="project_page_content">
       {returnProjectStats(projectInfo)}
       {returnDepartaments(departments, projectId)}
+      {returnMembersModal(projectId)}
     </div>
   );
 }
 
 function returnProjectStats(projectInfo) {
-  return (
-    <div className="card">
-      <div className="card_title">
-        <p id="title">{projectInfo.title}</p>
+  console.log(projectInfo);
+  if (projectInfo.projectManag != "None")
+    return (
+      <div className="card">
+        <div className="card_title">
+          <p id="title">{projectInfo.title}</p>
+        </div>
+        <p className="card_description">{projectInfo.description}.</p>
+        <div className="row">
+          <p className="card_item">
+            Project Manager : <strong> {projectInfo.projectManag}</strong>
+          </p>
+          <p className="card_item">
+            Period : <strong> {projectInfo.period}</strong>
+          </p>
+        </div>
       </div>
-      <p className="card_description">{projectInfo.description}.</p>
-      <div className="row">
-        <p className="card_item">
-          Project Manager : <strong> {projectInfo.projectManag}</strong>
-        </p>
-        <p className="card_item">
-          Period : <strong> {projectInfo.period}</strong>
-        </p>
+    );
+  else {
+    return (
+      <div className="card">
+        <div className="card_title">
+          <p id="title">{projectInfo.title}</p>
+        </div>
+        <p className="card_description">{projectInfo.description}.</p>
+        <div className="row">
+          <p className="card_item">
+            <div
+              className="button"
+              onClick={(e) => {
+                displayStatusModal("addProjectManager", "flex");
+              }}
+            >
+              <span className="icon-plus icon"></span>
+              <p>Add Project Manag</p>
+            </div>
+          </p>
+          <p className="card_item">
+            Period : <strong> {projectInfo.period}</strong>
+          </p>
+        </div>
+      </div>
+    );
+  }
+}
+
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
+
+  statusModal.style.display = type;
+}
+
+function returnMembersModal(projectId) {
+  return (
+    <div className="modal" id="addProjectManager">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("addProjectManager", "none");
+          }}
+        ></span>
+        <div className="title">Add Project Manager</div>
+        <div className="modal_label modal_label-icon">
+          <input
+            type="text"
+            name="add_memeber"
+            id="add_memeber"
+            placeholder="Write username"
+          />
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              let body = {
+                username: document.getElementById("add_memeber").value,
+                projectId: projectId,
+                type: "PROJECT_MANAGER",
+              };
+              postProjectAllocationByUsername(body);
+            }}
+          ></span>
+        </div>
+        <div className="members"></div>
+        <div className="modal_actions modal_actions-one">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("addProjectManager", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
       </div>
     </div>
   );
