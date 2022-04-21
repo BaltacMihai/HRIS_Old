@@ -6,10 +6,23 @@ import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import TasksTableDepPj from "../components/TaskTableDepPj";
+import useUsersProjects from "../hooks/findUsersProjects";
 
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
+  let projects = null;
+  let rawProjects = useUsersProjects(userId);
+
+  if (rawProjects && projects == null) {
+    projects = rawProjects.map((e) => {
+      return {
+        id: e.Project.id,
+        name: e.Project.name,
+      };
+    });
+  }
+
   if (projectId && departmentId) {
     tableDetails = {
       type: "Project",
@@ -21,6 +34,7 @@ function Tasks({ userId }) {
     tableDetails = {
       type: "User",
       userId: userId,
+      projects: projects,
     };
   }
   return (
@@ -37,7 +51,7 @@ function returnContent(tableDetails) {
       <div className="tasks_content">
         {returnActions()}
         <TasksTable id={tableDetails.userId} />
-        {returnAddTask(tableDetails.userId)}
+        {returnAddTask(tableDetails)}
       </div>
     );
   else if (tableDetails.type == "Project") {
@@ -48,7 +62,7 @@ function returnContent(tableDetails) {
           projectId={tableDetails.projectId}
           departmentId={tableDetails.departmentId}
         />
-        {returnAddTask(tableDetails.userId)}
+        {returnAddTask(tableDetails)}
       </div>
     );
   }
@@ -80,124 +94,255 @@ function returnActions() {
   );
 }
 
-function returnAddTask(userId) {
-  return (
-    <div className="modal" id="addTask">
-      <div className="modal_content">
-        <span
-          className="icon-cross close"
-          onClick={(e) => {
-            displayStatusModal("addTask", "none");
-          }}
-        ></span>
-
-        <div className="title">Add Task</div>
-        <div className="modal_label">
-          <label htmlFor="task_name">Name</label>
-          <input type="text" name="task_name" id="task_name" />
-        </div>
-        <div className="modal_label">
-          <label htmlFor="task_description">Description</label>
-          <textarea
-            name="task_description"
-            id="task_description"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-        <div className="modal_label">
-          <label htmlFor="task_link">Label</label>
-          <select name="task_link" id="task_link">
-            <option value="New">New</option>
-            <option value="Doing">Doing</option>
-            <option value="Done">Done</option>
-            <option value="Closed">Closed</option>
-          </select>
-        </div>
-        <div className="modal_label">
-          <label htmlFor="task_project">Project</label>
-          <select name="task_project" id="task_project">
-            <option value="2">Dare To Speak</option>
-            <option value="3">Academia Sperantei</option>
-          </select>
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="task_starting_date">Starting Date</label>
-
-            <input
-              type="date"
-              name="task_starting_date"
-              id="task_starting_date"
-            />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="task_starting_hour">Starting Hour</label>
-
-            <input
-              type="time"
-              name="task_starting_hour"
-              id="task_starting_hour"
-            />
-          </div>
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="task_ending_date">Ending Date</label>
-
-            <input type="date" name="task_ending_date" id="task_ending_date" />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="task_ending_hour">Ending Hour</label>
-
-            <input type="time" name="task_ending_hour" id="task_ending_hour" />
-          </div>
-        </div>
-        <div className="modal_actions">
-          <p
-            className="cancel"
+function returnAddTask(tableDetails) {
+  if (tableDetails.type == "User")
+    return (
+      <div className="modal" id="addTask">
+        <div className="modal_content">
+          <span
+            className="icon-cross close"
             onClick={(e) => {
               displayStatusModal("addTask", "none");
             }}
-          >
-            Cancel
-          </p>
-          <p
-            className="accept"
-            onClick={(e) => {
-              let generateEvent = {
-                userId: userId,
-                name: document.getElementById("task_name").value,
-                description: document.getElementById("task_description").value,
-                label: document.getElementById("task_link").value,
-                projectId: document.getElementById("task_project").value,
-                startingDate:
-                  formatDateForDatabase(
-                    document.getElementById("task_starting_date").value
-                  ) +
-                  " " +
-                  document.getElementById("task_starting_hour").value,
-                endingDate:
-                  formatDateForDatabase(
-                    document.getElementById("task_ending_date").value
-                  ) +
-                  " " +
-                  document.getElementById("task_ending_hour").value,
-                type: "TASK",
-              };
+          ></span>
 
-              console.log(generateEvent);
-              submitNewMeeting(generateEvent);
-            }}
-          >
-            Submit
-          </p>
+          <div className="title">Add Task</div>
+          <div className="modal_label">
+            <label htmlFor="task_name">Name</label>
+            <input type="text" name="task_name" id="task_name" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_description">Description</label>
+            <textarea
+              name="task_description"
+              id="task_description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_link">Label</label>
+            <select name="task_link" id="task_link">
+              <option value="New">New</option>
+              <option value="Doing">Doing</option>
+              <option value="Done">Done</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_project">Project</label>
+            <select name="task_project" id="task_project">
+              {tableDetails.projects?.map((e) => {
+                return <option value={e.id}>{e.name}</option>;
+              })}
+            </select>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_starting_date">Starting Date</label>
+
+              <input
+                type="date"
+                name="task_starting_date"
+                id="task_starting_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_starting_hour">Starting Hour</label>
+
+              <input
+                type="time"
+                name="task_starting_hour"
+                id="task_starting_hour"
+              />
+            </div>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_ending_date">Ending Date</label>
+
+              <input
+                type="date"
+                name="task_ending_date"
+                id="task_ending_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_ending_hour">Ending Hour</label>
+
+              <input
+                type="time"
+                name="task_ending_hour"
+                id="task_ending_hour"
+              />
+            </div>
+          </div>
+          <div className="modal_actions">
+            <p
+              className="cancel"
+              onClick={(e) => {
+                displayStatusModal("addTask", "none");
+              }}
+            >
+              Cancel
+            </p>
+            <p
+              className="accept"
+              onClick={(e) => {
+                let generateEvent = {
+                  userId: tableDetails.userId,
+                  name: document.getElementById("task_name").value,
+                  description:
+                    document.getElementById("task_description").value,
+                  label: document.getElementById("task_link").value,
+                  projectId: document.getElementById("task_project").value,
+                  startingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_starting_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_starting_hour").value,
+                  endingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_ending_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_ending_hour").value,
+                  type: "TASK",
+                };
+
+                console.log(generateEvent);
+                submitNewMeeting(generateEvent);
+              }}
+            >
+              Submit
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else if (tableDetails.type == "Project")
+    return (
+      <div className="modal" id="addTask">
+        <div className="modal_content">
+          <span
+            className="icon-cross close"
+            onClick={(e) => {
+              displayStatusModal("addTask", "none");
+            }}
+          ></span>
+
+          <div className="title">Add Task</div>
+          <div className="modal_label">
+            <label htmlFor="task_name">Name</label>
+            <input type="text" name="task_name" id="task_name" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_description">Description</label>
+            <textarea
+              name="task_description"
+              id="task_description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_link">Label</label>
+            <select name="task_link" id="task_link">
+              <option value="New">New</option>
+              <option value="Doing">Doing</option>
+              <option value="Done">Done</option>
+              <option value="Closed">Closed</option>
+            </select>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_starting_date">Starting Date</label>
+
+              <input
+                type="date"
+                name="task_starting_date"
+                id="task_starting_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_starting_hour">Starting Hour</label>
+
+              <input
+                type="time"
+                name="task_starting_hour"
+                id="task_starting_hour"
+              />
+            </div>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_ending_date">Ending Date</label>
+
+              <input
+                type="date"
+                name="task_ending_date"
+                id="task_ending_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_ending_hour">Ending Hour</label>
+
+              <input
+                type="time"
+                name="task_ending_hour"
+                id="task_ending_hour"
+              />
+            </div>
+          </div>
+          <div className="modal_actions">
+            <p
+              className="cancel"
+              onClick={(e) => {
+                displayStatusModal("addTask", "none");
+              }}
+            >
+              Cancel
+            </p>
+            <p
+              className="accept"
+              onClick={(e) => {
+                let generateEvent = {
+                  userId: tableDetails.userId,
+                  name: document.getElementById("task_name").value,
+                  description:
+                    document.getElementById("task_description").value,
+                  label: document.getElementById("task_link").value,
+                  projectId: tableDetails.projectId,
+                  startingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_starting_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_starting_hour").value,
+                  endingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_ending_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_ending_hour").value,
+                  type: "TASK",
+                };
+
+                console.log(generateEvent);
+                submitNewMeeting(generateEvent);
+              }}
+            >
+              Submit
+            </p>
+          </div>
+        </div>
+      </div>
+    );
 }
 
 export default Tasks;
