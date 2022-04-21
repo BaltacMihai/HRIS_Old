@@ -4,6 +4,7 @@ import generateMonthDates from "../utils/dates/generateMonthDates";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
+import { Link } from "react-router-dom";
 
 function MeetingsTable({ id }) {
   let currentDate = new Date();
@@ -16,7 +17,7 @@ function MeetingsTable({ id }) {
 
   if (task && tasks == null) {
     tasks = task.map((e) => {
-      let date = new Date(e.Event.endingDate);
+      let date = new Date(e.Event.startingDate);
 
       return {
         id: e.eventId,
@@ -48,7 +49,6 @@ function returnTableHeader() {
       <p className="meeting_table_header_item">Meeting Subject</p>
       <p className="meeting_table_header_item">Day</p>
       <p className="meeting_table_header_item">Hour</p>
-      <p className="meeting_table_header_item">Actions</p>
     </div>
   );
 }
@@ -78,22 +78,22 @@ function Entity({ project, name, day, hour, id, color }) {
     let projectColor = document.getElementById(name + "-" + id);
     projectColor.style.backgroundColor = color;
   });
+  let location = "/meeting/" + id;
   return (
-    <div className="meeting_table_content_entity">
-      <p className="meeting_table_content_entity_info meeting_table_content_entity_info-project">
-        <span
-          className="meeting_table_content_entity_info-project_color"
-          id={name + "-" + id}
-        ></span>
-        {project}
-      </p>
-      <p className="meeting_table_content_entity_info">{name}</p>
-      <p className="meeting_table_content_entity_info">{day}</p>
-      <p className="meeting_table_content_entity_info">{hour}</p>
-      <p className="meeting_table_content_entity_info meeting_table_content_entity_info-actions">
-        ...
-      </p>
-    </div>
+    <Link to={location}>
+      <div className="meeting_table_content_entity">
+        <p className="meeting_table_content_entity_info meeting_table_content_entity_info-project">
+          <span
+            className="meeting_table_content_entity_info-project_color"
+            id={name + "-" + id}
+          ></span>
+          {project}
+        </p>
+        <p className="meeting_table_content_entity_info">{name}</p>
+        <p className="meeting_table_content_entity_info">{day}</p>
+        <p className="meeting_table_content_entity_info">{hour}</p>
+      </div>
+    </Link>
   );
 }
 

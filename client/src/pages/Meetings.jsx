@@ -6,10 +6,23 @@ import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import MeetingsTableDepPj from "../components/MeetingTableDepPj";
+import useUsersProjects from "../hooks/findUsersProjects";
 
 function Meetings({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
+
+  let projects = null;
+  let rawProjects = useUsersProjects(userId);
+
+  if (rawProjects && projects == null) {
+    projects = rawProjects.map((e) => {
+      return {
+        id: e.Project.id,
+        name: e.Project.name,
+      };
+    });
+  }
 
   if (projectId && departmentId) {
     tableDetails = {
@@ -22,6 +35,7 @@ function Meetings({ userId }) {
     tableDetails = {
       type: "User",
       userId: userId,
+      projects: projects,
     };
   }
   return (
@@ -38,7 +52,7 @@ function returnContent(tableDetails) {
       <div className="meetings_content">
         {returnActions()}
         <MeetingsTable id={tableDetails.userId} />
-        {returnAddModal(tableDetails.userId)}
+        {returnAddModal(tableDetails)}
       </div>
     );
   else if (tableDetails.type == "Project") {
@@ -49,7 +63,7 @@ function returnContent(tableDetails) {
           projectId={tableDetails.projectId}
           departmentId={tableDetails.departmentId}
         />
-        {returnAddModal(tableDetails.userId)}
+        {returnAddModal(tableDetails)}
       </div>
     );
   }
@@ -81,129 +95,246 @@ function displayStatusModal(location, type) {
 
   statusModal.style.display = type;
 }
-function returnAddModal(userId) {
-  return (
-    <div className="modal" id="addMeeting">
-      <div className="modal_content">
-        <span
-          className="icon-cross close"
-          onClick={(e) => {
-            displayStatusModal("addMeeting", "none");
-          }}
-        ></span>
-
-        <div className="title">Add Meeting</div>
-        <div className="modal_label">
-          <label htmlFor="meeting_name">Name</label>
-          <input type="text" name="meeting_name" id="meeting_name" />
-        </div>
-        <div className="modal_label">
-          <label htmlFor="meeting_description">Description</label>
-          <textarea
-            name="meeting_description"
-            id="meeting_description"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-        <div className="modal_label">
-          <label htmlFor="meeting_link">Link</label>
-          <input type="text" name="meeting_link" id="meeting_link" />
-        </div>
-        <div className="modal_label">
-          <label htmlFor="meeting_project">Project</label>
-          <select name="meeting_project" id="meeting_project">
-            <option value="2">ING</option>
-            <option value="3">Vodafone</option>
-            <option value="4">JTI</option>
-          </select>
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="meeting_starting_date">Starting Date</label>
-
-            <input
-              type="date"
-              name="meeting_starting_date"
-              id="meeting_starting_date"
-            />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="meeting_starting_hour">Starting Hour</label>
-
-            <input
-              type="time"
-              name="meeting_starting_hour"
-              id="meeting_starting_hour"
-            />
-          </div>
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="meeting_ending_date">Ending Date</label>
-
-            <input
-              type="date"
-              name="meeting_ending_date"
-              id="meeting_ending_date"
-            />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="meeting_ending_hour">Ending Hour</label>
-
-            <input
-              type="time"
-              name="meeting_ending_hour"
-              id="meeting_ending_hour"
-            />
-          </div>
-        </div>
-        <div className="modal_actions">
-          <p
-            className="cancel"
+function returnAddModal(tableDetails) {
+  if (tableDetails.type == "User")
+    return (
+      <div className="modal" id="addMeeting">
+        <div className="modal_content">
+          <span
+            className="icon-cross close"
             onClick={(e) => {
               displayStatusModal("addMeeting", "none");
             }}
-          >
-            Cancel
-          </p>
-          <p
-            className="accept"
-            onClick={(e) => {
-              let generateEvent = {
-                userId: userId,
-                name: document.getElementById("meeting_name").value,
-                description: document.getElementById("meeting_description")
-                  .value,
-                label: document.getElementById("meeting_link").value,
-                projectId: document.getElementById("meeting_project").value,
-                startingDate:
-                  formatDateForDatabase(
-                    document.getElementById("meeting_starting_date").value
-                  ) +
-                  " " +
-                  document.getElementById("meeting_starting_hour").value,
-                endingDate:
-                  formatDateForDatabase(
-                    document.getElementById("meeting_ending_date").value
-                  ) +
-                  " " +
-                  document.getElementById("meeting_ending_hour").value,
-                type: "MEETING",
-              };
+          ></span>
 
-              console.log(generateEvent);
-              submitNewMeeting(generateEvent);
-            }}
-          >
-            Submit
-          </p>
+          <div className="title">Add Meeting</div>
+          <div className="modal_label">
+            <label htmlFor="meeting_name">Name</label>
+            <input type="text" name="meeting_name" id="meeting_name" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_description">Description</label>
+            <textarea
+              name="meeting_description"
+              id="meeting_description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_link">Link</label>
+            <input type="text" name="meeting_link" id="meeting_link" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_project">Project</label>
+            <select name="meeting_project" id="meeting_project">
+              {tableDetails.projects?.map((e) => {
+                return <option value={e.id}>{e.name}</option>;
+              })}
+            </select>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="meeting_starting_date">Starting Date</label>
+
+              <input
+                type="date"
+                name="meeting_starting_date"
+                id="meeting_starting_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="meeting_starting_hour">Starting Hour</label>
+
+              <input
+                type="time"
+                name="meeting_starting_hour"
+                id="meeting_starting_hour"
+              />
+            </div>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="meeting_ending_date">Ending Date</label>
+
+              <input
+                type="date"
+                name="meeting_ending_date"
+                id="meeting_ending_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="meeting_ending_hour">Ending Hour</label>
+
+              <input
+                type="time"
+                name="meeting_ending_hour"
+                id="meeting_ending_hour"
+              />
+            </div>
+          </div>
+          <div className="modal_actions">
+            <p
+              className="cancel"
+              onClick={(e) => {
+                displayStatusModal("addMeeting", "none");
+              }}
+            >
+              Cancel
+            </p>
+            <p
+              className="accept"
+              onClick={(e) => {
+                let generateEvent = {
+                  userId: tableDetails.userId,
+                  name: document.getElementById("meeting_name").value,
+                  description: document.getElementById("meeting_description")
+                    .value,
+                  label: document.getElementById("meeting_link").value,
+                  projectId: document.getElementById("meeting_project").value,
+                  startingDate:
+                    formatDateForDatabase(
+                      document.getElementById("meeting_starting_date").value
+                    ) +
+                    " " +
+                    document.getElementById("meeting_starting_hour").value,
+                  endingDate:
+                    formatDateForDatabase(
+                      document.getElementById("meeting_ending_date").value
+                    ) +
+                    " " +
+                    document.getElementById("meeting_ending_hour").value,
+                  type: "MEETING",
+                };
+
+                console.log(generateEvent);
+                submitNewMeeting(generateEvent);
+              }}
+            >
+              Submit
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  else if (tableDetails.type == "Project") {
+    return (
+      <div className="modal" id="addMeeting">
+        <div className="modal_content">
+          <span
+            className="icon-cross close"
+            onClick={(e) => {
+              displayStatusModal("addMeeting", "none");
+            }}
+          ></span>
+
+          <div className="title">Add Meeting</div>
+          <div className="modal_label">
+            <label htmlFor="meeting_name">Name</label>
+            <input type="text" name="meeting_name" id="meeting_name" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_description">Description</label>
+            <textarea
+              name="meeting_description"
+              id="meeting_description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="meeting_link">Link</label>
+            <input type="text" name="meeting_link" id="meeting_link" />
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="meeting_starting_date">Starting Date</label>
+
+              <input
+                type="date"
+                name="meeting_starting_date"
+                id="meeting_starting_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="meeting_starting_hour">Starting Hour</label>
+
+              <input
+                type="time"
+                name="meeting_starting_hour"
+                id="meeting_starting_hour"
+              />
+            </div>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="meeting_ending_date">Ending Date</label>
+
+              <input
+                type="date"
+                name="meeting_ending_date"
+                id="meeting_ending_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="meeting_ending_hour">Ending Hour</label>
+
+              <input
+                type="time"
+                name="meeting_ending_hour"
+                id="meeting_ending_hour"
+              />
+            </div>
+          </div>
+          <div className="modal_actions">
+            <p
+              className="cancel"
+              onClick={(e) => {
+                displayStatusModal("addMeeting", "none");
+              }}
+            >
+              Cancel
+            </p>
+            <p
+              className="accept"
+              onClick={(e) => {
+                let generateEvent = {
+                  userId: tableDetails.userId,
+                  name: document.getElementById("meeting_name").value,
+                  description: document.getElementById("meeting_description")
+                    .value,
+                  label: document.getElementById("meeting_link").value,
+                  projectId: tableDetails.projectId,
+                  startingDate:
+                    formatDateForDatabase(
+                      document.getElementById("meeting_starting_date").value
+                    ) +
+                    " " +
+                    document.getElementById("meeting_starting_hour").value,
+                  endingDate:
+                    formatDateForDatabase(
+                      document.getElementById("meeting_ending_date").value
+                    ) +
+                    " " +
+                    document.getElementById("meeting_ending_hour").value,
+                  type: "MEETING",
+                };
+
+                console.log(generateEvent);
+                submitNewMeeting(generateEvent);
+              }}
+            >
+              Submit
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Meetings;
