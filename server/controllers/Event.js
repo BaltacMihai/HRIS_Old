@@ -99,7 +99,7 @@ const controller = {
         type: type,
       },
       include: [{ model: ProjectDB, attributes: ["color", "name"] }],
-      attributes: ["type", "name", "startingDate", "endingDate", "label"],
+      attributes: ["type", "name", "startingDate", "endingDate", "label", "id"],
     })
       .then((event) => {
         res.status(200).send(event);

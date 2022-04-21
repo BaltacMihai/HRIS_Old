@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
 import useEventDepPj from "../hooks/useEventDepPj";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
@@ -7,7 +8,7 @@ import generateMonthDates from "../utils/dates/generateMonthDates";
 
 function TasksTableDepPj({ projectId, departmentId }) {
   let task = useEventDepPj(projectId, departmentId, "TASK");
-
+  console.log(task);
   let tasks = null;
 
   if (task && tasks == null) {
@@ -16,7 +17,7 @@ function TasksTableDepPj({ projectId, departmentId }) {
       let startingDate = new Date(e.startingDate);
 
       return {
-        id: e.eventId,
+        id: e.id,
         name: e.name,
         project: e.Project.name,
         color: e.Project.color,
@@ -47,7 +48,6 @@ function returnTableHeader() {
       <p className="task_table_header_item">Progress</p>
       <p className="task_table_header_item">Start task</p>
       <p className="task_table_header_item">Deadline</p>
-      <p className="task_table_header_item">Actions</p>
     </div>
   );
 }
@@ -78,24 +78,25 @@ function Entity({ project, name, status, beggining, ending, color, id }) {
     let projectColor = document.getElementById(name + "-" + id);
     projectColor.style.backgroundColor = color;
   });
+  let location = "/task/" + id;
+
   return (
-    <div className="task_table_content_entity">
-      <p className="task_table_content_entity_info">
-        <p
-          className="task_table_content_entity_info-project"
-          id={name + "-" + id}
-        >
-          {project}
+    <Link to={location}>
+      <div className="task_table_content_entity">
+        <p className="task_table_content_entity_info">
+          <p
+            className="task_table_content_entity_info-project"
+            id={name + "-" + id}
+          >
+            {project}
+          </p>
         </p>
-      </p>
-      <p className="task_table_content_entity_info">{name}</p>
-      <p className="task_table_content_entity_info">{status}</p>
-      <p className="task_table_content_entity_info">{beggining}</p>
-      <p className="task_table_content_entity_info">{ending}</p>
-      <p className="task_table_content_entity_info task_table_content_entity_info-actions">
-        ...
-      </p>
-    </div>
+        <p className="task_table_content_entity_info">{name}</p>
+        <p className="task_table_content_entity_info">{status}</p>
+        <p className="task_table_content_entity_info">{beggining}</p>
+        <p className="task_table_content_entity_info">{ending}</p>
+      </div>
+    </Link>
   );
 }
 export default TasksTableDepPj;
