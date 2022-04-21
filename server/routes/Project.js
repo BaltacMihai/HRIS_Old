@@ -6,6 +6,7 @@ router.get(
   "/not-user/:id",
   projectController.findProjectsWhereUserIsntEnrolled
 );
+router.get("/user/:id", projectController.findProjectsWhereUserIsEnrolled);
 
 router.get("/:projectId", projectController.findProjects);
 router.get(

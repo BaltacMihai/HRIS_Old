@@ -40,6 +40,36 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  findProjectsWhereUserIsEnrolled: async (req, res) => {
+    const { Op, Sequelize } = require("@sequelize/core");
+    const { id } = req.params;
+
+    console.log(id);
+    if (id < 0) {
+      res.status(400).send({ message: "User doesn't exist" });
+    }
+
+    ProjectDB.findAll({
+      attributes: ["id", "color", "name", "startingDate", "endingDate"],
+
+      include: [
+        {
+          model: ProjectAllocationDB,
+          where: {
+            userId: id,
+          },
+          attributes: [],
+        },
+      ],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   findProjects: async (req, res) => {
     const { projectId } = req.params;
 
