@@ -59,6 +59,7 @@ function Project({ userId }) {
         <Navbar current="projects" />
         {returnProjectPage(projectInfo, departments, projectId)}
         {returnModifyMeeting(projectInfo, projectId)}
+        {returnDeparment(projectId)}
       </div>
     );
   else {
@@ -337,7 +338,15 @@ function returnMembersModal(projectId) {
 function returnDepartaments(departments, projectId) {
   return (
     <div className="section">
-      <p className="title">Departments</p>
+      <div className="row row-department">
+        <p className="title">Departments</p>
+        <span
+          className="icon-plus icon"
+          onClick={(e) => {
+            displayStatusModal("addTeamLead", "flex");
+          }}
+        ></span>
+      </div>
       <div className="row">
         {departments?.map((e) => {
           return returnDepartment(e, projectId);
@@ -364,5 +373,52 @@ function returnDepartment(department, projectId) {
     </Link>
   );
 }
-
+function returnDeparment(projectId) {
+  return (
+    <div className="modal" id="addTeamLead">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("addTeamLead", "none");
+          }}
+        ></span>
+        <div className="title">Add Team lead</div>
+        <div className="description">
+          Adding a team lead, means you add a department in this project
+        </div>
+        <div className="modal_label modal_label-icon">
+          <input
+            type="text"
+            name="add_teamLead"
+            id="add_teamLead"
+            placeholder="Write username"
+          />
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              let body = {
+                username: document.getElementById("add_teamLead").value,
+                projectId: projectId,
+                type: "TEAM_LEAD",
+              };
+              postProjectAllocationByUsername(body);
+            }}
+          ></span>
+        </div>
+        <div className="members"></div>
+        <div className="modal_actions modal_actions-one">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("addTeamLead", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 export default Project;
