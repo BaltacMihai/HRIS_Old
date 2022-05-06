@@ -85,7 +85,9 @@ function returnCalendarHeader() {
 
 function returnCalendarBody(id, setRefresh) {
   let firstDay = generateMonthDates().firstDay;
+
   let lastDay = generateMonthDates().lastDay;
+
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}
