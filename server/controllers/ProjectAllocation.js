@@ -101,6 +101,21 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  delete: async (req, res) => {
+    ProjectAllocationDB.destroy({
+      where: {
+        projectId: req.body.projectId,
+        userId: req.body.userId,
+      },
+    })
+      .then((event) => {
+        res.status(200).send(event.toString());
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
