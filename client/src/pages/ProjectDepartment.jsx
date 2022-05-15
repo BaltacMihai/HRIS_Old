@@ -76,6 +76,7 @@ function returnProjectPage(departmentStats, members, urlBuilder) {
       <div className="row">
         {returnEvents(urlBuilder)}
         {returnMembers(members)}
+        {returnMembersModal(members)}
       </div>
     </div>
   );
@@ -138,11 +139,91 @@ function returnEvents(urlBuilder) {
 function returnMembers(members) {
   return (
     <div className="section">
-      <p className="title">Members</p>
+      <div className="row row-around">
+        <p className="title" id="title">
+          Members
+        </p>
+        <span
+          className="icon-plus icon"
+          onClick={(e) => {
+            displayStatusModal("seeMembers", "flex");
+          }}
+        ></span>
+      </div>
       <div className="column">
         {members?.map((e) => {
           return returnMember(e);
         })}
+      </div>
+    </div>
+  );
+}
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
+
+  statusModal.style.display = type;
+}
+function returnMembersModal(members) {
+  return (
+    <div className="modal" id="seeMembers">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("seeMembers", "none");
+          }}
+        ></span>
+        <div className="modal_label modal_label-icon">
+          <input
+            type="text"
+            name="add_memeber"
+            id="add_memeber"
+            placeholder="Write username"
+          />
+          <span
+            className="icon-plus icon"
+            onClick={(e) => {
+              // let body = {
+              //   username: document.getElementById("add_memeber").value,
+              //   eventId: eventId,
+              // };
+              // submitNewMember(body);
+            }}
+          ></span>
+        </div>
+        <div className="members">
+          {members.map((member) => {
+            return (
+              <div className="member">
+                <div className="member_infos">
+                  <img
+                    src={member.photo}
+                    alt={member.name + " photo"}
+                    className="member_infos_photo"
+                  />
+                  <p className="member_infos_name">{member.name}</p>
+                </div>
+
+                <span
+                  className="actions icon-cross"
+                  onClick={(e) => {
+                    // deleteEventAllocation(eventId, member.id);
+                  }}
+                ></span>
+              </div>
+            );
+          })}
+        </div>
+        <div className="modal_actions  modal_actions-one">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("seeMembers", "none");
+            }}
+          >
+            Cancel
+          </p>
+        </div>
       </div>
     </div>
   );

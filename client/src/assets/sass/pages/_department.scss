@@ -5,6 +5,12 @@
   }
   .section {
     justify-content: start;
+    .row-around {
+      justify-content: space-around;
+    }
+    #title {
+      padding: 3vh 0;
+    }
     .column {
       max-height: 60vh;
       overflow-y: auto;
@@ -37,6 +43,51 @@
 
     .row {
       height: auto;
+    }
+  }
+}
+
+#seeMembers {
+  .modal_content {
+    max-height: 40vh;
+  }
+  .members {
+    max-height: 35vh;
+    overflow-y: scroll;
+  }
+  .icon {
+    margin-right: 0;
+  }
+  .member {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 1rem;
+
+    &_infos {
+      display: flex;
+      align-items: center;
+
+      &_photo {
+        $size: 50px;
+
+        width: $size;
+        height: $size;
+        border-radius: 100%;
+        margin-right: 1rem;
+
+        object-fit: cover;
+      }
+      &_name {
+        font-size: 20px;
+      }
+    }
+
+    .actions {
+      position: relative;
+      cursor: pointer;
+      z-index: 99;
+      left: -3%;
     }
   }
 }
