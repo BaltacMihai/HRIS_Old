@@ -220,6 +220,31 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  delete: async (req, res) => {
+    ProjectAllocationDB.destroy({
+      where: {
+        projectId: req.body.id,
+      },
+    })
+      .then(() => {
+        ProjectDB.destroy({
+          where: {
+            id: req.body.id,
+          },
+        })
+          .then((project) => {
+            res.status(200).send(project.toString());
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Server error" });
+          });
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

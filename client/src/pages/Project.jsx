@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import deleteProject from "../hooks/deleteProject";
 import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import modifyProject from "../hooks/putProject";
 import useProject from "../hooks/useProject";
@@ -77,6 +78,7 @@ function returnProjectPage(projectInfo, departments, projectId) {
       {returnProjectStats(projectInfo)}
       {returnDepartaments(departments, projectId)}
       {returnMembersModal(projectId)}
+      {returnDeleteModal(projectId)}
     </div>
   );
 }
@@ -90,12 +92,20 @@ function returnProjectStats(projectInfo) {
           <div className="card_title">
             <p id="title">{projectInfo.title}</p>
           </div>
-          <span
-            className="icon-pencil icon"
-            onClick={(e) => {
-              displayStatusModal("modifyProject", "flex");
-            }}
-          ></span>
+          <div className="icons">
+            <span
+              className="icon-pencil icon"
+              onClick={(e) => {
+                displayStatusModal("modifyProject", "flex");
+              }}
+            ></span>
+            <span
+              className="icon-bin2 icon"
+              onClick={(e) => {
+                displayStatusModal("deleteProject", "flex");
+              }}
+            ></span>
+          </div>
         </div>
 
         <p className="card_description">{projectInfo.description}.</p>
@@ -334,12 +344,49 @@ function returnMembersModal(projectId) {
     </div>
   );
 }
+function returnDeleteModal(projectId) {
+  return (
+    <div className="modal" id="deleteProject">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("deleteProject", "none");
+          }}
+        ></span>
+        <div className="title">
+          Are you sure you want to delete this project?
+        </div>
+        <p class="text_body">This action is irreversible</p>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("deleteProject", "none");
+            }}
+          >
+            Cancel
+          </p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              deleteProject(projectId);
+            }}
+          >
+            Yes
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 function returnDepartaments(departments, projectId) {
   return (
     <div className="section">
       <div className="row row-department">
         <p className="title">Departments</p>
+
         <span
           className="icon-plus icon"
           onClick={(e) => {

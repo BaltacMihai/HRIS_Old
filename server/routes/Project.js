@@ -15,4 +15,6 @@ router.get(
 );
 router.post("/post", projectController.postProject);
 router.put("/put", projectController.putProject);
+router.delete("/delete", projectController.delete);
+
 module.exports = router;
