@@ -49,7 +49,7 @@ const controller = {
         {
           model: UserDB,
 
-          attributes: ["name", "photo"],
+          attributes: ["name", "photo", "id"],
           where: {
             departmentId: departmentId,
           },

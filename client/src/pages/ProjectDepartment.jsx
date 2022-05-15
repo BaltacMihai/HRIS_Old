@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import deleteProjectAllocation from "../hooks/deleteProjectAllocation";
 import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
@@ -35,6 +36,7 @@ function ProjectDepartment() {
   if (rawDepartmentStats && members == null) {
     members = rawDepartmentStats.map((member) => {
       return {
+        id: member.User.id,
         photo: member.User.photo,
         name: member.User.name,
       };
@@ -145,7 +147,7 @@ function returnMembers(members) {
           Members
         </p>
         <span
-          className="icon-plus icon"
+          className="icon-pencil icon"
           onClick={(e) => {
             displayStatusModal("seeMembers", "flex");
           }}
@@ -195,6 +197,7 @@ function returnMembersModal(members, projectId) {
         </div>
         <div className="members">
           {members.map((member) => {
+            console.log(members);
             return (
               <div className="member">
                 <div className="member_infos">
@@ -209,7 +212,7 @@ function returnMembersModal(members, projectId) {
                 <span
                   className="actions icon-cross"
                   onClick={(e) => {
-                    // deleteEventAllocation(eventId, member.id);
+                    deleteProjectAllocation(projectId, member.id);
                   }}
                 ></span>
               </div>
