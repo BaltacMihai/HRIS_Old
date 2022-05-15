@@ -47,6 +47,10 @@ function Navbar({ current }) {
             <p>Calendar</p>
           </div>
         </Link> */}
+        <div className="navbar_options_option" id="logOut">
+          <span className="icon-exit"></span>
+          <p>Log out</p>
+        </div>
       </div>
     </div>
   );

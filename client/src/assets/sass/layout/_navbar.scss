@@ -41,6 +41,14 @@
 
         border-radius: $radius-10;
       }
+
+      &#logOut {
+        margin-top: 60vh;
+
+        span {
+          margin-top: 2px;
+        }
+      }
     }
   }
 }
