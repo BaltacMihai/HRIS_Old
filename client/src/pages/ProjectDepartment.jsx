@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
 
@@ -63,12 +64,12 @@ function ProjectDepartment() {
   return (
     <div className="page project_page department_page">
       <Navbar current="projects" />
-      {returnProjectPage(departmentStats, members, urlBuilder)}
+      {returnProjectPage(departmentStats, members, urlBuilder, projectId)}
     </div>
   );
 }
 
-function returnProjectPage(departmentStats, members, urlBuilder) {
+function returnProjectPage(departmentStats, members, urlBuilder, projectId) {
   return (
     <div className="project_page_content">
       {returnDepartmentStats(departmentStats)}
@@ -76,7 +77,7 @@ function returnProjectPage(departmentStats, members, urlBuilder) {
       <div className="row">
         {returnEvents(urlBuilder)}
         {returnMembers(members)}
-        {returnMembersModal(members)}
+        {returnMembersModal(members, projectId)}
       </div>
     </div>
   );
@@ -163,7 +164,7 @@ function displayStatusModal(location, type) {
 
   statusModal.style.display = type;
 }
-function returnMembersModal(members) {
+function returnMembersModal(members, projectId) {
   return (
     <div className="modal" id="seeMembers">
       <div className="modal_content">
@@ -183,11 +184,12 @@ function returnMembersModal(members) {
           <span
             className="icon-plus icon"
             onClick={(e) => {
-              // let body = {
-              //   username: document.getElementById("add_memeber").value,
-              //   eventId: eventId,
-              // };
-              // submitNewMember(body);
+              let body = {
+                username: document.getElementById("add_memeber").value,
+                projectId: projectId,
+                type: "EMPLOYEE",
+              };
+              postProjectAllocationByUsername(body);
             }}
           ></span>
         </div>
