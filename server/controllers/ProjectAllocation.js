@@ -42,7 +42,7 @@ const controller = {
       where: {
         projectId: projectId,
         type: {
-          [Op.ne]: "PROJECT_MANAGER",
+          [Op.and]: [{ [Op.ne]: "PROJECT_MANAGER" }, { [Op.ne]: "CEO" }],
         },
       },
       include: [
