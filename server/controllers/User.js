@@ -19,6 +19,23 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  login: async (req, res) => {
+    const { username, password } = req.params;
+
+    UserDB.findOne({
+      where: {
+        username: username,
+        password: password,
+      },
+    })
+      .then((user) => {
+        res.status(200).send(user);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 
   put: async (req, res) => {
     UserDB.update(

@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 function Navbar({ current }) {
+  const cookies = new Cookies();
+
   useEffect(() => {
     if (current) {
       const active = document.getElementById(current);
@@ -47,7 +50,14 @@ function Navbar({ current }) {
             <p>Calendar</p>
           </div>
         </Link> */}
-        <div className="navbar_options_option" id="logOut">
+        <div
+          className="navbar_options_option"
+          id="logOut"
+          onClick={(e) => {
+            cookies.remove("user");
+            window.location.href = "http://localhost:3000/";
+          }}
+        >
           <span className="icon-exit"></span>
           <p>Log out</p>
         </div>

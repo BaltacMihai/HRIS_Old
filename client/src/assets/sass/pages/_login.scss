@@ -1,0 +1,84 @@
+.login_page {
+  width: 100vw;
+  height: 100vh;
+  background-color: $white;
+
+  display: flex;
+  & > * {
+    flex: 0 0 50%;
+  }
+  .image {
+    position: relative;
+
+    * {
+      position: absolute;
+    }
+    .illustration {
+      z-index: 1;
+      width: 80%;
+      right: 0%;
+      top: 20%;
+    }
+
+    .background {
+      height: 110vh;
+    }
+  }
+  .form {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    align-items: center;
+    height: 70vh;
+
+    & > * {
+      margin: 1rem;
+    }
+
+    .title {
+      font-size: 4rem;
+    }
+    .input {
+      display: flex;
+      flex-direction: column;
+      width: 45%;
+
+      input {
+        width: 100%;
+        font-size: 17.5px;
+        padding: 0.5rem;
+        background-color: $grey-blue;
+        border-radius: 5px;
+        resize: none;
+        border: none;
+        margin-top: 2.5%;
+      }
+    }
+
+    .forgetPass {
+      margin-right: -16vw;
+      color: $bright-blue;
+
+      cursor: pointer;
+    }
+
+    .button {
+      background-color: $dark-blue;
+
+      width: 45%;
+      font-size: 17.5px;
+      padding: 0.5rem;
+      border-radius: 5px;
+      resize: none;
+      border: none;
+      margin-top: 2.5%;
+
+      color: $white;
+
+      display: flex;
+      justify-content: center;
+
+      cursor: pointer;
+    }
+  }
+}
