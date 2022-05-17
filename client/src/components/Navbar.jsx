@@ -56,6 +56,7 @@ function Navbar({ current }) {
           onClick={(e) => {
             cookies.remove("user");
             window.location.href = "http://localhost:3000/";
+            window.location.reload();
           }}
         >
           <span className="icon-exit"></span>
