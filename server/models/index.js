@@ -9,7 +9,7 @@ const ProjectAllocationModel = require("./ProjectAllocation");
 const DepartmentModel = require("./Department");
 const EventModel = require("./Event");
 const EventAllocationModel = require("./EventAllocation");
-const CommentsModel = require("./Comments");
+// const CommentsModel = require("./Comments");
 
 // create tables
 
@@ -19,7 +19,7 @@ const ProjectAllocation = ProjectAllocationModel(db, Sequelize);
 const Department = DepartmentModel(db, Sequelize);
 const Event = EventModel(db, Sequelize);
 const EventAllocation = EventAllocationModel(db, Sequelize);
-const Comments = CommentsModel(db, Sequelize);
+// const Comments = CommentsModel(db, Sequelize);
 
 // relationships between tables
 
@@ -35,25 +35,25 @@ User.belongsTo(Department, {
   targetKey: "id",
 });
 
-Comments.belongsTo(User, {
-  foreignKey: "userId",
-  targetKey: "id",
-});
+// Comments.belongsTo(User, {
+//   foreignKey: "userId",
+//   targetKey: "id",
+// });
 
-User.hasMany(Comments, {
-  foreignKey: "userId",
-  targetKey: "id",
-});
+// User.hasMany(Comments, {
+//   foreignKey: "userId",
+//   targetKey: "id",
+// });
 
-Comments.belongsTo(Event, {
-  foreignKey: "eventId",
-  targetKey: "id",
-});
+// Comments.belongsTo(Event, {
+//   foreignKey: "eventId",
+//   targetKey: "id",
+// });
 
-Event.hasMany(Comments, {
-  foreignKey: "eventId",
-  targetKey: "id",
-});
+// Event.hasMany(Comments, {
+//   foreignKey: "eventId",
+//   targetKey: "id",
+// });
 // projectAllocation
 
 User.hasMany(ProjectAllocation, {
@@ -124,6 +124,6 @@ module.exports = {
   Department,
   Event,
   EventAllocation,
-  Comments,
+  // Comments,
   connection: db,
 };

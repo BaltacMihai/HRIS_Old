@@ -10,5 +10,9 @@ router.get(
 );
 router.post("/post/username", projectAllocationController.postByUsername);
 router.delete("/delete", projectAllocationController.delete);
+router.delete(
+  "/deleteDepartment",
+  projectAllocationController.deleteDepartment
+);
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import deleteProjectAllocation from "../hooks/deleteProjectAllocation";
+import deleteProjectDepartment from "../hooks/deleteProjectDepartment";
 import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
@@ -17,6 +18,7 @@ function ProjectDepartment() {
 
   if (rawProjectInfo && rawDepartmentStats && departmentStats == null) {
     departmentStats = {
+      id: departmentId,
       project: rawProjectInfo.name,
       color: rawProjectInfo.color,
       name: rawDepartmentStats[0].User.Department.name,
@@ -80,6 +82,7 @@ function returnProjectPage(departmentStats, members, urlBuilder, projectId) {
         {returnEvents(urlBuilder)}
         {returnMembers(members)}
         {returnMembersModal(members, projectId)}
+        {returnDeleteModal(departmentStats.id, projectId)}
       </div>
     </div>
   );
@@ -99,9 +102,56 @@ function returnDepartmentStats(departmentStats) {
             </p>
           </div>
         </div>
-        <p className="card_item">
-          Team lead: <strong>{departmentStats.teamLead}</strong>
+        <span
+          className="icon-bin2 icon"
+          id="bin"
+          onClick={(e) => {
+            displayStatusModal("deleteDepartment", "flex");
+          }}
+        ></span>
+        <p className="card_item ">
+          <p>
+            Team lead: <strong>{departmentStats.teamLead}</strong>
+          </p>
         </p>
+      </div>
+    </div>
+  );
+}
+
+function returnDeleteModal(departmentId, projectId) {
+  console.log(departmentId, projectId);
+  return (
+    <div className="modal" id="deleteDepartment">
+      <div className="modal_content">
+        <span
+          className="icon-cross close"
+          onClick={(e) => {
+            displayStatusModal("deleteDepartment", "none");
+          }}
+        ></span>
+        <div className="title">
+          Are you sure you want to delete this department from this project?
+        </div>
+        <p class="text_body">This action is irreversible</p>
+        <div className="modal_actions">
+          <p
+            className="cancel"
+            onClick={(e) => {
+              displayStatusModal("deleteDepartment", "none");
+            }}
+          >
+            Cancel
+          </p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              deleteProjectDepartment(projectId, departmentId);
+            }}
+          >
+            Yes
+          </p>
+        </div>
       </div>
     </div>
   );

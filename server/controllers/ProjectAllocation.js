@@ -102,10 +102,72 @@ const controller = {
       });
   },
   delete: async (req, res) => {
-    ProjectAllocationDB.destroy({
+    let projectAllocationList = null;
+
+    await ProjectAllocationDB.findAll({
       where: {
         projectId: req.body.projectId,
         userId: req.body.userId,
+      },
+
+      attributes: ["id", "createdAt"],
+      order: [["createdAt", "DESC"]],
+    })
+      .then((event) => {
+        projectAllocationList = event;
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+
+    await ProjectAllocationDB.destroy({
+      where: {
+        projectId: req.body.projectId,
+        userId: req.body.userId,
+        id: projectAllocationList[0].id,
+      },
+    })
+      .then((event) => {
+        res.status(200).send(event.toString());
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  deleteDepartment: async (req, res) => {
+    let departmentUsers;
+    const { Op } = require("@sequelize/core");
+
+    await UserDB.findAll({
+      where: {
+        departmentId: req.body.departmentId,
+      },
+      attributes: ["id"],
+    })
+      .then((event) => {
+        departmentUsers = event;
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+
+    departmentUsers = departmentUsers.map((row) => {
+      return row.dataValues.id;
+    });
+
+    console.log("---------");
+    console.log(departmentUsers);
+    console.log("---------");
+
+    await ProjectAllocationDB.destroy({
+      where: {
+        projectId: req.body.projectId,
+        userId: {
+          [Op.in]: departmentUsers,
+        },
       },
     })
       .then((event) => {
