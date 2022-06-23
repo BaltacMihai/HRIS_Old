@@ -44,7 +44,7 @@ function Navbar({ current }) {
             <p>Projects</p>
           </div>
         </Link>
-        <Link to="/raports">
+        <Link to="/reports">
           <div className="navbar_options_option" id="reports">
             <span className="icon-stats-bars"></span>
             <p>Reports</p>

@@ -1,0 +1,38 @@
+.reports {
+  &_content {
+    padding: 2vh 2vw;
+    width: 100%;
+    height: 90vh;
+    gap: 30px;
+
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    .row {
+      gap: 30px;
+    }
+
+    &_element {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      padding: 3vh 4vw;
+      background-color: $white;
+      border-radius: $radius-25;
+
+      img {
+        width: 150px;
+        scale: 1/1;
+      }
+      p {
+        font-size: 25px;
+        margin-top: 15px;
+      }
+    }
+  }
+}
