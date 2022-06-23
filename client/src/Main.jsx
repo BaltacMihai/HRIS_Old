@@ -14,6 +14,7 @@ import ProjectDepartment from "./pages/ProjectDepartment";
 import Cookies from "universal-cookie";
 import Login from "./pages/Login";
 import Reports from "./pages/Reports";
+import RepDepartments from "./pages/reports/RepDepartments";
 
 function Main() {
   const cookies = new Cookies();
@@ -55,6 +56,7 @@ function Main() {
             element={<Tasks userId={username} />}
           />
           <Route path="/reports" element={<Reports />} />
+          <Route path="/reports/departments" element={<RepDepartments />} />
         </Routes>
       </BrowserRouter>
     );

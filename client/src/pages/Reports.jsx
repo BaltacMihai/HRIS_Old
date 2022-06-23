@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 function Reports() {
@@ -7,13 +8,15 @@ function Reports() {
       <Navbar current="reports" />
       <div className="reports_content">
         <div className="row">
-          <div className="reports_content_element">
-            <img
-              src="https://img.icons8.com/external-flaticons-lineal-flat-icons/150/000000/external-department-university-flaticons-lineal-flat-icons.png"
-              alt="DepartmentImage"
-            />
-            <p>Departments</p>
-          </div>
+          <Link to="/reports/departments">
+            <div className="reports_content_element">
+              <img
+                src="https://img.icons8.com/external-flaticons-lineal-flat-icons/150/000000/external-department-university-flaticons-lineal-flat-icons.png"
+                alt="DepartmentImage"
+              />
+              <p>Departments</p>
+            </div>
+          </Link>
           <div className="reports_content_element">
             <img
               src="https://img.icons8.com/external-smashingstocks-mixed-smashing-stocks/150/000000/external-users-internet-of-things-smashingstocks-mixed-smashing-stocks.png"

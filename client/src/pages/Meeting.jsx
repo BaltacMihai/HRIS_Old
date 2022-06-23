@@ -612,32 +612,32 @@ function returnLoading() {
   );
 }
 
-function Comment({ photo, name, text }) {
-  return (
-    <div className="comment">
-      <div className="comment_header">
-        <img
-          className="comment_header_photo"
-          src={
-            photo
-              ? photo
-              : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg"
-          }
-        ></img>
-        <div className="comment_header_name">{name}</div>
-      </div>
-      <textarea
-        name="textArea"
-        id=""
-        cols="30"
-        rows="10"
-        spellcheck="false"
-        className="comment-text"
-      >
-        {text}
-      </textarea>
-    </div>
-  );
-}
+// function Comment({ photo, name, text }) {
+//   return (
+//     <div className="comment">
+//       <div className="comment_header">
+//         <img
+//           className="comment_header_photo"
+//           src={
+//             photo
+//               ? photo
+//               : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Unknown_person.jpg/925px-Unknown_person.jpg"
+//           }
+//         ></img>
+//         <div className="comment_header_name">{name}</div>
+//       </div>
+//       <textarea
+//         name="textArea"
+//         id=""
+//         cols="30"
+//         rows="10"
+//         spellcheck="false"
+//         className="comment-text"
+//       >
+//         {text}
+//       </textarea>
+//     </div>
+//   );
+// }
 
 export default Meeting;
