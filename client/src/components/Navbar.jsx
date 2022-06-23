@@ -45,9 +45,9 @@ function Navbar({ current }) {
           </div>
         </Link>
         <Link to="/raports">
-          <div className="navbar_options_option" id="raports">
+          <div className="navbar_options_option" id="reports">
             <span className="icon-stats-bars"></span>
-            <p>Raports</p>
+            <p>Reports</p>
           </div>
         </Link>
         {/* <Link to="/calendar">
