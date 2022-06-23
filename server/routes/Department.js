@@ -3,5 +3,6 @@ const router = express.Router();
 const departmentController = require("./../controllers").Depatment;
 
 router.get("/stats", departmentController.getStats);
+router.get("/stats/:departmentId", departmentController.getCurrentStats);
 
 module.exports = router;

@@ -1,10 +1,11 @@
 import React from "react";
-import { BarChart } from "../../components/Charts/Bar";
+import { Link } from "react-router-dom";
+import { BarChart } from "../../components/Charts/BarDepartments";
 import Navbar from "../../components/Navbar";
-import useDepartmentStats from "../../hooks/getDepartmentStats";
+import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 
 function RepDepartments() {
-  let departmentStats = useDepartmentStats();
+  let departmentStats = useDepartmentsStats();
 
   console.log(departmentStats);
 
@@ -16,8 +17,10 @@ function RepDepartments() {
           <div className="card">
             <h1 className="title">Departments Reports</h1>
           </div>
+
           <div className="details">
             <div className="reports card">
+              <h3>Comparison of Departments</h3>
               <BarChart date={departmentStats} />
             </div>
             <div className="list">
@@ -48,11 +51,14 @@ function RepDepartments() {
 
 function returnDepartments(details) {
   return details?.map((e) => {
+    let link = "/reports/departments/" + e.id;
     return (
-      <div className="department card">
-        <img src={e.icon} alt="" />
-        <p>{e.name}</p>
-      </div>
+      <Link to={link}>
+        <div className="department card">
+          <img src={e.icon} alt="" />
+          <p>{e.name}</p>
+        </div>
+      </Link>
     );
   });
 }

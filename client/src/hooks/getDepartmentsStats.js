@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-export default function useDepartmentStats(departmentId) {
+export default function useDepartmentsStats() {
   const [departamentStats, setDepartamentStats] = useState(null);
-  const URL = "http://localhost:3031/api/departments/stats/" + departmentId;
+  const URL = "http://localhost:3031/api/departments/stats";
 
   useEffect(() => {
     if (departamentStats == null)
