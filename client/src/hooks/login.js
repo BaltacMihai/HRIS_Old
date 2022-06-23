@@ -11,7 +11,11 @@ export default async function login(username, password) {
   })
     .then((res) => res.json())
     .then((result) => {
-      cookies.set("user", result.id, { path: "/", secure: true });
+      cookies.set(
+        "user",
+        { id: result.id, specialRights: result.specialRights },
+        { path: "/", secure: true }
+      );
       window.location.reload();
     })
     .catch((error) => {

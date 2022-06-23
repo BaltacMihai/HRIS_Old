@@ -18,7 +18,8 @@ function Main() {
   const cookies = new Cookies();
 
   //  let login = useLogin("baltacm", "pass");
-  let username = cookies.get("user");
+  let user = cookies.get("user");
+  let username = user.id;
 
   if (username == undefined) {
     return <Login />;

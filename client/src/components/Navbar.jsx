@@ -40,8 +40,14 @@ function Navbar({ current }) {
 
         <Link to="/projects">
           <div className="navbar_options_option" id="projects">
-            <span className="icon-files-empty"></span>
+            <span className="icon-folder-open"></span>
             <p>Projects</p>
+          </div>
+        </Link>
+        <Link to="/raports">
+          <div className="navbar_options_option" id="raports">
+            <span className="icon-stats-bars"></span>
+            <p>Raports</p>
           </div>
         </Link>
         {/* <Link to="/calendar">
