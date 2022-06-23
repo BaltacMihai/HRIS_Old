@@ -21,11 +21,11 @@ function Main() {
 
   //  let login = useLogin("baltacm", "pass");
   let user = cookies.get("user");
-  let username = user.id;
 
-  if (username == undefined) {
+  if (user == undefined) {
     return <Login />;
   } else {
+    let username = user.id;
     return (
       <BrowserRouter>
         <Routes>

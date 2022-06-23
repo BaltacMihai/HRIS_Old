@@ -1,0 +1,64 @@
+.report_page {
+  &_content {
+    padding: 2vh 2vw;
+    width: 100%;
+    height: 100vh;
+    gap: 30px;
+
+    display: flex;
+    flex-direction: column;
+
+    .card {
+      padding: 3vh 4vw;
+      background-color: #fff;
+      border-radius: 25px;
+    }
+
+    .details {
+      display: flex;
+      justify-content: space-between;
+      height: 80%;
+
+      .reports {
+        width: 65%;
+        display: flex;
+
+        align-items: center;
+      }
+
+      .list {
+        width: 20%;
+
+        .title {
+          font-size: 30px;
+          padding: 1vh 0;
+        }
+
+        .departments {
+          height: 92%;
+
+          overflow: auto;
+          display: flex;
+          flex-direction: column;
+          gap: 15px;
+
+          .department {
+            display: flex;
+            align-items: center;
+            padding: 2vh 2vw;
+
+            img {
+              width: 50px;
+              scale: 1/1;
+            }
+
+            p {
+              font-size: 20px;
+              margin-left: 20px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
