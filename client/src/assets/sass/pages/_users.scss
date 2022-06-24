@@ -1,0 +1,22 @@
+.users {
+  .member_card {
+    width: 15vw;
+  }
+}
+
+.user-raport {
+  .myTask_container {
+    margin: 0 auto;
+    width: 90%;
+  }
+
+  .stats_values {
+    margin-top: 3rem;
+    text-align: center;
+
+    span {
+      margin-left: 5px;
+      font-weight: 600;
+    }
+  }
+}

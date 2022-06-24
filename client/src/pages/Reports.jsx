@@ -17,40 +17,16 @@ function Reports() {
               <p>Departments</p>
             </div>
           </Link>
-          <div className="reports_content_element">
-            <img
-              src="https://img.icons8.com/external-smashingstocks-mixed-smashing-stocks/150/000000/external-users-internet-of-things-smashingstocks-mixed-smashing-stocks.png"
-              alt="Users Image"
-            />
-            <p>Users</p>
-          </div>
-          <div className="reports_content_element">
-            {" "}
-            <img
-              src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/150/000000/external-project-management-flatart-icons-outline-flatarticons.png"
-              alt="Projects Image"
-            />
-            <p>Projects</p>
-          </div>
-        </div>
+          <Link to="/reports/users">
+            <div className="reports_content_element">
+              <img
+                src="https://img.icons8.com/external-smashingstocks-mixed-smashing-stocks/150/000000/external-users-internet-of-things-smashingstocks-mixed-smashing-stocks.png"
+                alt="Users Image"
+              />
 
-        <div className="row">
-          <div className="reports_content_element">
-            {" "}
-            <img
-              src="https://img.icons8.com/dotty/150/000000/meeting.png"
-              alt="Meetings Image"
-            />
-            <p>Meetings</p>
-          </div>
-          <div className="reports_content_element">
-            {" "}
-            <img
-              src="https://img.icons8.com/external-others-pike-picture/150/000000/external-Tasks-development-others-pike-picture-4.png"
-              alt="Tasks Image"
-            />
-            <p>Tasks</p>
-          </div>
+              <p>Users</p>
+            </div>{" "}
+          </Link>
         </div>
       </div>
     </div>

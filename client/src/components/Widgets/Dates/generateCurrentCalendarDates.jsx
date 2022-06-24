@@ -5,7 +5,12 @@ import {
   removeContextCalendar,
 } from "../../ContextMenu/ContextCalendar";
 
-export default function GenerateCurrentCalendarDates(id, setRefresh, noOfDays) {
+export default function GenerateCurrentCalendarDates(
+  id,
+  setRefresh,
+  noOfDays,
+  isEditable
+) {
   let xPos;
   let yPos;
   return [...Array(noOfDays)].map((e, i) => {
@@ -18,23 +23,23 @@ export default function GenerateCurrentCalendarDates(id, setRefresh, noOfDays) {
             onClick={(e) => {
               //TODO: Must find a better way to do this
               removeContextCalendar(noOfDays);
-
               let dashboard = document.getElementsByClassName("dashboard");
+              if (isEditable) {
+                dashboard[0].addEventListener("click", (e) => {
+                  removeContextCalendar(noOfDays);
+                });
 
-              dashboard[0].addEventListener("click", (e) => {
-                removeContextCalendar(noOfDays);
-              });
+                document
+                  .getElementById("day-" + i)
+                  .classList.add("calendar_body_item-selected");
 
-              document
-                .getElementById("day-" + i)
-                .classList.add("calendar_body_item-selected");
+                document
+                  .getElementById("context_menu-" + i)
+                  .classList.add("context_menu-active");
 
-              document
-                .getElementById("context_menu-" + i)
-                .classList.add("context_menu-active");
-
-              xPos = e.clientX + "px";
-              yPos = e.clientY + "px";
+                xPos = e.clientX + "px";
+                yPos = e.clientY + "px";
+              }
             }}
           >
             {i}

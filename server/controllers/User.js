@@ -1,3 +1,6 @@
+const EventAllocationDB = require("./../models").EventAllocation;
+const EventDB = require("./../models").Event;
+
 const UserDB = require("./../models").User;
 
 const controller = {
@@ -53,6 +56,119 @@ const controller = {
       }
     )
       .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  getAll: async (req, res) => {
+    UserDB.findAll({
+      attributes: ["id", "photo", "name", "specialRights"],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  getStats: async (req, res) => {
+    const { Op } = require("sequelize");
+    const { userId } = req.params;
+    UserDB.findOne({
+      attributes: [],
+      include: [
+        {
+          model: EventAllocationDB,
+          attributes: ["eventId"],
+          include: [
+            {
+              model: EventDB,
+              attributes: ["type"],
+            },
+          ],
+        },
+      ],
+      where: {
+        id: {
+          [Op.eq]: userId,
+        },
+      },
+    })
+      .then((event) => {
+        event.dataValues = event.dataValues.EventAllocations?.map((e) => {
+          return e.dataValues.Event.dataValues.type;
+        });
+
+        let noOfTasks = 0;
+        let noOfMeetings = 0;
+
+        event.dataValues.forEach((e) => {
+          if (e == "TASK") noOfTasks++;
+          if (e == "MEETING") noOfMeetings++;
+        });
+
+        console.log(noOfTasks, noOfMeetings);
+        event.dataValues.forEach((e) => {});
+        event.dataValues.Task = noOfTasks;
+        event.dataValues.Meeting = noOfMeetings;
+
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  getStatsLastMonth: async (req, res) => {
+    const { Op } = require("sequelize");
+
+    const lastMonth = new Date(new Date().setDate(new Date().getDate() - 31));
+
+    const { userId } = req.params;
+    UserDB.findOne({
+      attributes: [],
+
+      include: [
+        {
+          model: EventAllocationDB,
+          attributes: ["eventId"],
+          include: [
+            {
+              model: EventDB,
+              attributes: ["type", "endingDate"],
+            },
+          ],
+        },
+      ],
+      where: {
+        id: {
+          [Op.eq]: userId,
+        },
+      },
+    })
+      .then((event) => {
+        event.dataValues = event.dataValues.EventAllocations?.map((e) => {
+          if (e.dataValues.Event.dataValues > lastMonth)
+            return e.dataValues.Event.dataValues.type;
+        });
+
+        let noOfTasks = 0;
+        let noOfMeetings = 0;
+
+        event.dataValues.forEach((e) => {
+          if (e == "TASK") noOfTasks++;
+          if (e == "MEETING") noOfMeetings++;
+        });
+
+        console.log(noOfTasks, noOfMeetings);
+        event.dataValues.forEach((e) => {});
+        event.dataValues.Task = noOfTasks;
+        event.dataValues.Meeting = noOfMeetings;
+
         res.status(200).send(event);
       })
       .catch((error) => {

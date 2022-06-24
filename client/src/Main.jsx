@@ -16,6 +16,8 @@ import Login from "./pages/Login";
 import Reports from "./pages/Reports";
 import RepDepartments from "./pages/reports/RepDepartments";
 import RepDepartment from "./pages/reports/RepDepartment";
+import RepUser from "./pages/reports/RepUser";
+import User from "./pages/User";
 
 function Main() {
   const cookies = new Cookies();
@@ -62,6 +64,8 @@ function Main() {
             path="/reports/departments/:departmentId"
             element={<RepDepartment />}
           />
+          <Route path="/reports/users" element={<RepUser />} />
+          <Route path="/user/:userId" element={<User />} />
         </Routes>
       </BrowserRouter>
     );

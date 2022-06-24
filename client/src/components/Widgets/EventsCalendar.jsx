@@ -6,7 +6,7 @@ import useEvents from "../../hooks/findEventsByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
 import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 
-function EventsCalendar({ id }) {
+function EventsCalendar({ id, isEditable = true }) {
   const [refresh, setRefresh] = useState(null);
 
   let event = useEvents(
@@ -52,10 +52,10 @@ function EventsCalendar({ id }) {
     }
   });
 
-  return returnCalendarLayout(id, setRefresh);
+  return returnCalendarLayout(id, setRefresh, isEditable);
 }
 
-function returnCalendarLayout(id, setRefresh) {
+function returnCalendarLayout(id, setRefresh, isEditable) {
   return (
     <div className="widget events_calendar">
       <div className="events_calendar_header">
@@ -63,7 +63,7 @@ function returnCalendarLayout(id, setRefresh) {
       </div>
       <div className=" calendar">
         {returnCalendarHeader()}
-        {returnCalendarBody(id, setRefresh)}
+        {returnCalendarBody(id, setRefresh, isEditable)}
       </div>
     </div>
   );
@@ -83,7 +83,7 @@ function returnCalendarHeader() {
   );
 }
 
-function returnCalendarBody(id, setRefresh) {
+function returnCalendarBody(id, setRefresh, isEditable) {
   let firstDay = generateMonthDates().firstDay;
 
   let lastDay = generateMonthDates().lastDay;
@@ -91,7 +91,12 @@ function returnCalendarBody(id, setRefresh) {
   return (
     <div className="calendar_body">
       {generateSpaces(firstDay.getDay())}
-      {generateCurrentCalendarDates(id, setRefresh, lastDay.getDate() + 1)}
+      {generateCurrentCalendarDates(
+        id,
+        setRefresh,
+        lastDay.getDate() + 1,
+        isEditable
+      )}
       {generateSpaces(lastDay.getDay())}
     </div>
   );

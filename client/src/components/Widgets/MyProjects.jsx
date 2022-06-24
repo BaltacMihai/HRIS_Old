@@ -4,7 +4,7 @@ import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 import ProjectCard from "../ProjectCard";
 import submitNewMeeting from "../../hooks/postEventAndAllocate";
 
-function MyProjects({ id }) {
+function MyProjects({ id, text }) {
   let event = useUsersProjects(id);
   let events = null;
 
@@ -24,7 +24,7 @@ function MyProjects({ id }) {
     return (
       <div className="widget myProjects">
         <div className="myProjects_header">
-          <p className="myProjects_header_title">My Projects</p>
+          <p className="myProjects_header_title">{text}</p>
         </div>
         <div className="myProjects_container">{mapTheTasks(events)}</div>
         {returnAddModal(id, events)}
@@ -35,7 +35,7 @@ function MyProjects({ id }) {
     return (
       <div className="widget myProjects">
         <div className="myProjects_header">
-          <p className="myProjects_header_title">My Projects</p>
+          <p className="myProjects_header_title">{text}</p>
         </div>
       </div>
     );

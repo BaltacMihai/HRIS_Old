@@ -5,23 +5,27 @@ import EventsCalendar from "../components/Widgets/EventsCalendar";
 import MyTasks from "../components/Widgets/MyTasks";
 import MyMeetings from "../components/Widgets/MyMeetings";
 import MyProjects from "../components/Widgets/MyProjects";
+import { useParams } from "react-router-dom";
+import ReportsAll from "../components/Widgets/ReportsAll";
+import useUserReport from "../hooks/getUserReports";
+import useUserLastReport from "../hooks/getUserLastReport";
+import Raports from "../components/Widgets/Raports";
 
-function Dashboard({ userId }) {
+function User() {
+  let { userId } = useParams();
+
   return (
-    <div className="page dashboard">
-      <Navbar current="dashboard" />
+    <div className="page dashboard user-raport">
+      <Navbar current="reports" />
       <div className="dashboard_content">
         <div className="row dashboard_content-row">
           <div className="col">
             <UserInfo id={userId} />
-            <div className="row dashboard_content-row">
-              <MyTasks id={userId} />
-              <MyMeetings id={userId} />
-            </div>
+            <Raports userId={userId} />
           </div>
           <div className="col">
-            <EventsCalendar id={userId} />
-            <MyProjects id={userId} text={"My Projects"} />
+            <EventsCalendar id={userId} isEditable={false} />
+            <MyProjects id={userId} text={"His Projects"} />
           </div>
         </div>
       </div>
@@ -29,4 +33,4 @@ function Dashboard({ userId }) {
   );
 }
 
-export default Dashboard;
+export default User;
