@@ -2,19 +2,23 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import useUsers from "../../hooks/getUsers";
+import useDeparmtent from "../../hooks/useDepartment";
 
 function RepUser() {
-  let { department } = useParams();
-  let user = useUsers();
+  let { departmentId } = useParams();
+  let user = useUsers(departmentId);
+  let departmentName = useDeparmtent(departmentId);
 
-  if (user)
+  if (user && departmentName) {
+    if (departmentName.name == "FREE DAY") departmentName.name = "";
+
     return (
       <div className="page users">
         <Navbar current={"reports"} />
-        {returnContent(department, user)}
+        {returnContent(user, departmentName)}
       </div>
     );
-  else {
+  } else {
     return (
       <div className="page projects">
         <Navbar current={"reports"} />
@@ -23,20 +27,21 @@ function RepUser() {
   }
 }
 
-function returnContent(department, user) {
+function returnContent(user, departmentName) {
   return (
     <div className="project_content">
-      {returnProjectsContent(department, user)}
+      {returnProjectsContent(user, departmentName)}
       {returnAddProject(user)}
     </div>
   );
 }
 
-function returnProjectsContent(department, user) {
+function returnProjectsContent(user, departmentName) {
+  let pageName = departmentName.name + " Users ";
   return (
     <div className="project_content_current">
       <div className="header">
-        <h2>Users {+department ? department : ""}</h2>
+        <h2>{pageName}</h2>
         <span
           className="icon-plus icon"
           onClick={(e) => {

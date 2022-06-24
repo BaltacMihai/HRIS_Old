@@ -8,6 +8,24 @@ const ProjectAllocationDB = require("./../models").ProjectAllocation;
 const ProjectDB = require("./../models").Project;
 
 const controller = {
+  getName: async (req, res) => {
+    const { departmentId } = req.params;
+
+    await DepartmentDB.findOne({
+      attributes: ["name"],
+
+      where: {
+        id: departmentId,
+      },
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   getStats: async (req, res) => {
     const { Op } = require("sequelize");
 
@@ -57,7 +75,7 @@ const controller = {
     const { departmentId } = req.params;
 
     await DepartmentDB.findAll({
-      attributes: ["name", "icon"],
+      attributes: ["name", "icon", "id"],
       include: [
         {
           model: UserDB,

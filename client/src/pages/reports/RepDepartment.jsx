@@ -8,9 +8,8 @@ function RepDepartments() {
   let { departmentId } = useParams();
   let departmentStats = useDepartmentStats(departmentId);
 
-  console.log(departmentStats);
-
-  if (departmentStats)
+  if (departmentStats) {
+    const URL_PEOPLE = "/reports/users/" + departmentStats.id;
     return (
       <div className="page report_page report_page-dep">
         <Navbar current="reports" />
@@ -21,7 +20,10 @@ function RepDepartments() {
             </h1>
           </div>
           <div className="actions">
-            <button>See Members</button>
+            <Link to={URL_PEOPLE}>
+              <button>See Members</button>
+            </Link>
+
             <button>See Projects</button>
           </div>
           <div className="details">
@@ -75,7 +77,7 @@ function RepDepartments() {
         </div>
       </div>
     );
-  else {
+  } else {
     return (
       <div className="page report_page">
         <Navbar current="reports" />

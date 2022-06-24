@@ -65,6 +65,7 @@ function Main() {
             element={<RepDepartment />}
           />
           <Route path="/reports/users" element={<RepUser />} />
+          <Route path="/reports/users/:departmentId" element={<RepUser />} />
           <Route path="/user/:userId" element={<User />} />
         </Routes>
       </BrowserRouter>

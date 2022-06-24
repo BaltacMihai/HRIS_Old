@@ -1,3 +1,5 @@
+const DepartmentDB = require("./../models").Department;
+
 const EventAllocationDB = require("./../models").EventAllocation;
 const EventDB = require("./../models").Event;
 
@@ -66,6 +68,28 @@ const controller = {
   getAll: async (req, res) => {
     UserDB.findAll({
       attributes: ["id", "photo", "name", "specialRights"],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  getAllDepartment: async (req, res) => {
+    const { departmentId } = req.params;
+    UserDB.findAll({
+      attributes: ["id", "photo", "name", "specialRights"],
+      where: {
+        departmentId: departmentId,
+      },
+      include: [
+        {
+          model: DepartmentDB,
+          attributes: ["name"],
+        },
+      ],
     })
       .then((event) => {
         res.status(200).send(event);
