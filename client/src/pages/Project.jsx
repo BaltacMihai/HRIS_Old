@@ -388,7 +388,7 @@ function returnDepartaments(departments, projectId) {
         <p className="title">Departments</p>
 
         <span
-          className="icon-plus icon"
+          className="icon-plus icon js-pj"
           onClick={(e) => {
             displayStatusModal("addTeamLead", "flex");
           }}

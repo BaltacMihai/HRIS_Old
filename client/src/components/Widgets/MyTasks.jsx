@@ -49,15 +49,20 @@ function MyTasks({ id }) {
 }
 
 function mapTheTasks(tasks) {
-  return tasks.map((e) => (
-    <TaskCard
-      name={e.name}
-      project={e.project}
-      deadline={e.deadline}
-      id={e.id}
-      color={e.color}
-    />
-  ));
+  return tasks.map((e) => {
+    let today = formatDateForUser(new Date());
+
+    if (e.deadline > today)
+      return (
+        <TaskCard
+          name={e.name}
+          project={e.project}
+          deadline={e.deadline}
+          id={e.id}
+          color={e.color}
+        />
+      );
+  });
 }
 
 export default MyTasks;

@@ -11,11 +11,11 @@ import useUsersProjects from "../hooks/findUsersProjects";
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
-  let projects = null;
-  let rawProjects = useUsersProjects(userId);
+  let events = null;
+  let rawEvents = useUsersProjects(userId);
 
-  if (rawProjects && projects == null) {
-    projects = rawProjects.map((e) => {
+  if (rawEvents && events == null) {
+    events = rawEvents.map((e) => {
       return {
         id: e.Project.id,
         name: e.Project.name,
@@ -34,7 +34,7 @@ function Tasks({ userId }) {
     tableDetails = {
       type: "User",
       userId: userId,
-      projects: projects,
+      events: events,
     };
   }
   return (
@@ -132,7 +132,7 @@ function returnAddTask(tableDetails) {
           <div className="modal_label">
             <label htmlFor="task_project">Project</label>
             <select name="task_project" id="task_project">
-              {tableDetails.projects?.map((e) => {
+              {tableDetails.events?.map((e) => {
                 return <option value={e.id}>{e.name}</option>;
               })}
             </select>

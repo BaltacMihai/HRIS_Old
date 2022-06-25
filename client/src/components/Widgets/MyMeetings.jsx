@@ -17,7 +17,7 @@ function MyMeetings({ id }) {
 
   if (event && events == null) {
     events = event.map((e) => {
-      let date = new Date(e.Event.endingDate);
+      let date = new Date(e.Event.startingDate);
 
       return {
         id: e.eventId,
@@ -51,15 +51,20 @@ function MyMeetings({ id }) {
 
 function mapTheTasks(tasks) {
   //TODO: Filter the meetings
-  return tasks.map((e) => (
-    <MeetingsCard
-      name={e.name}
-      date={e.date}
-      hour={e.hour}
-      id={e.id}
-      color={e.color}
-    />
-  ));
+  return tasks.map((e) => {
+    let today = formatDateForUser(new Date());
+
+    if (e.date > today)
+      return (
+        <MeetingsCard
+          name={e.name}
+          date={e.date}
+          hour={e.hour}
+          id={e.id}
+          color={e.color}
+        />
+      );
+  });
 }
 
 export default MyMeetings;

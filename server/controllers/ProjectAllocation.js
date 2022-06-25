@@ -158,10 +158,6 @@ const controller = {
       return row.dataValues.id;
     });
 
-    console.log("---------");
-    console.log(departmentUsers);
-    console.log("---------");
-
     await ProjectAllocationDB.destroy({
       where: {
         projectId: req.body.projectId,

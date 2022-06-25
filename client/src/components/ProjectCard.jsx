@@ -7,11 +7,23 @@ function ProjectCard({ name, role, id, color }) {
     let projectColor = document.getElementById(name + "-" + id);
     projectColor.style.backgroundColor = color;
   });
+
+  switch (role) {
+    case "EMPLOYEE":
+      role = "Employee";
+      break;
+    case "TEAM_LEAD":
+      role = "Team Lead";
+      break;
+    case "PROJECT_MANAGER":
+      role = "Project Manager";
+      break;
+  }
   return (
     <Link to={location}>
       <div className="project_card" id={name + "-" + id}>
         <p className="project_card_title">{name}</p>
-        <p className="project_card_role">Rol: {role}</p>
+        <p className="project_card_role"> {role}</p>
       </div>
     </Link>
   );

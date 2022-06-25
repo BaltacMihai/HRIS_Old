@@ -147,12 +147,27 @@ function ProjectItem({ name, role, color, id, startingDate, endingDate }) {
     projectColor.style.backgroundColor = color;
   });
   let location = "/project/" + id;
-
+  switch (role) {
+    case "EMPLOYEE":
+      role = "Employee";
+      break;
+    case "TEAM_LEAD":
+      role = "Team Lead";
+      break;
+    case "PROJECT_MANAGER":
+      role = "Project Manager";
+      break;
+    case "CEO":
+      role = "CEO";
+      break;
+    default:
+      break;
+  }
   return (
     <Link to={location} className="project_item">
       <div className="project_item_color" id={name + "-" + id}></div>
       <p className="project_item_name">{name}</p>
-      <p className="project_item_role">Role: {role}</p>
+      <p className="project_item_role">{role}</p>
       <div className="project_item_dates">
         <div className="project_item_dates_date">{startingDate}</div>
         <div className="project_item_dates_date">{endingDate}</div>

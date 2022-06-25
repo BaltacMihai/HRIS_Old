@@ -24,7 +24,7 @@ function RepDepartments() {
               <button>See Members</button>
             </Link>
 
-            <button>See Projects</button>
+            {/* <button>See Projects</button> */}
           </div>
           <div className="details">
             <div className="row">
