@@ -16,15 +16,9 @@
     }
     &_editBtn {
       font-size: 15px;
-      padding: 0.5rem 1rem;
-      border-radius: $radius-10;
-      border: 0.5px solid $dark-blue;
-      cursor: pointer;
+      margin: 0.5rem 1rem;
 
-      &:hover {
-        background-color: $dark-blue;
-        color: $white;
-      }
+      cursor: pointer;
     }
   }
   &_container {

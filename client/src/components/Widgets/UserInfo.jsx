@@ -1,23 +1,21 @@
 import React from "react";
 import getUserById from "../../hooks/User";
 
-function UserInfo({ id }) {
+function UserInfo({ id, raport }) {
   const userInfo = getUserById(id);
 
   if (userInfo != undefined)
-    if (userInfo.length > 0) return returnUserInfoCard(userInfo[0]);
+    if (userInfo.length > 0) return returnUserInfoCard(userInfo[0], raport);
     else return returnLoadingInfoCard();
   else return returnLoadingInfoCard();
 }
 
-function returnUserInfoCard(userInfo) {
+function returnUserInfoCard(userInfo, raport) {
   return (
     <div className="widget userInfo">
       <div className="userInfo_header">
         <p className="userInfo_header_title">Personal Info</p>
-        {/* <div className="userInfo_header_editBtn">
-          <p>Edit Info</p>
-        </div> */}
+        {actionButtons(raport)}
       </div>
       <div className="userInfo_container">
         <div className="userInfo_container_infos">
@@ -51,6 +49,45 @@ function returnUserInfoCard(userInfo) {
       </div>
     </div>
   );
+}
+
+function actionButtons(raport) {
+  if (raport == true)
+    return (
+      <div className="row">
+        <div className="userInfo_header_editBtn">
+          <span
+            className="icon-pencil icon"
+            onClick={(e) => {
+              displayStatusModal("modifyUser", "flex");
+            }}
+          ></span>
+        </div>
+        <div className="userInfo_header_editBtn">
+          <span
+            className="icon-bin2 icon"
+            onClick={(e) => {
+              displayStatusModal("deleteUser", "flex");
+            }}
+          ></span>
+        </div>
+        <div className="userInfo_header_editBtn">
+          <span
+            className="icon-spinner11 icon"
+            onClick={(e) => {
+              displayStatusModal("resetPassword", "flex");
+            }}
+          ></span>
+        </div>
+      </div>
+    );
+  else return "";
+}
+
+function displayStatusModal(location, type) {
+  let statusModal = document.getElementById(location);
+
+  statusModal.style.display = type;
 }
 
 function returnLoadingInfoCard() {
