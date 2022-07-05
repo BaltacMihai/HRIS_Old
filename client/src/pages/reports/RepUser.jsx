@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import createUser from "../../hooks/createUser";
+import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 import useUsers from "../../hooks/getUsers";
 import useDeparmtent from "../../hooks/useDepartment";
 
@@ -9,14 +10,32 @@ function RepUser() {
   let { departmentId } = useParams();
   let user = useUsers(departmentId);
   let departmentName = useDeparmtent(departmentId);
+  let departmentStats = useDepartmentsStats();
+  let listOfDepartments;
+
+  if (departmentStats) {
+    listOfDepartments = departmentStats?.map((department) => {
+      return {
+        name: department.name,
+        id: department.id,
+      };
+    });
+  }
 
   if (user && departmentName) {
     if (departmentName.name == "FREE DAY") departmentName.name = "";
+    if (departmentName.name.length > 1)
+      listOfDepartments = [
+        {
+          name: departmentName.name,
+          id: departmentId,
+        },
+      ];
 
     return (
       <div className="page users">
         <Navbar current={"reports"} />
-        {returnContent(user, departmentName)}
+        {returnContent(user, departmentName, listOfDepartments)}
       </div>
     );
   } else {
@@ -28,11 +47,11 @@ function RepUser() {
   }
 }
 
-function returnContent(user, departmentName) {
+function returnContent(user, departmentName, listOfDepartments) {
   return (
     <div className="project_content">
       {returnProjectsContent(user, departmentName)}
-      {returnAddProject(user)}
+      {returnAddProject(listOfDepartments)}
     </div>
   );
 }
@@ -84,7 +103,7 @@ function mapUsers(user) {
   });
 }
 
-function returnAddProject() {
+function returnAddProject(listOfDepartments) {
   return (
     <div className="modal" id="addUser">
       <div className="modal_content">
@@ -122,7 +141,11 @@ function returnAddProject() {
         <div className="modal_label">
           <label htmlFor="user_department">Department</label>
 
-          <input type="text" name="user_department" id="user_department" />
+          <select name="user_department" id="user_department">
+            {listOfDepartments?.map((dep) => {
+              return <option value={dep.id}>{dep.name}</option>;
+            })}
+          </select>
         </div>
         <div className="modal_label">
           <label htmlFor="user_specialRights">Special Rights</label>
