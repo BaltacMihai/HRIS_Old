@@ -172,6 +172,26 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  put: async (req, res) => {
+    DepartmentDB.update(
+      {
+        name: req.body.name,
+        icon: req.body.icon,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;
