@@ -192,6 +192,22 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  delete: async (req, res) => {
+    const { departmentId } = req.params;
+    await DepartmentDB.destroy({
+      where: {
+        id: departmentId,
+      },
+    })
+
+      .then((event) => {
+        res.status(200).send(event.toString());
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

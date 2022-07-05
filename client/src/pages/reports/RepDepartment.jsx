@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { BarChart } from "../../components/Charts/BarCompare2Values";
 import Navbar from "../../components/Navbar";
+import deleteDepartment from "../../hooks/deleteDepartment";
 import useDepartmentStats from "../../hooks/getDepartmentStats";
 import putDepartment from "../../hooks/putDepartment";
 
@@ -199,7 +200,12 @@ function returnDeleteModal(departmentId) {
           >
             Cancel
           </p>
-          <p className="accept" onClick={(e) => {}}>
+          <p
+            className="accept"
+            onClick={(e) => {
+              deleteDepartment(departmentId);
+            }}
+          >
             Yes
           </p>
         </div>
