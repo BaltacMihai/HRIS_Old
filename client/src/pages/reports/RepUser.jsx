@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import Navbar from "../../components/Navbar";
+import createUser from "../../hooks/createUser";
 import useUsers from "../../hooks/getUsers";
 import useDeparmtent from "../../hooks/useDepartment";
 
@@ -96,45 +97,37 @@ function returnAddProject() {
 
         <div className="title">Add User</div>
         <div className="modal_label">
-          <label htmlFor="task_name">Name</label>
-          <input type="text" name="task_name" id="task_name" />
+          <label htmlFor="user_name">Name</label>
+          <input type="text" name="user_name" id="user_name" />
         </div>
         <div className="modal_label">
-          <label htmlFor="task_description">Email</label>
-          <input type="email" name="task_name" id="task_name" />
+          <label htmlFor="user_email">Email</label>
+          <input type="email" name="user_email" id="user_email" />
+        </div>
+        <div className="modal_label">
+          <label htmlFor="user_phone">Phone</label>
+          <input type="phone" name="user_phone" id="user_phone" />
         </div>
 
         <div className="modal_label">
-          <label htmlFor="task_starting_date">Photo</label>
+          <label htmlFor="user_photo">Photo</label>
 
-          <input
-            type="link"
-            name="task_starting_date"
-            id="task_starting_date"
-          />
+          <input type="link" name="user_photo" id="user_photo" />
         </div>
         <div className="modal_label">
-          <label htmlFor="task_starting_date">Free days:</label>
+          <label htmlFor="user_daysOff">Free days:</label>
 
-          <input
-            type="number"
-            name="task_starting_date"
-            id="task_starting_date"
-          />
+          <input type="number" name="user_daysOff" id="user_daysOff" />
         </div>
         <div className="modal_label">
-          <label htmlFor="task_starting_date">Department</label>
+          <label htmlFor="user_department">Department</label>
 
-          <input
-            type="text"
-            name="task_starting_date"
-            id="task_starting_date"
-          />
+          <input type="text" name="user_department" id="user_department" />
         </div>
         <div className="modal_label">
-          <label htmlFor="task_starting_hour">Special Rights</label>
+          <label htmlFor="user_specialRights">Special Rights</label>
 
-          <select name="task_starting_hour" id="task_starting_hour">
+          <select name="user_specialRights" id="user_specialRights">
             <option value="EMPLOYEE">Employee</option>
             <option value="SUPPORT">Support</option>
             <option value="CEO">Ceo</option>
@@ -150,7 +143,27 @@ function returnAddProject() {
           >
             Cancel
           </p>
-          <p>Submit</p>
+          <p
+            className="accept"
+            onClick={(e) => {
+              let userInfo = {
+                departmentId: document.getElementById("user_department").value,
+                name: document.getElementById("user_name").value,
+                email: document.getElementById("user_email").value,
+                facebook: "none",
+                photo: document.getElementById("user_photo").value,
+                specialRights:
+                  document.getElementById("user_specialRights").value,
+                phone: document.getElementById("user_phone").value,
+                daysOff: document.getElementById("user_daysOff").value,
+              };
+
+              createUser(userInfo);
+              console.log(userInfo);
+            }}
+          >
+            Submit
+          </p>
         </div>
       </div>
     </div>

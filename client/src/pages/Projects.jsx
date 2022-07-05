@@ -251,7 +251,7 @@ function returnAddProject(userId) {
           <p
             className="accept"
             onClick={(e) => {
-              let generateEvent = {
+              let generateProject = {
                 userId: userId,
                 name: document.getElementById("task_name").value,
                 description: document.getElementById("task_description").value,
@@ -270,8 +270,7 @@ function returnAddProject(userId) {
                   " " +
                   document.getElementById("task_ending_hour").value,
               };
-              postProject(generateEvent);
-              console.log(generateEvent);
+              postProject(generateProject);
             }}
           >
             Submit

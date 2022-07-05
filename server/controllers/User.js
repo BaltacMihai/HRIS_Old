@@ -176,7 +176,7 @@ const controller = {
     })
       .then((event) => {
         event.dataValues = event.dataValues.EventAllocations?.map((e) => {
-          if (e.dataValues.Event.dataValues > lastMonth)
+          if (e.dataValues.Event.dataValues.endingDate > lastMonth)
             return e.dataValues.Event.dataValues.type;
         });
 
@@ -188,12 +188,41 @@ const controller = {
           if (e == "MEETING") noOfMeetings++;
         });
 
-        console.log(noOfTasks, noOfMeetings);
         event.dataValues.forEach((e) => {});
         event.dataValues.Task = noOfTasks;
         event.dataValues.Meeting = noOfMeetings;
 
         res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+
+  create: async (req, res) => {
+    let username = req.body.name.toLowerCase().replace(/\s/g, "");
+    let password = Math.random().toString(36).slice(2, 10);
+
+    UserDB.create({
+      departmentId: req.body.departmentId,
+      name: req.body.name,
+      email: req.body.email,
+      facebook: req.body.facebook,
+      username: username,
+      password: password,
+      photo: req.body.photo,
+      specialRights: req.body.specialRights,
+      phone: req.body.phone,
+      daysOff: req.body.daysOff,
+    })
+      .then((user) => {
+        res.status(200).send({
+          username: user.username,
+          password: user.password,
+          email: user.email,
+          name: user.name,
+        });
       })
       .catch((error) => {
         console.log(error);

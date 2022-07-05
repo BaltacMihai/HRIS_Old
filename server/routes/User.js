@@ -9,5 +9,6 @@ router.get("/", userController.getAll);
 router.get("/department/:departmentId", userController.getAllDepartment);
 router.get("/report/:userId", userController.getStats);
 router.get("/report/:userId/last", userController.getStatsLastMonth);
+router.post("/create", userController.create);
 
 module.exports = router;

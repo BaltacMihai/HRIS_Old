@@ -126,12 +126,20 @@ function returnProjectStats(projectInfo) {
           <div className="row">
             <p id="title">{projectInfo.title}</p>
 
-            <span
-              className="icon-pencil icon"
-              onClick={(e) => {
-                displayStatusModal("modifyProject", "flex");
-              }}
-            ></span>
+            <div className="icons">
+              <span
+                className="icon-pencil icon"
+                onClick={(e) => {
+                  displayStatusModal("modifyProject", "flex");
+                }}
+              ></span>
+              <span
+                className="icon-bin2 icon"
+                onClick={(e) => {
+                  displayStatusModal("deleteProject", "flex");
+                }}
+              ></span>
+            </div>
           </div>
         </div>
         <p className="card_description">{projectInfo.description}.</p>
@@ -144,7 +152,7 @@ function returnProjectStats(projectInfo) {
               }}
             >
               <span className="icon-plus icon"></span>
-              <p>Add Project Manag</p>
+              <p>Add Project Manager</p>
             </div>
           </p>
           <p className="card_item">
