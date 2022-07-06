@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from "react";
 
-export default function useTasks(userId, startingDate, endingDate) {
+export default function useTasks(userId, startingDate, endingDate, role) {
   const [event, setEvent] = useState(null);
-  const URL =
-    "http://localhost:3031/api/events-allocation/" +
-    userId +
-    "/" +
-    startingDate +
-    " 00:00:00" +
-    "/" +
-    endingDate +
-    " 23:59:59" +
-    "/TASK";
+
+  let URL;
+  if (role != "SUPPORT")
+    URL =
+      "http://localhost:3031/api/events-allocation/" +
+      userId +
+      "/" +
+      startingDate +
+      " 00:00:00" +
+      "/" +
+      endingDate +
+      " 23:59:59" +
+      "/TASK";
+  else {
+    URL = "http://localhost:3031/api/events-allocation/" + "TASK";
+  }
 
   useEffect(() => {
     if (event == null)

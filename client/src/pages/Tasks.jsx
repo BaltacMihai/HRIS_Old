@@ -12,6 +12,7 @@ function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
   let events = null;
+
   let rawEvents = useUsersProjects(userId);
 
   if (rawEvents && events == null) {

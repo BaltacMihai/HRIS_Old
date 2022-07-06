@@ -124,7 +124,33 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  findAllBySpecificEvent: async (req, res) => {
+    const { Op } = require("@sequelize/core");
+    const { type } = req.params;
 
+    EventAllocationDB.findAll({
+      include: [
+        {
+          model: EventDB,
+          attributes: ["type", "name", "startingDate", "endingDate", "label"],
+          where: {
+            type: {
+              [Op.eq]: type,
+            },
+          },
+          include: [{ model: ProjectDB, attributes: ["color", "name"] }],
+        },
+      ],
+      attributes: ["eventId"],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
   postFreeDay: async (req, res) => {
     EventDB.create({
       name: "Off day",

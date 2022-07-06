@@ -5,13 +5,18 @@ import useUsersProjects from "../hooks/findUsersProjects";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
+import Cookies from "universal-cookie";
 
 function TasksTable({ id }) {
+  const cookies = new Cookies();
+  let user = cookies.get("user");
+
   let currentDate = new Date();
   let task = useTasks(
     id,
     formatDateForDatabase(currentDate) - 1,
-    formatDateForDatabase(generateMonthDates().lastDay)
+    formatDateForDatabase(generateMonthDates().lastDay),
+    user.specialRights
   );
   let tasks = null;
 
@@ -30,8 +35,12 @@ function TasksTable({ id }) {
         status: e.Event.label,
       };
     });
+    let dict = new Map();
+    tasks.forEach((taskOne) => {
+      dict.set(taskOne.id, taskOne);
+    });
+    tasks = Array.from(dict.values());
   }
-  console.log(tasks);
   if (tasks)
     return (
       <div className="task_table">

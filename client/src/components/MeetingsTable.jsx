@@ -5,13 +5,18 @@ import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import { Link } from "react-router-dom";
+import Cookies from "universal-cookie";
 
 function MeetingsTable({ id }) {
+  const cookies = new Cookies();
+  let user = cookies.get("user");
+
   let currentDate = new Date();
   let task = useMeetings(
     id,
     formatDateForDatabase(currentDate) - 1,
-    formatDateForDatabase(generateMonthDates().lastDay)
+    formatDateForDatabase(generateMonthDates().lastDay),
+    user.specialRights
   );
   let tasks = null;
 
@@ -28,8 +33,12 @@ function MeetingsTable({ id }) {
         hour: formatHourForUser(date),
       };
     });
+    let dict = new Map();
+    tasks.forEach((taskOne) => {
+      dict.set(taskOne.id, taskOne);
+    });
+    tasks = Array.from(dict.values());
   }
-  console.log(tasks);
   if (tasks)
     return (
       <div className="meeting_table">

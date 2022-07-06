@@ -11,6 +11,7 @@ router.get(
   "/:userId/:startingDate/:endingDate/:type",
   eventAllocationController.findSpecificEventsByIntervalAndUser
 );
+router.get("/:type", eventAllocationController.findAllBySpecificEvent);
 
 router.post("/post-free-day", eventAllocationController.postFreeDay);
 

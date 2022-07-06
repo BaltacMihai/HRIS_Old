@@ -52,8 +52,6 @@ function GetOtherProjects(userId) {
   let myProject = useOtherProjects(userId);
   let myProjects = null;
 
-  console.log(myProject);
-
   if (myProject && myProjects == null) {
     myProjects = myProject.map((e) => {
       let endingDate = new Date(e.endingDate);
@@ -64,7 +62,7 @@ function GetOtherProjects(userId) {
         name: e.name,
 
         color: e.color,
-        role: "UnEnrolled",
+        role: "",
         startingDate: formatDateForUser(startingDate),
         endingDate: formatDateForUser(endingDate),
       };
@@ -98,21 +96,34 @@ function returnActions() {
 
 function returnProjectsContent(myProjects, otherProjects, role) {
   if (myProjects && otherProjects)
-    return (
-      <div className="project_content_current">
-        <div className="header">
-          <h2>Your Projects</h2>
-          {returnAditionallActions(role)}
-        </div>
-        <div className="project_content_current_projects">
-          {mapMyProjects(myProjects)}
-        </div>
-        {/* <h2>Other Projects:</h2>
+    if (role != "SUPPORT") {
+      return (
+        <div className="project_content_current">
+          <div className="header">
+            <h2>Your Projects</h2>
+            {returnAditionallActions(role)}
+          </div>
+          <div className="project_content_current_projects">
+            {mapMyProjects(myProjects)}
+          </div>
+          {/* <h2>Other Projects:</h2>
         <div className="project_content_current_projects">
           {mapMyProjects(otherProjects)}
         </div> */}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className="project_content_current">
+          <div className="header">
+            <h2>Projects:</h2>
+          </div>
+          <div className="project_content_current_projects">
+            {mapMyProjects(otherProjects)}
+          </div>
+        </div>
+      );
+    }
   else {
     return (
       <div className="project_content_current">
