@@ -117,6 +117,7 @@ function returnProjectsContent(myProjects, otherProjects, role) {
         <div className="project_content_current">
           <div className="header">
             <h2>Projects:</h2>
+            {returnAditionallActions(role)}
           </div>
           <div className="project_content_current_projects">
             {mapMyProjects(otherProjects)}
