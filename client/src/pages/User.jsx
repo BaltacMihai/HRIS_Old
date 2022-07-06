@@ -14,6 +14,7 @@ import displayModal from "../utils/displayModal";
 import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import getUserById from "../hooks/User";
 import putUser from "../hooks/putUser";
+import deleteUser from "../hooks/deleteUser";
 
 function User() {
   let { userId } = useParams();
@@ -219,7 +220,12 @@ function returnDeleteModal(userId) {
           >
             Cancel
           </p>
-          <p className="accept" onClick={(e) => {}}>
+          <p
+            className="accept"
+            onClick={(e) => {
+              deleteUser(userId);
+            }}
+          >
             Yes
           </p>
         </div>
