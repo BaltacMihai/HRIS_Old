@@ -7,15 +7,19 @@ import postProject from "../hooks/postProject";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import displayModal from "../utils/displayModal";
+import Cookies from "universal-cookie";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
   let otherProjects = GetOtherProjects(userId);
 
+  const cookies = new Cookies();
+  let user = cookies.get("user");
+
   return (
     <div className="page projects">
       <Navbar current={"projects"} />
-      {returnContent(myProjects, otherProjects, userId)}
+      {returnContent(myProjects, otherProjects, user)}
     </div>
   );
 }
@@ -69,12 +73,12 @@ function GetOtherProjects(userId) {
   }
 }
 
-function returnContent(myProjects, otherProjects, userId) {
+function returnContent(myProjects, otherProjects, user) {
   return (
     <div className="project_content">
       {/* {returnActions()} */}
-      {returnProjectsContent(myProjects, otherProjects)}
-      {returnAddProject(userId)}
+      {returnProjectsContent(myProjects, otherProjects, user.specialRights)}
+      {returnAddProject(user)}
     </div>
   );
 }
@@ -92,18 +96,13 @@ function returnActions() {
   );
 }
 
-function returnProjectsContent(myProjects, otherProjects) {
+function returnProjectsContent(myProjects, otherProjects, role) {
   if (myProjects && otherProjects)
     return (
       <div className="project_content_current">
         <div className="header">
           <h2>Your Projects</h2>
-          <span
-            className="icon-plus icon"
-            onClick={(e) => {
-              displayStatusModal("addProject", "flex");
-            }}
-          ></span>
+          {returnAditionallActions(role)}
         </div>
         <div className="project_content_current_projects">
           {mapMyProjects(myProjects)}
@@ -122,6 +121,20 @@ function returnProjectsContent(myProjects, otherProjects) {
         <h2>Other Projects:</h2>
         <div className="project_content_current_projects"></div>
       </div>
+    );
+  }
+}
+
+function returnAditionallActions(role) {
+  console.log(role);
+  if (role != "EMPLOYEE") {
+    return (
+      <span
+        className="icon-plus icon"
+        onClick={(e) => {
+          displayStatusModal("addProject", "flex");
+        }}
+      ></span>
     );
   }
 }
@@ -176,109 +189,121 @@ function ProjectItem({ name, role, color, id, startingDate, endingDate }) {
   );
 }
 
-function returnAddProject(userId) {
-  return (
-    <div className="modal" id="addProject">
-      <div className="modal_content">
-        <span
-          className="icon-cross close"
-          onClick={(e) => {
-            displayStatusModal("addProject", "none");
-          }}
-        ></span>
+function returnAddProject(user) {
+  let userId = user.id;
 
-        <div className="title">Add Project</div>
-        <div className="modal_label">
-          <label htmlFor="task_name">Name</label>
-          <input type="text" name="task_name" id="task_name" />
-        </div>
-        <div className="modal_label">
-          <label htmlFor="task_description">Description</label>
-          <textarea
-            name="task_description"
-            id="task_description"
-            cols="30"
-            rows="10"
-          ></textarea>
-        </div>
-        <div className="modal_label">
-          <label htmlFor="project_color">Color</label>
-          <input type="color" name="project_color" id="project_color" />
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="task_starting_date">Starting Date</label>
-
-            <input
-              type="date"
-              name="task_starting_date"
-              id="task_starting_date"
-            />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="task_starting_hour">Starting Hour</label>
-
-            <input
-              type="time"
-              name="task_starting_hour"
-              id="task_starting_hour"
-            />
-          </div>
-        </div>
-
-        <div className=" fieldset">
-          <div className="modal_label">
-            <label htmlFor="task_ending_date">Ending Date</label>
-
-            <input type="date" name="task_ending_date" id="task_ending_date" />
-          </div>
-          <div className="modal_label">
-            <label htmlFor="task_ending_hour">Ending Hour</label>
-
-            <input type="time" name="task_ending_hour" id="task_ending_hour" />
-          </div>
-        </div>
-        <div className="modal_actions">
-          <p
-            className="cancel"
+  if (user.specialRights != "EMPLOYEE")
+    return (
+      <div className="modal" id="addProject">
+        <div className="modal_content">
+          <span
+            className="icon-cross close"
             onClick={(e) => {
               displayStatusModal("addProject", "none");
             }}
-          >
-            Cancel
-          </p>
-          <p
-            className="accept"
-            onClick={(e) => {
-              let generateProject = {
-                userId: userId,
-                name: document.getElementById("task_name").value,
-                description: document.getElementById("task_description").value,
-                color: document.getElementById("project_color").value,
+          ></span>
 
-                startingDate:
-                  formatDateForDatabase(
-                    document.getElementById("task_starting_date").value
-                  ) +
-                  " " +
-                  document.getElementById("task_starting_hour").value,
-                endingDate:
-                  formatDateForDatabase(
-                    document.getElementById("task_ending_date").value
-                  ) +
-                  " " +
-                  document.getElementById("task_ending_hour").value,
-              };
-              postProject(generateProject);
-            }}
-          >
-            Submit
-          </p>
+          <div className="title">Add Project</div>
+          <div className="modal_label">
+            <label htmlFor="task_name">Name</label>
+            <input type="text" name="task_name" id="task_name" />
+          </div>
+          <div className="modal_label">
+            <label htmlFor="task_description">Description</label>
+            <textarea
+              name="task_description"
+              id="task_description"
+              cols="30"
+              rows="10"
+            ></textarea>
+          </div>
+          <div className="modal_label">
+            <label htmlFor="project_color">Color</label>
+            <input type="color" name="project_color" id="project_color" />
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_starting_date">Starting Date</label>
+
+              <input
+                type="date"
+                name="task_starting_date"
+                id="task_starting_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_starting_hour">Starting Hour</label>
+
+              <input
+                type="time"
+                name="task_starting_hour"
+                id="task_starting_hour"
+              />
+            </div>
+          </div>
+
+          <div className=" fieldset">
+            <div className="modal_label">
+              <label htmlFor="task_ending_date">Ending Date</label>
+
+              <input
+                type="date"
+                name="task_ending_date"
+                id="task_ending_date"
+              />
+            </div>
+            <div className="modal_label">
+              <label htmlFor="task_ending_hour">Ending Hour</label>
+
+              <input
+                type="time"
+                name="task_ending_hour"
+                id="task_ending_hour"
+              />
+            </div>
+          </div>
+          <div className="modal_actions">
+            <p
+              className="cancel"
+              onClick={(e) => {
+                displayStatusModal("addProject", "none");
+              }}
+            >
+              Cancel
+            </p>
+            <p
+              className="accept"
+              onClick={(e) => {
+                let generateProject = {
+                  userId: userId,
+                  name: document.getElementById("task_name").value,
+                  description:
+                    document.getElementById("task_description").value,
+                  color: document.getElementById("project_color").value,
+
+                  startingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_starting_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_starting_hour").value,
+                  endingDate:
+                    formatDateForDatabase(
+                      document.getElementById("task_ending_date").value
+                    ) +
+                    " " +
+                    document.getElementById("task_ending_hour").value,
+                };
+                postProject(generateProject);
+              }}
+            >
+              Submit
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    );
 }
 function displayStatusModal(location, type) {
   let statusModal = document.getElementById(location);

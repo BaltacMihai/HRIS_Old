@@ -4,11 +4,13 @@ import { BarChart } from "../../components/Charts/BarDepartments";
 import Navbar from "../../components/Navbar";
 import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 import postDepartment from "../../hooks/postDepartment";
+import Cookies from "universal-cookie";
 
 function RepDepartments() {
   let departmentStats = useDepartmentsStats();
 
-  console.log(departmentStats);
+  const cookies = new Cookies();
+  let user = cookies.get("user");
 
   if (departmentStats)
     return (
@@ -27,13 +29,7 @@ function RepDepartments() {
             <div className="list">
               <div className="row align-center space-between ">
                 <p className="title">Departments: </p>
-
-                <span
-                  className="icon-plus icon"
-                  onClick={(e) => {
-                    displayStatusModal("addDepartment", "flex");
-                  }}
-                ></span>
+                {returnAddDepartmentButton(user.specialRights)}
               </div>
               <div className="departments">
                 {returnDepartments(departmentStats)}
@@ -59,6 +55,18 @@ function RepDepartments() {
       </div>
     );
   }
+}
+
+function returnAddDepartmentButton(role) {
+  if (role === "SUPPORT")
+    return (
+      <span
+        className="icon-plus icon"
+        onClick={(e) => {
+          displayStatusModal("addDepartment", "flex");
+        }}
+      ></span>
+    );
 }
 
 function returnDepartments(details) {

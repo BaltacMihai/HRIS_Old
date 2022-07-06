@@ -107,6 +107,7 @@ const controller = {
                   startingDate: project.startingDate,
                   endingDate: project.endingDate,
                   projectManag: user.name,
+                  projectManagId: user.id,
                 });
               })
               .catch((error) => {

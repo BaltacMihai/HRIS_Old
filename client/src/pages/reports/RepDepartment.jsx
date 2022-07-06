@@ -5,10 +5,13 @@ import Navbar from "../../components/Navbar";
 import deleteDepartment from "../../hooks/deleteDepartment";
 import useDepartmentStats from "../../hooks/getDepartmentStats";
 import putDepartment from "../../hooks/putDepartment";
+import Cookies from "universal-cookie";
 
 function RepDepartments() {
   let { departmentId } = useParams();
   let departmentStats = useDepartmentStats(departmentId);
+  const cookies = new Cookies();
+  let user = cookies.get("user");
 
   if (departmentStats) {
     const URL_PEOPLE = "/reports/users/" + departmentStats.id;
@@ -22,20 +25,8 @@ function RepDepartments() {
             <h1 className="title">
               {departmentStats.name} <span>department reports </span>
             </h1>
-            <div className="actions">
-              <span
-                className="icon-pencil icon mr-25px"
-                onClick={(e) => {
-                  displayStatusModal("modifyDepartment", "flex");
-                }}
-              ></span>
-              <span
-                className="icon-bin2 icon "
-                onClick={(e) => {
-                  displayStatusModal("deleteDepartmentModal", "flex");
-                }}
-              ></span>
-            </div>
+
+            {returnOptions(user.specialRights)}
           </div>
           <div className="actions">
             <Link to={URL_PEOPLE}>
@@ -113,6 +104,26 @@ function RepDepartments() {
       </div>
     );
   }
+}
+
+function returnOptions(role) {
+  if (role == "SUPPORT")
+    return (
+      <div className="actions">
+        <span
+          className="icon-pencil icon mr-25px"
+          onClick={(e) => {
+            displayStatusModal("modifyDepartment", "flex");
+          }}
+        ></span>
+        <span
+          className="icon-bin2 icon "
+          onClick={(e) => {
+            displayStatusModal("deleteDepartmentModal", "flex");
+          }}
+        ></span>
+      </div>
+    );
 }
 
 function returnModifyDepartment(id, name, icon) {

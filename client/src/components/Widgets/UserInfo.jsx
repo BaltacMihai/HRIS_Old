@@ -1,21 +1,26 @@
 import React from "react";
 import getUserById from "../../hooks/User";
+import Cookies from "universal-cookie";
 
 function UserInfo({ id, raport }) {
   const userInfo = getUserById(id);
 
+  const cookies = new Cookies();
+  let user = cookies.get("user");
+
   if (userInfo != undefined)
-    if (userInfo.length > 0) return returnUserInfoCard(userInfo[0], raport);
+    if (userInfo.length > 0)
+      return returnUserInfoCard(userInfo[0], raport, user.specialRights);
     else return returnLoadingInfoCard();
   else return returnLoadingInfoCard();
 }
 
-function returnUserInfoCard(userInfo, raport) {
+function returnUserInfoCard(userInfo, raport, role) {
   return (
     <div className="widget userInfo">
       <div className="userInfo_header">
         <p className="userInfo_header_title">Personal Info</p>
-        {actionButtons(raport)}
+        {actionButtons(raport, role)}
       </div>
       <div className="userInfo_container">
         <div className="userInfo_container_infos">
@@ -51,8 +56,8 @@ function returnUserInfoCard(userInfo, raport) {
   );
 }
 
-function actionButtons(raport) {
-  if (raport == true)
+function actionButtons(raport, role) {
+  if (raport == true && role === "SUPPORT")
     return (
       <div className="row">
         <div className="userInfo_header_editBtn">

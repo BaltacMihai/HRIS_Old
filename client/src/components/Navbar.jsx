@@ -4,12 +4,18 @@ import Cookies from "universal-cookie";
 
 function Navbar({ current }) {
   const cookies = new Cookies();
+  let user = cookies.get("user");
 
   useEffect(() => {
     if (current) {
       const active = document.getElementById(current);
 
       active.classList.add("navbar_options_option-active");
+      if (user.specialRights === "EMPLOYEE") {
+        let logoutButton = document.getElementById("logOut");
+        console.log(logoutButton);
+        if (logoutButton) logoutButton.style.marginTop = "59vh";
+      }
     }
   });
   return (
@@ -44,12 +50,7 @@ function Navbar({ current }) {
             <p>Projects</p>
           </div>
         </Link>
-        <Link to="/reports">
-          <div className="navbar_options_option" id="reports">
-            <span className="icon-stats-bars"></span>
-            <p>Reports</p>
-          </div>
-        </Link>
+        {returnNavbar(user.specialRights)}
         {/* <Link to="/calendar">
           <div className="navbar_options_option" id="calendar">
             <span className="icon-calendar"></span>
@@ -70,6 +71,19 @@ function Navbar({ current }) {
       </div>
     </div>
   );
+}
+
+function returnNavbar(role) {
+  if (role != "EMPLOYEE") {
+    return (
+      <Link to="/reports">
+        <div className="navbar_options_option" id="reports">
+          <span className="icon-stats-bars"></span>
+          <p>Reports</p>
+        </div>
+      </Link>
+    );
+  }
 }
 
 export default Navbar;

@@ -58,19 +58,28 @@ function Main() {
             path="/tasks/:projectId/:departmentId"
             element={<Tasks userId={username} />}
           />
-          <Route path="/reports" element={<Reports />} />
-          <Route path="/reports/departments" element={<RepDepartments />} />
-          <Route
-            path="/reports/departments/:departmentId"
-            element={<RepDepartment />}
-          />
-          <Route path="/reports/users" element={<RepUser />} />
-          <Route path="/reports/users/:departmentId" element={<RepUser />} />
-          <Route path="/user/:userId" element={<User />} />
         </Routes>
+        {returnUserPosibilities(user.specialRights)}
       </BrowserRouter>
     );
   }
+}
+
+function returnUserPosibilities(role) {
+  if (role != "EMPLOYEE")
+    return (
+      <Routes>
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/reports/departments" element={<RepDepartments />} />
+        <Route
+          path="/reports/departments/:departmentId"
+          element={<RepDepartment />}
+        />
+        <Route path="/reports/users" element={<RepUser />} />
+        <Route path="/reports/users/:departmentId" element={<RepUser />} />
+        <Route path="/user/:userId" element={<User />} />
+      </Routes>
+    );
 }
 
 export default Main;

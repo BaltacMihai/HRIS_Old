@@ -6,8 +6,11 @@ import deleteProjectDepartment from "../hooks/deleteProjectDepartment";
 import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
+import Cookies from "universal-cookie";
 
 function ProjectDepartment() {
+  const cookies = new Cookies();
+  let user = cookies.get("user");
   let { projectId, departmentId } = useParams();
 
   let rawDepartmentStats = useProjectDepartment(projectId, departmentId);
@@ -17,6 +20,7 @@ function ProjectDepartment() {
   let departmentStats = null;
 
   if (rawProjectInfo && rawDepartmentStats && departmentStats == null) {
+    console.log(rawProjectInfo);
     departmentStats = {
       id: departmentId,
       project: rawProjectInfo.name,
@@ -24,6 +28,8 @@ function ProjectDepartment() {
       name: rawDepartmentStats[0].User.Department.name,
       teamLead: rawDepartmentStats[0].User.name,
     };
+    if (rawProjectInfo.projectManagId === user.id)
+      user.specialRights = "PROJECT_MANAGER";
   } else {
     departmentStats = {
       project: "ING",
@@ -43,6 +49,8 @@ function ProjectDepartment() {
         name: member.User.name,
       };
     });
+
+    if (user.id == members[0].id) user.specialRights = "TEAM_LEAD";
   } else {
     members = [
       {
@@ -68,19 +76,25 @@ function ProjectDepartment() {
   return (
     <div className="page project_page department_page">
       <Navbar current="projects" />
-      {returnProjectPage(departmentStats, members, urlBuilder, projectId)}
+      {returnProjectPage(departmentStats, members, urlBuilder, projectId, user)}
     </div>
   );
 }
 
-function returnProjectPage(departmentStats, members, urlBuilder, projectId) {
+function returnProjectPage(
+  departmentStats,
+  members,
+  urlBuilder,
+  projectId,
+  user
+) {
   return (
     <div className="project_page_content">
-      {returnDepartmentStats(departmentStats)}
+      {returnDepartmentStats(departmentStats, user)}
 
       <div className="row">
         {returnEvents(urlBuilder)}
-        {returnMembers(members)}
+        {returnMembers(members, user)}
         {returnMembersModal(members, projectId)}
         {returnDeleteModal(departmentStats.id, projectId)}
       </div>
@@ -88,7 +102,7 @@ function returnProjectPage(departmentStats, members, urlBuilder, projectId) {
   );
 }
 
-function returnDepartmentStats(departmentStats) {
+function returnDepartmentStats(departmentStats, user) {
   return (
     <div className="card">
       <div className="row">
@@ -102,13 +116,7 @@ function returnDepartmentStats(departmentStats) {
             </p>
           </div>
         </div>
-        <span
-          className="icon-bin2 icon"
-          id="bin"
-          onClick={(e) => {
-            displayStatusModal("deleteDepartment", "flex");
-          }}
-        ></span>
+        {returnAdditionalActions(user.specialRights)}
         <p className="card_item ">
           <p>
             Team lead: <strong>{departmentStats.teamLead}</strong>
@@ -117,6 +125,20 @@ function returnDepartmentStats(departmentStats) {
       </div>
     </div>
   );
+}
+
+function returnAdditionalActions(role) {
+  if (role != "EMPLOYEE") {
+    return (
+      <span
+        className="icon-bin2 icon"
+        id="bin"
+        onClick={(e) => {
+          displayStatusModal("deleteDepartment", "flex");
+        }}
+      ></span>
+    );
+  }
 }
 
 function returnDeleteModal(departmentId, projectId) {
@@ -189,19 +211,14 @@ function returnEvents(urlBuilder) {
   );
 }
 
-function returnMembers(members) {
+function returnMembers(members, user) {
   return (
     <div className="section">
       <div className="row row-around">
         <p className="title" id="title">
           Members
         </p>
-        <span
-          className="icon-pencil icon"
-          onClick={(e) => {
-            displayStatusModal("seeMembers", "flex");
-          }}
-        ></span>
+        {returnAddMembersButton(user.specialRights)}
       </div>
       <div className="column">
         {members?.map((e) => {
@@ -211,6 +228,19 @@ function returnMembers(members) {
     </div>
   );
 }
+
+function returnAddMembersButton(role) {
+  if (role != "EMPLOYEE")
+    return (
+      <span
+        className="icon-pencil icon"
+        onClick={(e) => {
+          displayStatusModal("seeMembers", "flex");
+        }}
+      ></span>
+    );
+}
+
 function displayStatusModal(location, type) {
   let statusModal = document.getElementById(location);
 

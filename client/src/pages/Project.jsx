@@ -10,10 +10,13 @@ import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
+import Cookies from "universal-cookie";
 
 function Project({ userId }) {
   let { projectId } = useParams();
-  console.log(projectId);
+
+  const cookies = new Cookies();
+  let user = cookies.get("user");
 
   let rawProjectInfo = useProject(projectId);
   let rawProjectDepartments = useProjectDepartments(projectId);
@@ -23,6 +26,8 @@ function Project({ userId }) {
   let departments = null;
 
   if (rawProjectInfo && projectInfo == null) {
+    console.log(rawProjectInfo);
+
     projectInfo = {
       title: rawProjectInfo.name,
       description: rawProjectInfo.description,
@@ -35,6 +40,11 @@ function Project({ userId }) {
       startingDate: rawProjectInfo.startingDate,
       endingDate: rawProjectInfo.endingDate,
     };
+
+    if (rawProjectInfo.projectManagId === user.id)
+      user.specialRights = "PROJECT_MANAGER";
+
+    console.log(user);
   }
   if (rawProjectDepartments && departments == null) {
     departments = rawProjectDepartments?.map((e) => {
@@ -58,7 +68,12 @@ function Project({ userId }) {
     return (
       <div className="page project_page">
         <Navbar current="projects" />
-        {returnProjectPage(projectInfo, departments, projectId)}
+        {returnProjectPage(
+          projectInfo,
+          departments,
+          projectId,
+          user.specialRights
+        )}
         {returnModifyMeeting(projectInfo, projectId)}
         {returnDeparment(projectId)}
       </div>
@@ -72,18 +87,35 @@ function Project({ userId }) {
   }
 }
 
-function returnProjectPage(projectInfo, departments, projectId) {
-  return (
-    <div className="project_page_content">
-      {returnProjectStats(projectInfo)}
-      {returnDepartaments(departments, projectId)}
-      {returnMembersModal(projectId)}
-      {returnDeleteModal(projectId)}
-    </div>
-  );
+function returnProjectPage(projectInfo, departments, projectId, userRole) {
+  if (userRole === "CEO" || userRole === "SUPPORT")
+    return (
+      <div className="project_page_content">
+        {returnProjectStats(projectInfo, userRole)}
+        {returnDepartaments(departments, projectId, userRole)}
+        {returnMembersModal(projectId)}
+        {returnDeleteModal(projectId)}
+      </div>
+    );
+  else if (userRole === "PROJECT_MANAGER") {
+    return (
+      <div className="project_page_content">
+        {returnProjectStats(projectInfo, userRole)}
+        {returnDepartaments(departments, projectId, userRole)}
+        {returnMembersModal(projectId)}
+      </div>
+    );
+  } else {
+    return (
+      <div className="project_page_content">
+        {returnProjectStats(projectInfo, userRole)}
+        {returnDepartaments(departments, projectId, userRole)}
+      </div>
+    );
+  }
 }
 
-function returnProjectStats(projectInfo) {
+function returnProjectStats(projectInfo, role) {
   console.log(projectInfo);
   if (projectInfo.projectManag != "None")
     return (
@@ -92,20 +124,7 @@ function returnProjectStats(projectInfo) {
           <div className="card_title">
             <p id="title">{projectInfo.title}</p>
           </div>
-          <div className="icons">
-            <span
-              className="icon-pencil icon"
-              onClick={(e) => {
-                displayStatusModal("modifyProject", "flex");
-              }}
-            ></span>
-            <span
-              className="icon-bin2 icon"
-              onClick={(e) => {
-                displayStatusModal("deleteProject", "flex");
-              }}
-            ></span>
-          </div>
+          {returnProjectFunctions(role)}
         </div>
 
         <p className="card_description">{projectInfo.description}.</p>
@@ -159,6 +178,39 @@ function returnProjectStats(projectInfo) {
             Period : <strong> {projectInfo.period}</strong>
           </p>
         </div>
+      </div>
+    );
+  }
+}
+
+function returnProjectFunctions(role) {
+  console.log(role);
+  if (role === "CEO" || role === "SUPPORT")
+    return (
+      <div className="icons">
+        <span
+          className="icon-pencil icon"
+          onClick={(e) => {
+            displayStatusModal("modifyProject", "flex");
+          }}
+        ></span>
+        <span
+          className="icon-bin2 icon"
+          onClick={(e) => {
+            displayStatusModal("deleteProject", "flex");
+          }}
+        ></span>
+      </div>
+    );
+  else if (role === "PROJECT_MANAGER") {
+    return (
+      <div className="icons">
+        <span
+          className="icon-pencil icon"
+          onClick={(e) => {
+            displayStatusModal("modifyProject", "flex");
+          }}
+        ></span>
       </div>
     );
   }
@@ -389,18 +441,12 @@ function returnDeleteModal(projectId) {
   );
 }
 
-function returnDepartaments(departments, projectId) {
+function returnDepartaments(departments, projectId, role) {
   return (
     <div className="section">
       <div className="row row-department">
         <p className="title">Departments</p>
-
-        <span
-          className="icon-plus icon js-pj"
-          onClick={(e) => {
-            displayStatusModal("addTeamLead", "flex");
-          }}
-        ></span>
+        {returnDepartmentActions(role)}
       </div>
       <div className="row">
         {departments?.map((e) => {
@@ -409,6 +455,19 @@ function returnDepartaments(departments, projectId) {
       </div>
     </div>
   );
+}
+
+function returnDepartmentActions(role) {
+  console.log(role);
+  if (role != "EMPLOYEE")
+    return (
+      <span
+        className="icon-plus icon js-pj"
+        onClick={(e) => {
+          displayStatusModal("addTeamLead", "flex");
+        }}
+      ></span>
+    );
 }
 
 function returnDepartment(department, projectId) {

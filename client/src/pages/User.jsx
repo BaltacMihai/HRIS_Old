@@ -16,10 +16,14 @@ import getUserById from "../hooks/User";
 import putUser from "../hooks/putUser";
 import deleteUser from "../hooks/deleteUser";
 import resetPasswordUser from "../hooks/restPasswordUser";
+import Cookies from "universal-cookie";
 
 function User() {
   let { userId } = useParams();
   const userInfo = getUserById(userId);
+
+  const cookies = new Cookies();
+  let user = cookies.get("user");
 
   let departmentStats = useDepartmentsStats();
   let listOfDepartments;
@@ -47,9 +51,12 @@ function User() {
               <MyProjects id={userId} text={"His Projects"} />
             </div>
           </div>
-          {returnDeleteModal(userId)}
-          {returnModifyUser(listOfDepartments, userInfo[0])}
-          {returnResetPassword(userId)}
+          {returnModals(
+            listOfDepartments,
+            userInfo,
+            userId,
+            user.specialRights
+          )}
         </div>
       </div>
     );
@@ -71,6 +78,18 @@ function User() {
           {returnDeleteModal(userId)}
           {returnResetPassword(userId)}
         </div>
+      </div>
+    );
+  }
+}
+
+function returnModals(listOfDepartments, userInfo, userId, role) {
+  if (role === "SUPPORT") {
+    return (
+      <div>
+        {returnDeleteModal(userId)}
+        {returnModifyUser(listOfDepartments, userInfo[0])}
+        {returnResetPassword(userId)}
       </div>
     );
   }
