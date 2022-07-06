@@ -229,6 +229,68 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  put: async (req, res) => {
+    UserDB.update(
+      {
+        departmentId: req.body.departmentId,
+        name: req.body.name,
+        email: req.body.email,
+        facebook: req.body.facebook,
+        photo: req.body.photo,
+        specialRights: req.body.specialRights,
+        phone: req.body.phone,
+        daysOff: req.body.daysOff,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  delete: async (req, res) => {
+    const { userId } = req.params;
+    await UserDB.destroy({
+      where: {
+        id: userId,
+      },
+    })
+
+      .then((event) => {
+        res.status(200).send(event.toString());
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  changePassword: async (req, res) => {
+    let password = Math.random().toString(36).slice(2, 10);
+    UserDB.update(
+      {
+        password: password,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    )
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 };
 
 module.exports = controller;

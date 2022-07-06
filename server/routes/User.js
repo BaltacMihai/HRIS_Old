@@ -10,5 +10,8 @@ router.get("/department/:departmentId", userController.getAllDepartment);
 router.get("/report/:userId", userController.getStats);
 router.get("/report/:userId/last", userController.getStatsLastMonth);
 router.post("/create", userController.create);
+router.put("/put", userController.put);
+router.delete("/delete/:userId", userController.delete);
+router.put("/reset-password", userController.changePassword);
 
 module.exports = router;

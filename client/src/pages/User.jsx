@@ -13,6 +13,7 @@ import Raports from "../components/Widgets/Raports";
 import displayModal from "../utils/displayModal";
 import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import getUserById from "../hooks/User";
+import putUser from "../hooks/putUser";
 
 function User() {
   let { userId } = useParams();
@@ -173,11 +174,11 @@ function returnModifyUser(listOfDepartments, userInfo) {
           <p
             className="accept"
             onClick={(e) => {
-              let userInfo = {
+              let userInfoModified = {
+                id: userInfo.id,
                 departmentId: document.getElementById("user_department").value,
                 name: document.getElementById("user_name").value,
                 email: document.getElementById("user_email").value,
-                facebook: "none",
                 photo: document.getElementById("user_photo").value,
                 specialRights:
                   document.getElementById("user_specialRights").value,
@@ -185,7 +186,7 @@ function returnModifyUser(listOfDepartments, userInfo) {
                 daysOff: document.getElementById("user_daysOff").value,
               };
 
-              console.log(userInfo);
+              putUser(userInfoModified);
             }}
           >
             Submit
