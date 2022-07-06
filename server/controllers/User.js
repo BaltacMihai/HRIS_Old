@@ -273,6 +273,7 @@ const controller = {
   },
   changePassword: async (req, res) => {
     let password = Math.random().toString(36).slice(2, 10);
+
     UserDB.update(
       {
         password: password,
@@ -284,7 +285,23 @@ const controller = {
       }
     )
       .then((event) => {
-        res.status(200).send(event);
+        UserDB.findOne({
+          where: {
+            id: req.body.id,
+          },
+        })
+          .then((user) => {
+            res.status(200).send({
+              username: user.username,
+              password: user.password,
+              email: user.email,
+              name: user.name,
+            });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Server error" });
+          });
       })
       .catch((error) => {
         console.log(error);

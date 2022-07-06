@@ -1,23 +1,23 @@
-export default async function createUser(body) {
-  const URL = "http://localhost:3031/api/users/create";
+export default async function resetPasswordUser(body) {
+  const URL = "http://localhost:3031/api/users/reset-password";
 
   await fetch(URL, {
     headers: {
       "Content-Type": "application/json",
     },
-    method: "POST",
+    method: "PUT",
     body: JSON.stringify(body),
   })
     .then((res) => res.json())
     .then((result) => {
       let addresses = result.email;
-      let subject = "Congratulations, your account has been created";
+      let subject = "Your password has been successfully reset";
 
-      let emailBody = `Congratulations ${result.name},  
+      let emailBody = `Hello ${result.name},  
       
-      %0A %0A You can access your account using the username: %22 ${result.username} %22 and password: %22 ${result.password} %22.
+      %0A %0A Your password has been successfully reset, you can log in to the platform using the following credentials: %22 ${result.username}%22 and password: %22 ${result.password}%22.
 
-      %0A %0A For other details, please contact the support team.
+      %0A %0A This action was done by the Support team, if you did not request the password reset, please talk to any member of the support team for more details.
       
       %0A %0A - This email was created automatically -`;
 

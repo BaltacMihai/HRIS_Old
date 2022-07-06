@@ -15,6 +15,7 @@ import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import getUserById from "../hooks/User";
 import putUser from "../hooks/putUser";
 import deleteUser from "../hooks/deleteUser";
+import resetPasswordUser from "../hooks/restPasswordUser";
 
 function User() {
   let { userId } = useParams();
@@ -262,7 +263,12 @@ function returnResetPassword(userId) {
           >
             Cancel
           </p>
-          <p className="accept" onClick={(e) => {}}>
+          <p
+            className="accept"
+            onClick={(e) => {
+              resetPasswordUser({ id: userId });
+            }}
+          >
             Yes
           </p>
         </div>
