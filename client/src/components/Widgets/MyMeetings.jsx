@@ -10,7 +10,7 @@ function MyMeetings({ id }) {
   let currentDate = new Date();
   let event = useMeetings(
     id,
-    formatDateForDatabase(currentDate) - 1,
+    formatDateForDatabase(currentDate),
     formatDateForDatabase(generateMonthDates().lastDay)
   );
   let events = null;

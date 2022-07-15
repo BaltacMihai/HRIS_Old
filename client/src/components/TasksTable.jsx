@@ -30,16 +30,23 @@ function TasksTable({ id }) {
         name: e.Event.name,
         project: e.Event.Project.name,
         color: e.Event.Project.color,
-        ending: formatDateForUser(startingDate),
-        beggining: formatDateForUser(endingDate),
+        ending: formatDateForUser(endingDate),
+        beggining: formatDateForUser(startingDate),
         status: e.Event.label,
       };
     });
+
     let dict = new Map();
     tasks.forEach((taskOne) => {
       dict.set(taskOne.id, taskOne);
     });
     tasks = Array.from(dict.values());
+    tasks = tasks.sort((a, b) => {
+      let firstDate = new Date(a.ending);
+      let secondDate = new Date(a.ending);
+      if (firstDate > secondDate) return 1;
+      else return -1;
+    });
   }
   if (tasks)
     return (

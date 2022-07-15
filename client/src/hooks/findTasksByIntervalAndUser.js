@@ -18,7 +18,6 @@ export default function useTasks(userId, startingDate, endingDate, role) {
   else {
     URL = "http://localhost:3031/api/events-allocation/" + "TASK";
   }
-
   useEffect(() => {
     if (event == null)
       fetch(URL, {

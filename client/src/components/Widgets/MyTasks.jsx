@@ -9,7 +9,7 @@ function MyTasks({ id }) {
   let currentDate = new Date();
   let event = useTasks(
     id,
-    formatDateForDatabase(currentDate) - 1,
+    formatDateForDatabase(currentDate),
     formatDateForDatabase(generateMonthDates().lastDay)
   );
   let events = null;
