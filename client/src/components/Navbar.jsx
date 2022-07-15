@@ -11,11 +11,6 @@ function Navbar({ current }) {
       const active = document.getElementById(current);
 
       active.classList.add("navbar_options_option-active");
-      if (user.specialRights === "EMPLOYEE") {
-        let logoutButton = document.getElementById("logOut");
-        console.log(logoutButton);
-        if (logoutButton) logoutButton.style.marginTop = "59vh";
-      }
     }
   });
   return (
@@ -80,6 +75,15 @@ function returnNavbar(role) {
         <div className="navbar_options_option" id="reports">
           <span className="icon-stats-bars"></span>
           <p>Reports</p>
+        </div>
+      </Link>
+    );
+  } else {
+    return (
+      <Link to="/search">
+        <div className="navbar_options_option" id="reports">
+          <span className="icon-search"></span>
+          <p>Search People</p>
         </div>
       </Link>
     );

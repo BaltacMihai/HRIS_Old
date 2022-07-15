@@ -18,6 +18,7 @@ import RepDepartments from "./pages/reports/RepDepartments";
 import RepDepartment from "./pages/reports/RepDepartment";
 import RepUser from "./pages/reports/RepUser";
 import User from "./pages/User";
+import SearchUser from "./pages/SearchUser";
 
 function Main() {
   const cookies = new Cookies();
@@ -80,6 +81,14 @@ function returnUserPosibilities(role) {
         <Route path="/user/:userId" element={<User />} />
       </Routes>
     );
+  else {
+    return (
+      <Routes>
+        <Route path="/search" element={<SearchUser />} />
+        <Route path="/user/:searchedUser" element={<Dashboard />} />
+      </Routes>
+    );
+  }
 }
 
 export default Main;
