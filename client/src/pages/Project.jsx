@@ -26,8 +26,6 @@ function Project({ userId }) {
   let departments = null;
 
   if (rawProjectInfo && projectInfo == null) {
-    console.log(rawProjectInfo);
-
     projectInfo = {
       title: rawProjectInfo.name,
       description: rawProjectInfo.description,

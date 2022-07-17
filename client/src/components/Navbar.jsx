@@ -11,6 +11,12 @@ function Navbar({ current }) {
       const active = document.getElementById(current);
 
       active.classList.add("navbar_options_option-active");
+
+      if (user.specialRights == "SUPPORT") {
+        const logOutBtn = document.getElementById("logOut");
+
+        logOutBtn.style.marginTop = "46vh";
+      }
     }
   });
   return (
@@ -38,14 +44,14 @@ function Navbar({ current }) {
             <p>Meetings</p>
           </div>
         </Link>
-
+        {returnNavbar(user.specialRights)}
         <Link to="/projects">
           <div className="navbar_options_option" id="projects">
             <span className="icon-folder-open"></span>
             <p>Projects</p>
           </div>
         </Link>
-        {returnNavbar(user.specialRights)}
+
         {/* <Link to="/calendar">
           <div className="navbar_options_option" id="calendar">
             <span className="icon-calendar"></span>
@@ -70,20 +76,39 @@ function Navbar({ current }) {
 
 function returnNavbar(role) {
   if (role != "EMPLOYEE") {
-    return (
-      <Link to="/reports">
-        <div className="navbar_options_option" id="reports">
-          <span className="icon-stats-bars"></span>
-          <p>Reports</p>
-        </div>
-      </Link>
-    );
+    if (role != "SUPPORT")
+      return (
+        <Link to="/reports">
+          <div className="navbar_options_option" id="reports">
+            <span className="icon-stats-bars"></span>
+            <p>Reports</p>
+          </div>
+        </Link>
+      );
+    else {
+      return (
+        <React.Fragment>
+          <Link to="/freeDay">
+            <div className="navbar_options_option" id="freeDay">
+              <span className="icon-clock"></span>
+              <p>Free Days</p>
+            </div>
+          </Link>
+          <Link to="/reports">
+            <div className="navbar_options_option" id="reports">
+              <span className="icon-cog"></span>
+              <p>HR Admin</p>
+            </div>
+          </Link>
+        </React.Fragment>
+      );
+    }
   } else {
     return (
       <Link to="/search">
         <div className="navbar_options_option" id="reports">
-          <span className="icon-search"></span>
-          <p>Search People</p>
+          <span className="icon-user"></span>
+          <p>Users</p>
         </div>
       </Link>
     );

@@ -6,7 +6,7 @@ router.get(
   "/:userId/:startingDate/:endingDate",
   eventAllocationController.findEventsByIntervalAndUser
 );
-
+router.get("/freeDay", eventAllocationController.findFreeDays);
 router.get(
   "/:userId/:startingDate/:endingDate/:type",
   eventAllocationController.findSpecificEventsByIntervalAndUser
@@ -20,5 +20,9 @@ router.post("/post", eventAllocationController.post);
 router.get("/get/:eventId", eventAllocationController.findEventsById);
 router.post("/post-username", eventAllocationController.postByUsername);
 router.delete("/delete/:eventId/:userId", eventAllocationController.delete);
+router.delete(
+  "/freeDay/delete/:userId/:eventId/:eventAllocationId",
+  eventAllocationController.deleteFreeDay
+);
 
 module.exports = router;

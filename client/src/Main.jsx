@@ -19,6 +19,8 @@ import RepDepartment from "./pages/reports/RepDepartment";
 import RepUser from "./pages/reports/RepUser";
 import User from "./pages/User";
 import SearchUser from "./pages/SearchUser";
+import FreeDay from "./hooks/postFreeDay";
+import FreeDayPage from "./pages/FreeDayPage";
 
 function Main() {
   const cookies = new Cookies();
@@ -67,21 +69,38 @@ function Main() {
 }
 
 function returnUserPosibilities(role) {
-  if (role != "EMPLOYEE")
-    return (
-      <Routes>
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/reports/departments" element={<RepDepartments />} />
-        <Route
-          path="/reports/departments/:departmentId"
-          element={<RepDepartment />}
-        />
-        <Route path="/reports/users" element={<RepUser />} />
-        <Route path="/reports/users/:departmentId" element={<RepUser />} />
-        <Route path="/user/:userId" element={<User />} />
-      </Routes>
-    );
-  else {
+  if (role != "EMPLOYEE") {
+    if (role != "SUPPORT")
+      return (
+        <Routes>
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/reports/departments" element={<RepDepartments />} />
+          <Route
+            path="/reports/departments/:departmentId"
+            element={<RepDepartment />}
+          />
+          <Route path="/reports/users" element={<RepUser />} />
+          <Route path="/reports/users/:departmentId" element={<RepUser />} />
+          <Route path="/user/:userId" element={<User />} />
+        </Routes>
+      );
+    else {
+      return (
+        <Routes>
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/reports/departments" element={<RepDepartments />} />
+          <Route
+            path="/reports/departments/:departmentId"
+            element={<RepDepartment />}
+          />
+          <Route path="/reports/users" element={<RepUser />} />
+          <Route path="/reports/users/:departmentId" element={<RepUser />} />
+          <Route path="/user/:userId" element={<User />} />
+          <Route path="/freeDay" element={<FreeDayPage />} />
+        </Routes>
+      );
+    }
+  } else {
     return (
       <Routes>
         <Route path="/search" element={<SearchUser />} />

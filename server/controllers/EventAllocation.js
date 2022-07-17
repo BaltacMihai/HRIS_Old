@@ -207,6 +207,31 @@ const controller = {
         res.status(500).send({ message: "Server error" });
       });
   },
+  findFreeDays: async (req, res) => {
+    EventAllocationDB.findAll({
+      attributes: ["id"],
+      include: [
+        {
+          model: UserDB,
+          attributes: ["username", "id"],
+        },
+        {
+          model: EventDB,
+          attributes: ["startingDate", "id"],
+          where: {
+            type: "FREE_DAY",
+          },
+        },
+      ],
+    })
+      .then((event) => {
+        res.status(200).send(event);
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
 
   post: async (req, res) => {
     EventAllocationDB.create({
@@ -256,6 +281,59 @@ const controller = {
     })
       .then((event) => {
         res.status(200).send(event.toString());
+      })
+      .catch((error) => {
+        console.log(error);
+        res.status(500).send({ message: "Server error" });
+      });
+  },
+  deleteFreeDay: async (req, res) => {
+    const { eventId, userId, eventAllocationId } = req.params;
+    EventAllocationDB.destroy({
+      where: {
+        id: eventAllocationId,
+      },
+    })
+      .then((event) => {
+        EventDB.destroy({
+          where: {
+            id: eventId,
+          },
+        })
+          .then((event) => {
+            UserDB.findOne({
+              where: {
+                id: userId,
+              },
+            })
+              .then((user) => {
+                UserDB.update(
+                  {
+                    daysOff: user.daysOff + 1,
+                  },
+                  {
+                    where: {
+                      id: userId,
+                    },
+                  }
+                )
+                  .then((event) => {
+                    res.status(200).send(event.toString());
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    res.status(500).send({ message: "Server error" });
+                  });
+              })
+              .catch((error) => {
+                console.log(error);
+                res.status(500).send({ message: "Server error" });
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+            res.status(500).send({ message: "Server error" });
+          });
       })
       .catch((error) => {
         console.log(error);
