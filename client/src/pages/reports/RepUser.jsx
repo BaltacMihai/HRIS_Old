@@ -181,8 +181,21 @@ function returnAddProject(listOfDepartments) {
                 daysOff: document.getElementById("user_daysOff").value,
               };
 
-              createUser(userInfo);
-              console.log(userInfo);
+              const onlyNumbersRegex = /^[0-9]+$/;
+
+              if (
+                userInfo.name.length > 3 &&
+                userInfo.email.length > 3 &&
+                userInfo.email.includes("@") &&
+                userInfo.email.includes(".") &&
+                userInfo.phone.length > 9 &&
+                onlyNumbersRegex.test(userInfo.phone) &&
+                onlyNumbersRegex.test(userInfo.daysOff)
+              )
+                createUser(userInfo);
+              else {
+                alert("Please complete the form correctly");
+              }
             }}
           >
             Submit

@@ -206,8 +206,20 @@ function returnModifyUser(listOfDepartments, userInfo) {
                 phone: document.getElementById("user_phone").value,
                 daysOff: document.getElementById("user_daysOff").value,
               };
+              const onlyNumbersRegex = /^[0-9]+$/;
 
-              putUser(userInfoModified);
+              if (
+                userInfoModified.name.length > 3 &&
+                userInfoModified.email.length > 3 &&
+                userInfoModified.email.includes("@") &&
+                userInfoModified.email.includes(".") &&
+                userInfoModified.phone.length > 9 &&
+                onlyNumbersRegex.test(userInfoModified.phone)
+              )
+                putUser(userInfoModified);
+              else {
+                alert("Please complete the form correctly");
+              }
             }}
           >
             Submit
