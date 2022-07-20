@@ -13,45 +13,86 @@ function Navbar() {
       logOutBtn.style.marginTop = "46vh";
     }
   });
+
+  const navbarOptions = [
+    {
+      id: "dashboard",
+      icon: "icon-home",
+      name: "Dashboard",
+      link: "/",
+    },
+    {
+      id: "tasks",
+      icon: "icon-briefcase",
+      name: "Tasks",
+      link: "/tasks",
+    },
+    {
+      id: "meetings",
+      icon: "icon-users",
+      name: "Meetings",
+      link: "/meetings",
+    },
+    {
+      id: "projects",
+      icon: "icon-folder-open",
+      name: "Projects",
+      link: "/projects",
+    },
+  ];
+
+  switch (user.specialRights) {
+    case "EMPLOYEE":
+      navbarOptions.push({
+        id: "reports",
+        icon: "icon-user",
+        name: "Users",
+        link: "/search",
+      });
+      break;
+    case "CEO":
+      navbarOptions.push({
+        id: "reports",
+        icon: "icon-stats-bars",
+        name: "Reports",
+        link: "/reports",
+      });
+      break;
+    case "SUPPORT":
+      navbarOptions.push({
+        id: "freeDay",
+        icon: "icon-clock",
+        name: "Free Days",
+        link: "/freeDay",
+      });
+      navbarOptions.push({
+        id: "reports",
+        icon: "icon-cog",
+        name: "HR Admin",
+        link: "/reports",
+      });
+
+      break;
+  }
+
+  console.log(navbarOptions);
+
   return (
     <div className="navbar">
       <h1 className="navbar_title">Planner</h1>
 
       <div className="navbar_options">
-        <Link to="/">
-          <div className="navbar_options_option" id="dashboard">
-            <span className="icon-home"></span>
-            <p>Dashboard</p>
-          </div>
-        </Link>
+        {navbarOptions?.map((option) => {
+          return (
+            <Link to={option.link} key={option.id}>
+              <div className="navbar_options_option" id={option.id}>
+                <span className={option.icon}></span>
+                <p>{option.name}</p>
+              </div>
+            </Link>
+          );
+        })}
 
-        <Link to="/tasks">
-          <div className="navbar_options_option" id="tasks">
-            <span className="icon-briefcase"></span>
-            <p>Tasks</p>
-          </div>
-        </Link>
-
-        <Link to="/meetings">
-          <div className="navbar_options_option" id="meetings">
-            <span className="icon-users"></span>
-            <p>Meetings</p>
-          </div>
-        </Link>
-        {returnNavbar(user.specialRights)}
-        <Link to="/projects">
-          <div className="navbar_options_option" id="projects">
-            <span className="icon-folder-open"></span>
-            <p>Projects</p>
-          </div>
-        </Link>
-
-        {/* <Link to="/calendar">
-          <div className="navbar_options_option" id="calendar">
-            <span className="icon-calendar"></span>
-            <p>Calendar</p>
-          </div>
-        </Link> */}
         <div
           className="navbar_options_option"
           id="logOut"
@@ -66,47 +107,6 @@ function Navbar() {
       </div>
     </div>
   );
-}
-
-function returnNavbar(role) {
-  if (role != "EMPLOYEE") {
-    if (role != "SUPPORT")
-      return (
-        <Link to="/reports">
-          <div className="navbar_options_option" id="reports">
-            <span className="icon-stats-bars"></span>
-            <p>Reports</p>
-          </div>
-        </Link>
-      );
-    else {
-      return (
-        <React.Fragment>
-          <Link to="/freeDay">
-            <div className="navbar_options_option" id="freeDay">
-              <span className="icon-clock"></span>
-              <p>Free Days</p>
-            </div>
-          </Link>
-          <Link to="/reports">
-            <div className="navbar_options_option" id="reports">
-              <span className="icon-cog"></span>
-              <p>HR Admin</p>
-            </div>
-          </Link>
-        </React.Fragment>
-      );
-    }
-  } else {
-    return (
-      <Link to="/search">
-        <div className="navbar_options_option" id="reports">
-          <span className="icon-user"></span>
-          <p>Users</p>
-        </div>
-      </Link>
-    );
-  }
 }
 
 export default Navbar;
