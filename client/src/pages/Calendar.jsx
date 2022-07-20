@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/Navbar";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Calendar({ userId }) {
-  return (
-    <div className="page calendar">
-      <Navbar current="calendar" />
-      {returnContent(userId)}
-    </div>
-  );
+  useNavbarOption("calendar");
+
+  return <div className="page calendar">{returnContent(userId)}</div>;
 }
 
 function returnContent(userId) {

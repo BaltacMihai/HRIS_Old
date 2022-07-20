@@ -8,6 +8,7 @@ import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import displayModal from "../utils/displayModal";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -16,9 +17,10 @@ function Projects({ userId }) {
   const cookies = new Cookies();
   let user = cookies.get("user");
 
+  useNavbarOption("projects");
+
   return (
     <div className="page projects">
-      <Navbar current={"projects"} />
       {returnContent(myProjects, otherProjects, user)}
     </div>
   );

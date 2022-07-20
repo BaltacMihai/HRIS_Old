@@ -7,6 +7,7 @@ import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import MeetingsTableDepPj from "../components/MeetingTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Meetings({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -38,12 +39,9 @@ function Meetings({ userId }) {
       projects: projects,
     };
   }
-  return (
-    <div className="page meetings">
-      <Navbar current="meetings" />
-      {returnContent(tableDetails)}
-    </div>
-  );
+  useNavbarOption("meetings");
+
+  return <div className="page meetings">{returnContent(tableDetails)}</div>;
 }
 
 function returnContent(tableDetails) {

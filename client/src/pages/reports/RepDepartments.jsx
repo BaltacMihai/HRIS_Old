@@ -5,17 +5,18 @@ import Navbar from "../../components/Navbar";
 import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 import postDepartment from "../../hooks/postDepartment";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../../utils/useNavbarOption";
 
 function RepDepartments() {
   let departmentStats = useDepartmentsStats();
 
   const cookies = new Cookies();
   let user = cookies.get("user");
+  useNavbarOption("reports");
 
   if (departmentStats)
     return (
       <div className="page report_page">
-        <Navbar current="reports" />
         <div className="report_page_content">
           <div className="card">
             <h1 className="title">Departments Reports</h1>
@@ -43,7 +44,6 @@ function RepDepartments() {
   else {
     return (
       <div className="page report_page">
-        <Navbar current="reports" />
         <div className="report_page_content">
           <h1 className="title">Departments Reports</h1>
           <div className="details">

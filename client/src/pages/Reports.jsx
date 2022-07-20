@@ -1,11 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Reports() {
+  useNavbarOption("reports");
+
   return (
     <div className="page reports">
-      <Navbar current="reports" />
       <div className="reports_content">
         <div className="row">
           <Link to="/reports/departments">

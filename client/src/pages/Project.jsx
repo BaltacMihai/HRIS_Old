@@ -11,6 +11,7 @@ import formatDateForInput from "../utils/dates/formatDateForInput";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Project({ userId }) {
   let { projectId } = useParams();
@@ -54,6 +55,7 @@ function Project({ userId }) {
       };
     });
   }
+  useNavbarOption("projects");
 
   useEffect(() => {
     if (projectInfo) {
@@ -65,7 +67,6 @@ function Project({ userId }) {
   if (projectInfo && departments)
     return (
       <div className="page project_page">
-        <Navbar current="projects" />
         {returnProjectPage(
           projectInfo,
           departments,
@@ -77,11 +78,7 @@ function Project({ userId }) {
       </div>
     );
   else {
-    return (
-      <div className="page project_page">
-        <Navbar current="projects" />
-      </div>
-    );
+    return <div className="page project_page"></div>;
   }
 }
 

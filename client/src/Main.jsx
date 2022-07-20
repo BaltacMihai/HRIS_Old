@@ -19,7 +19,6 @@ import RepDepartment from "./pages/reports/RepDepartment";
 import RepUser from "./pages/reports/RepUser";
 import User from "./pages/User";
 import SearchUser from "./pages/SearchUser";
-import FreeDay from "./hooks/postFreeDay";
 import FreeDayPage from "./pages/FreeDayPage";
 
 function Main() {
@@ -27,52 +26,45 @@ function Main() {
 
   //  let login = useLogin("baltacm", "pass");
   let user = cookies.get("user");
-
-  if (user == undefined) {
-    return <Login />;
-  } else {
-    let username = user.id;
-    return (
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Dashboard userId={username} />} />
-          <Route path="/calendar" element={<Calendar userId={username} />} />
-          <Route path="/meetings" element={<Meetings userId={username} />} />
-          <Route path="/projects" element={<Projects userId={username} />} />
-          <Route path="/tasks" element={<Tasks userId={username} />} />
-          <Route path="/task/:taskId" element={<Task userId={username} />} />
-          <Route
-            path="/meeting/:meetingId"
-            element={<Meeting userId={username} />}
-          />
-          <Route
-            path="/project/:projectId"
-            element={<Project userId={username} />}
-          />
-          <Route
-            path="/project/:projectId/department/:departmentId"
-            element={<ProjectDepartment userId={username} />}
-          />
-          <Route
-            path="/meetings/:projectId/:departmentId"
-            element={<Meetings userId={username} />}
-          />
-          <Route
-            path="/tasks/:projectId/:departmentId"
-            element={<Tasks userId={username} />}
-          />
-        </Routes>
-        {returnUserPosibilities(user.specialRights)}
-      </BrowserRouter>
-    );
-  }
+  let username = user.id;
+  return (
+    <Routes>
+      <Route path="/" element={<Dashboard userId={username} />} />
+      <Route path="/calendar" element={<Calendar userId={username} />} />
+      <Route path="/meetings" element={<Meetings userId={username} />} />
+      <Route path="/projects" element={<Projects userId={username} />} />
+      <Route path="/tasks" element={<Tasks userId={username} />} />
+      <Route path="/task/:taskId" element={<Task userId={username} />} />
+      <Route
+        path="/meeting/:meetingId"
+        element={<Meeting userId={username} />}
+      />
+      <Route
+        path="/project/:projectId"
+        element={<Project userId={username} />}
+      />
+      <Route
+        path="/project/:projectId/department/:departmentId"
+        element={<ProjectDepartment userId={username} />}
+      />
+      <Route
+        path="/meetings/:projectId/:departmentId"
+        element={<Meetings userId={username} />}
+      />
+      <Route
+        path="/tasks/:projectId/:departmentId"
+        element={<Tasks userId={username} />}
+      />
+      {returnUserPosibilities(user.specialRights)}
+    </Routes>
+  );
 }
 
 function returnUserPosibilities(role) {
   if (role != "EMPLOYEE") {
     if (role != "SUPPORT")
       return (
-        <Routes>
+        <React.Fragment>
           <Route path="/reports" element={<Reports />} />
           <Route path="/reports/departments" element={<RepDepartments />} />
           <Route
@@ -82,11 +74,11 @@ function returnUserPosibilities(role) {
           <Route path="/reports/users" element={<RepUser />} />
           <Route path="/reports/users/:departmentId" element={<RepUser />} />
           <Route path="/user/:userId" element={<User />} />
-        </Routes>
+        </React.Fragment>
       );
     else {
       return (
-        <Routes>
+        <React.Fragment>
           <Route path="/reports" element={<Reports />} />
           <Route path="/reports/departments" element={<RepDepartments />} />
           <Route
@@ -97,15 +89,15 @@ function returnUserPosibilities(role) {
           <Route path="/reports/users/:departmentId" element={<RepUser />} />
           <Route path="/user/:userId" element={<User />} />
           <Route path="/freeDay" element={<FreeDayPage />} />
-        </Routes>
+        </React.Fragment>
       );
     }
   } else {
     return (
-      <Routes>
+      <React.Fragment>
         <Route path="/search" element={<SearchUser />} />
         <Route path="/user/:searchedUser" element={<Dashboard />} />
-      </Routes>
+      </React.Fragment>
     );
   }
 }

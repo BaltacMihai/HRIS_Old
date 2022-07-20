@@ -5,6 +5,7 @@ import createUser from "../hooks/createUser";
 import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import useUsers from "../hooks/getUsers";
 import useDeparmtent from "../hooks/useDepartment";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function SearchUser() {
   let { departmentId } = useParams();
@@ -12,6 +13,7 @@ function SearchUser() {
   let departmentName = useDeparmtent(departmentId);
   let departmentStats = useDepartmentsStats();
   let listOfDepartments;
+  useNavbarOption("reports");
 
   if (departmentStats) {
     listOfDepartments = departmentStats?.map((department) => {
@@ -34,16 +36,11 @@ function SearchUser() {
 
     return (
       <div className="page users">
-        <Navbar current={"reports"} />
         {returnContent(user, departmentName, listOfDepartments)}
       </div>
     );
   } else {
-    return (
-      <div className="page projects">
-        <Navbar current={"reports"} />
-      </div>
-    );
+    return <div className="page projects"></div>;
   }
 }
 

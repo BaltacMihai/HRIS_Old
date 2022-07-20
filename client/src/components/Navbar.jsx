@@ -2,21 +2,15 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
 
-function Navbar({ current }) {
+function Navbar() {
   const cookies = new Cookies();
   let user = cookies.get("user");
 
   useEffect(() => {
-    if (current) {
-      const active = document.getElementById(current);
+    if (user.specialRights == "SUPPORT") {
+      const logOutBtn = document.getElementById("logOut");
 
-      active.classList.add("navbar_options_option-active");
-
-      if (user.specialRights == "SUPPORT") {
-        const logOutBtn = document.getElementById("logOut");
-
-        logOutBtn.style.marginTop = "46vh";
-      }
+      logOutBtn.style.marginTop = "46vh";
     }
   });
   return (

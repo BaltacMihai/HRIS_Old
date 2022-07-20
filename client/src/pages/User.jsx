@@ -17,6 +17,7 @@ import putUser from "../hooks/putUser";
 import deleteUser from "../hooks/deleteUser";
 import resetPasswordUser from "../hooks/restPasswordUser";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function User() {
   let { userId } = useParams();
@@ -36,10 +37,11 @@ function User() {
       };
     });
   }
+  useNavbarOption("reports");
+
   if (departmentStats && userInfo)
     return (
       <div className="page dashboard user-raport">
-        <Navbar current="reports" />
         <div className="dashboard_content">
           <div className="row dashboard_content-row">
             <div className="col">
@@ -63,7 +65,6 @@ function User() {
   else {
     return (
       <div className="page dashboard user-raport">
-        <Navbar current="reports" />
         <div className="dashboard_content">
           <div className="row dashboard_content-row">
             <div className="col">

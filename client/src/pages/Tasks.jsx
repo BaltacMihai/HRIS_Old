@@ -7,6 +7,7 @@ import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import TasksTableDepPj from "../components/TaskTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -38,12 +39,9 @@ function Tasks({ userId }) {
       events: events,
     };
   }
-  return (
-    <div className="page tasks">
-      <Navbar current="tasks" />
-      {returnContent(tableDetails)}
-    </div>
-  );
+  useNavbarOption("tasks");
+
+  return <div className="page tasks">{returnContent(tableDetails)}</div>;
 }
 
 function returnContent(tableDetails) {

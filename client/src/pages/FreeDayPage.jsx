@@ -3,11 +3,13 @@ import React, { useEffect } from "react";
 import useFreeDays from "../hooks/useFreeDays";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import deleteFreeDay from "../hooks/deleteFreeDay";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function FreeDayPage() {
+  useNavbarOption("freeDay");
+
   return (
     <div className="page meetings">
-      <Navbar current="freeDay" />
       <div className="meetings_content">
         <FreeDayCalendar />
       </div>

@@ -5,6 +5,7 @@ import createUser from "../../hooks/createUser";
 import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 import useUsers from "../../hooks/getUsers";
 import useDeparmtent from "../../hooks/useDepartment";
+import useNavbarOption from "../../utils/useNavbarOption";
 
 function RepUser() {
   let { departmentId } = useParams();
@@ -21,7 +22,7 @@ function RepUser() {
       };
     });
   }
-
+  useNavbarOption("reports");
   if (user && departmentName) {
     if (departmentName.name == "FREE DAY") departmentName.name = "";
     if (departmentName.name.length > 1)
@@ -34,16 +35,11 @@ function RepUser() {
 
     return (
       <div className="page users">
-        <Navbar current={"reports"} />
         {returnContent(user, departmentName, listOfDepartments)}
       </div>
     );
   } else {
-    return (
-      <div className="page projects">
-        <Navbar current={"reports"} />
-      </div>
-    );
+    return <div className="page projects"></div>;
   }
 }
 

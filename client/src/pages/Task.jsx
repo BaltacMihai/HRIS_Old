@@ -14,6 +14,7 @@ import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import putEvent from "../hooks/putEvent";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -26,21 +27,15 @@ function Task({ userId }) {
       projectColor.style.backgroundColor = data.Project.color;
     }
   });
+  useNavbarOption("tasks");
 
   if (data && members) {
     return (
       <div className="page task_page">
-        <Navbar current="tasks" />
         {returnMeetingContent(data, members)}
       </div>
     );
-  } else
-    return (
-      <div className="page task_page">
-        <Navbar current="tasks" />
-        {returnLoading()}
-      </div>
-    );
+  } else return <div className="page task_page">{returnLoading()}</div>;
 }
 
 function returnMeetingContent(taskData, members) {

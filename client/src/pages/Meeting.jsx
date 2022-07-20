@@ -13,6 +13,7 @@ import deleteEventAllocation from "../hooks/deleteEventAllocation";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import putEvent from "../hooks/putEvent";
 import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -28,20 +29,13 @@ function Meeting({ userId }) {
     }
   });
 
+  useNavbarOption("meetings");
+
   if (data && members) {
     return (
-      <div className="page task_page">
-        <Navbar current="meetings" />
-        {returnTaskContent(data, members)}
-      </div>
+      <div className="page task_page">{returnTaskContent(data, members)}</div>
     );
-  } else
-    return (
-      <div className="page task_page">
-        <Navbar current="meetings" />
-        {returnLoading()}
-      </div>
-    );
+  } else return <div className="page task_page">{returnLoading()}</div>;
 }
 
 function returnTaskContent(taskData, members) {

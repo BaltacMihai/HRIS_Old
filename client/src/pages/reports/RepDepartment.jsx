@@ -6,6 +6,7 @@ import deleteDepartment from "../../hooks/deleteDepartment";
 import useDepartmentStats from "../../hooks/getDepartmentStats";
 import putDepartment from "../../hooks/putDepartment";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../../utils/useNavbarOption";
 
 function RepDepartments() {
   let { departmentId } = useParams();
@@ -13,13 +14,14 @@ function RepDepartments() {
   const cookies = new Cookies();
   let user = cookies.get("user");
 
+  useNavbarOption("reports");
+
   if (departmentStats) {
     const URL_PEOPLE = "/reports/users/" + departmentStats.id;
     console.log(departmentStats);
 
     return (
       <div className="page report_page report_page-dep">
-        <Navbar current="reports" />
         <div className="report_page_content">
           <div className="card row align-center space-between">
             <h1 className="title">
@@ -93,7 +95,6 @@ function RepDepartments() {
   } else {
     return (
       <div className="page report_page">
-        <Navbar current="reports" />
         <div className="report_page_content">
           <h1 className="title">Departments Reports</h1>
           <div className="details">

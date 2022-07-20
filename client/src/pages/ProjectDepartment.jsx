@@ -7,6 +7,7 @@ import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
 import Cookies from "universal-cookie";
+import useNavbarOption from "../utils/useNavbarOption";
 
 function ProjectDepartment() {
   const cookies = new Cookies();
@@ -73,9 +74,10 @@ function ProjectDepartment() {
     }
   });
 
+  useNavbarOption("projects");
+
   return (
     <div className="page project_page department_page">
-      <Navbar current="projects" />
       {returnProjectPage(departmentStats, members, urlBuilder, projectId, user)}
     </div>
   );
