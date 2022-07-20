@@ -29,7 +29,7 @@ function Navbar() {
     },
     {
       id: "meetings",
-      icon: "icon-users",
+      icon: "icon-bubbles2",
       name: "Meetings",
       link: "/meetings",
     },
@@ -45,7 +45,7 @@ function Navbar() {
     case "EMPLOYEE":
       navbarOptions.push({
         id: "reports",
-        icon: "icon-user",
+        icon: "icon-users",
         name: "Users",
         link: "/search",
       });
@@ -59,18 +59,20 @@ function Navbar() {
       });
       break;
     case "SUPPORT":
-      navbarOptions.push({
-        id: "freeDay",
-        icon: "icon-clock",
-        name: "Free Days",
-        link: "/freeDay",
-      });
-      navbarOptions.push({
-        id: "reports",
-        icon: "icon-cog",
-        name: "HR Admin",
-        link: "/reports",
-      });
+      navbarOptions.push(
+        {
+          id: "freeDay",
+          icon: "icon-clock",
+          name: "Free Days",
+          link: "/freeDay",
+        },
+        {
+          id: "reports",
+          icon: "icon-cog",
+          name: "HR Admin",
+          link: "/reports",
+        }
+      );
 
       break;
   }
