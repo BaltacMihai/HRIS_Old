@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import generateMonthDates from "../utils/dates/generateMonthDates";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import useEventDepPj from "../hooks/useEventDepPj";

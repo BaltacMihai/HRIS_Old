@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import useTasks from "../../hooks/findTasksByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
 import TaskCard from "../TaskCard";
-import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../../utils/dates/formatDateForUser";
+import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
 
 function MyTasks({ id }) {
   let currentDate = new Date();
   let event = useTasks(
     id,
-    formatDateForDatabase(currentDate),
-    formatDateForDatabase(generateMonthDates().lastDay)
+    new CustomDateFormat(currentDate).database(),
+    new CustomDateFormat(generateMonthDates().lastDay).database()
   );
   let events = null;
 

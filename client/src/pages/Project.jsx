@@ -6,12 +6,12 @@ import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import modifyProject from "../hooks/putProject";
 import useProject from "../hooks/useProject";
 import useProjectDepartments from "../hooks/useProjectDepartments";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Project({ userId }) {
   let { projectId } = useParams();
@@ -322,15 +322,15 @@ function returnModifyMeeting(projectInfo, projectId) {
                 description: document.getElementById("task_description").value,
 
                 startingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_starting_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_starting_hour").value,
                 endingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_ending_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_ending_hour").value,
                 id: projectId,

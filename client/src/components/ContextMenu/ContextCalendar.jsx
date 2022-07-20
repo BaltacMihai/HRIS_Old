@@ -1,6 +1,6 @@
 import React from "react";
 import FreeDay from "../../hooks/postFreeDay";
-import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
+import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
 import displayModal from "../../utils/displayModal";
 
 export function ContextCalendar({ id, number, xPos, yPos, refresh }) {
@@ -64,7 +64,7 @@ async function GetFreeDay(id, date, refresh) {
     date
   );
 
-  let freeDay = await FreeDay(id, 0, formatDateForDatabase(newDate));
+  let freeDay = await FreeDay(id, 0, new CustomDateFormat(newDate).database());
 
   window.location.reload();
 }

@@ -12,8 +12,8 @@ import deleteEvent from "../hooks/deleteEventById";
 import deleteEventAllocation from "../hooks/deleteEventAllocation";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import putEvent from "../hooks/putEvent";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -307,15 +307,15 @@ function returnModifyMeeting(
                 description: document.getElementById("task_description").value,
 
                 startingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_starting_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_starting_hour").value,
                 endingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_ending_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_ending_hour").value,
                 id: eventId,

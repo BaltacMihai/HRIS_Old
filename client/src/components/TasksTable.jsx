@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
 import useUsersProjects from "../hooks/findUsersProjects";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 import Cookies from "universal-cookie";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function TasksTable({ id }) {
   const cookies = new Cookies();
@@ -14,8 +14,8 @@ function TasksTable({ id }) {
   let currentDate = new Date();
   let task = useTasks(
     id,
-    formatDateForDatabase(currentDate) - 1,
-    formatDateForDatabase(generateMonthDates().lastDay),
+    new CustomDateFormat(currentDate).database() - 1,
+    new CustomDateFormat(generateMonthDates().lastDay).database(),
     user.specialRights
   );
   let tasks = null;

@@ -4,15 +4,15 @@ import generateCurrentCalendarDates from "./Dates/generateCurrentCalendarDates";
 import generateSpaces from "./Dates/generateSpacesCalendar";
 import useEvents from "../../hooks/findEventsByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
-import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
+import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
 
 function EventsCalendar({ id, isEditable = true }) {
   const [refresh, setRefresh] = useState(null);
 
   let event = useEvents(
     id,
-    formatDateForDatabase(generateMonthDates().firstDay),
-    formatDateForDatabase(generateMonthDates().lastDay)
+    new CustomDateFormat(generateMonthDates().firstDay).database(),
+    new CustomDateFormat(generateMonthDates().lastDay).database()
   );
   let events = null;
   if (refresh != null) event = null;

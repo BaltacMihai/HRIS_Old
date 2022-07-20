@@ -2,16 +2,16 @@ import React from "react";
 import useMeetings from "../../hooks/findMeetingsByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
 import MeetingsCard from "../MeetingsCard";
-import formatDateForDatabase from "../../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../../utils/dates/formatDateForUser";
 import formatHourForUser from "../../utils/dates/formatHourForUser";
+import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
 
 function MyMeetings({ id }) {
   let currentDate = new Date();
   let event = useMeetings(
     id,
-    formatDateForDatabase(currentDate),
-    formatDateForDatabase(generateMonthDates().lastDay)
+    new CustomDateFormat(currentDate).database(),
+    new CustomDateFormat(generateMonthDates().lastDay).database()
   );
   let events = null;
 

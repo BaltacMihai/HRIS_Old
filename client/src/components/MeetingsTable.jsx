@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
 import useMeetings from "../hooks/findMeetingsByIntervalAndUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function MeetingsTable({ id }) {
   const cookies = new Cookies();
@@ -14,8 +14,8 @@ function MeetingsTable({ id }) {
   let currentDate = new Date();
   let task = useMeetings(
     id,
-    formatDateForDatabase(currentDate) - 1,
-    formatDateForDatabase(generateMonthDates().lastDay),
+    new CustomDateFormat(currentDate).database() - 1,
+    new CustomDateFormat(generateMonthDates().lastDay).database(),
     user.specialRights
   );
   let tasks = null;

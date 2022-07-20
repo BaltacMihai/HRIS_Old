@@ -10,11 +10,11 @@ import useMembers from "../hooks/findMembersOfEvent";
 import submitNewMember from "../hooks/postEventAllocationUsername";
 import deleteEvent from "../hooks/deleteEventById";
 import deleteEventAllocation from "../hooks/deleteEventAllocation";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatHourForUser from "../utils/dates/formatHourForUser";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import putEvent from "../hooks/putEvent";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Task({ userId }) {
   let { taskId } = useParams();
@@ -297,15 +297,15 @@ function returnModifyTask(
                 description: document.getElementById("task_description").value,
 
                 startingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_starting_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_starting_hour").value,
                 endingDate:
-                  formatDateForDatabase(
+                  new CustomDateFormat(
                     document.getElementById("task_ending_date").value
-                  ) +
+                  ).database() +
                   " " +
                   document.getElementById("task_ending_hour").value,
                 id: eventId,

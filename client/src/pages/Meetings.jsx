@@ -1,13 +1,12 @@
 import React from "react";
 import MeetingsTable from "../components/MeetingsTable";
-import Navbar from "../components/Navbar";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import MeetingsTableDepPj from "../components/MeetingTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Meetings({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -193,15 +192,15 @@ function returnAddModal(tableDetails) {
                   label: document.getElementById("meeting_link").value,
                   projectId: document.getElementById("meeting_project").value,
                   startingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("meeting_starting_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("meeting_starting_hour").value,
                   endingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("meeting_ending_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("meeting_ending_hour").value,
                   type: "MEETING",
@@ -308,15 +307,15 @@ function returnAddModal(tableDetails) {
                   label: document.getElementById("meeting_link").value,
                   projectId: tableDetails.projectId,
                   startingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("meeting_starting_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("meeting_starting_hour").value,
                   endingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("meeting_ending_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("meeting_ending_hour").value,
                   type: "MEETING",

@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
 import useEventDepPj from "../hooks/useEventDepPj";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 

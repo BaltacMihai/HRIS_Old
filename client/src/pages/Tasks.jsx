@@ -1,13 +1,13 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import TasksTable from "../components/TasksTable";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import TasksTableDepPj from "../components/TaskTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -198,15 +198,15 @@ function returnAddTask(tableDetails) {
                   label: document.getElementById("task_link").value,
                   projectId: document.getElementById("task_project").value,
                   startingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_starting_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_starting_hour").value,
                   endingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_ending_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_ending_hour").value,
                   type: "TASK",
@@ -318,15 +318,15 @@ function returnAddTask(tableDetails) {
                   label: document.getElementById("task_link").value,
                   projectId: tableDetails.projectId,
                   startingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_starting_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_starting_hour").value,
                   endingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_ending_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_ending_hour").value,
                   type: "TASK",

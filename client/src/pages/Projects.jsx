@@ -4,11 +4,11 @@ import Navbar from "../components/Navbar";
 import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
 import postProject from "../hooks/postProject";
-import formatDateForDatabase from "../utils/dates/formatDateForDatabase";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import displayModal from "../utils/displayModal";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
+import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -297,15 +297,15 @@ function returnAddProject(user) {
                   color: document.getElementById("project_color").value,
 
                   startingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_starting_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_starting_hour").value,
                   endingDate:
-                    formatDateForDatabase(
+                    new CustomDateFormat(
                       document.getElementById("task_ending_date").value
-                    ) +
+                    ).database() +
                     " " +
                     document.getElementById("task_ending_hour").value,
                 };
