@@ -1,12 +1,12 @@
 import React from "react";
-import useUsersProjects from "../../hooks/findUsersProjects";
 import ProjectCard from "../ProjectCard";
 import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
 import usePostData from "../../hooks/usePostData";
-import { EVENT_URL } from "../../routes";
+import { EVENT_URL, PROJECT_ALLOCATION_URL } from "../../routes";
+import useData from "../../hooks/useData";
 
 function MyProjects({ id, text }) {
-  let event = useUsersProjects(id);
+  let event = useData(PROJECT_ALLOCATION_URL.GET_BY_USER(id));
   let events = null;
 
   if (event && events == null) {

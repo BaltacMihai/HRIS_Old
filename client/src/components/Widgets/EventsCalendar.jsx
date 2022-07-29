@@ -2,17 +2,20 @@ import React, { useEffect, useState } from "react";
 import compareDates from "../../utils/dates/compareDates";
 import generateCurrentCalendarDates from "./Dates/generateCurrentCalendarDates";
 import generateSpaces from "./Dates/generateSpacesCalendar";
-import useEvents from "../../hooks/findEventsByIntervalAndUser";
 import generateMonthDates from "../../utils/dates/generateMonthDates";
 import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
+import useData from "../../hooks/useData";
+import { EVENT_ALLOCATION_URL } from "../../routes";
 
 function EventsCalendar({ id, isEditable = true }) {
   const [refresh, setRefresh] = useState(null);
 
-  let event = useEvents(
-    id,
-    new CustomDateFormat(generateMonthDates().firstDay).database(),
-    new CustomDateFormat(generateMonthDates().lastDay).database()
+  let event = useData(
+    EVENT_ALLOCATION_URL.GET_BY_INTERVAL(
+      id,
+      new CustomDateFormat(generateMonthDates().firstDay).database(),
+      new CustomDateFormat(generateMonthDates().lastDay).database()
+    )
   );
   let events = null;
   if (refresh != null) event = null;

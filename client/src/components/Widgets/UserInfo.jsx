@@ -1,9 +1,10 @@
 import React from "react";
-import getUserById from "../../hooks/User";
 import Cookies from "universal-cookie";
+import useData from "../../hooks/useData";
+import { USER_URL } from "../../routes";
 
 function UserInfo({ id, raport }) {
-  const userInfo = getUserById(id);
+  const userInfo = useData(USER_URL.GET(id));
 
   const cookies = new Cookies();
   let user = cookies.get("user");

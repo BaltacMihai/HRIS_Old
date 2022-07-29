@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useOtherProjects from "../hooks/findOtherProjects";
-import useUsersProjects from "../hooks/findUsersProjects";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 import usePostData from "../hooks/usePostData";
-import { PROJECT_URL } from "../routes";
+import { PROJECT_ALLOCATION_URL, PROJECT_URL } from "../routes";
+import useData from "../hooks/useData";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -26,7 +26,7 @@ function Projects({ userId }) {
 }
 
 function GetMyProjects(userId) {
-  let myProject = useUsersProjects(userId);
+  let myProject = useData(PROJECT_ALLOCATION_URL.GET_BY_USER(userId));
   let myProjects = null;
 
   if (myProject && myProjects == null) {

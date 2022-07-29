@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import deleteProject from "../hooks/deleteProject";
-import useProject from "../hooks/useProject";
-import useProjectDepartments from "../hooks/useProjectDepartments";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
@@ -12,6 +10,7 @@ import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 import useModify from "../hooks/useModify";
 import { PROJECT_ALLOCATION_URL, PROJECT_URL } from "../routes";
 import usePostData from "../hooks/usePostData";
+import useData from "../hooks/useData";
 
 function Project({ userId }) {
   let { projectId } = useParams();
@@ -19,8 +18,8 @@ function Project({ userId }) {
   const cookies = new Cookies();
   let user = cookies.get("user");
 
-  let rawProjectInfo = useProject(projectId);
-  let rawProjectDepartments = useProjectDepartments(projectId);
+  let rawProjectInfo = useData(PROJECT_URL.GET(projectId));
+  let rawProjectDepartments = useData(PROJECT_URL.GET_DEPARTMENTS(projectId));
   console.log(rawProjectDepartments);
 
   let projectInfo = null;

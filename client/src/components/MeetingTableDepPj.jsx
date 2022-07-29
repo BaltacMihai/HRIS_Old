@@ -2,12 +2,18 @@ import React, { useEffect } from "react";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import formatHourForUser from "../utils/dates/formatHourForUser";
-import useEventDepPj from "../hooks/useEventDepPj";
 import { Link } from "react-router-dom";
+import useData from "../hooks/useData";
+import { EVENT_ALLOCATION_URL, EVENT_URL } from "../routes";
 
 function MeetingsTableDepPj({ projectId, departmentId }) {
-  let task = useEventDepPj(projectId, departmentId, "MEETING");
-
+  let task = useData(
+    EVENT_URL.GET_BY_DEPARTMENT_ID_PROJECT_ID_TYPE(
+      projectId,
+      departmentId,
+      "MEETING"
+    )
+  );
   console.log(task);
   let tasks = null;
 

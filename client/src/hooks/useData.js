@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export default function useData(url, parameters) {
+export default function useData(URL) {
   const [data, setData] = useState(null);
 
   console.log(URL);

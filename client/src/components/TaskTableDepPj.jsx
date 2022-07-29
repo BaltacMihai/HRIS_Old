@@ -1,12 +1,18 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import useTasks from "../hooks/findTasksByIntervalAndUser";
-import useEventDepPj from "../hooks/useEventDepPj";
+import useData from "../hooks/useData";
+import { EVENT_URL } from "../routes";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 
 function TasksTableDepPj({ projectId, departmentId }) {
-  let task = useEventDepPj(projectId, departmentId, "TASK");
+  let task = useData(
+    EVENT_URL.GET_BY_DEPARTMENT_ID_PROJECT_ID_TYPE(
+      projectId,
+      departmentId,
+      "TASK"
+    )
+  );
   console.log(task);
   let tasks = null;
 

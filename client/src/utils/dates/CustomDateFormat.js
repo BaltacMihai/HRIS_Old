@@ -9,8 +9,7 @@ export class CustomDateFormat {
       "-" +
       (this.date.getMonth() + 1) +
       "-" +
-      this.date.getDate() +
-      " "
+      this.date.getDate()
     );
   }
   form() {

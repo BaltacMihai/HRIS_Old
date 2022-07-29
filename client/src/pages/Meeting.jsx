@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
-import useEvent from "../hooks/findEventsById";
 import formatDateForUser from "../utils/dates/formatDateForUser";
-import useMembers from "../hooks/findMembersOfEvent";
 import formatHourForUser from "../utils/dates/formatHourForUser";
-import deleteEvent from "../hooks/deleteEventById";
-import deleteEventAllocation from "../hooks/deleteEventAllocation";
 import formatDateForInput from "../utils/dates/formatDateForInput";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 import useModify from "../hooks/useModify";
 import { EVENT_ALLOCATION_URL, EVENT_URL } from "../routes";
 import usePostData from "../hooks/usePostData";
+import useDelete from "../hooks/useDelete";
+import useData from "../hooks/useData";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
   console.log(meetingId);
 
-  let data = useEvent("MEETING", meetingId);
-  let members = useMembers(meetingId);
+  let data = useData(EVENT_URL.GET_BY_TYPE_EVENT_ID("MEETING", meetingId));
+  let members = useData(EVENT_ALLOCATION_URL.GET(meetingId));
 
   useEffect(() => {
     if (data && members) {
@@ -441,7 +439,7 @@ function returnMembersModal(eventId, members) {
                 <span
                   className="actions icon-cross"
                   onClick={(e) => {
-                    deleteEventAllocation(eventId, member.id);
+                    useDelete(EVENT_ALLOCATION_URL.DELETE(eventId, member.id));
                   }}
                 ></span>
               </div>
@@ -488,7 +486,7 @@ function returnDeleteModal(eventId) {
           <p
             className="accept"
             onClick={(e) => {
-              deleteEvent(eventId);
+              useDelete(EVENT_URL.DELETE(eventId));
             }}
           >
             Yes

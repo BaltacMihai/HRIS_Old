@@ -1,14 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BarChart } from "../../components/Charts/BarDepartments";
-import useDepartmentsStats from "../../hooks/getDepartmentsStats";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../../utils/useNavbarOption";
 import usePostData from "../../hooks/usePostData";
 import { DEPARTMENT_URL } from "../../routes";
+import useData from "../../hooks/useData";
 
 function RepDepartments() {
-  let departmentStats = useDepartmentsStats();
+  let departmentStats = useData(DEPARTMENT_URL.GET_STATS);
 
   const cookies = new Cookies();
   let user = cookies.get("user");

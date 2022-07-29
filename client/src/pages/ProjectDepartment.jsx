@@ -1,22 +1,25 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import deleteProjectAllocation from "../hooks/deleteProjectAllocation";
 import deleteProjectDepartment from "../hooks/deleteProjectDepartment";
-import useProject from "../hooks/useProject";
-import useProjectDepartment from "../hooks/useProjectDepartment";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
 import usePostData from "../hooks/usePostData";
-import { PROJECT_ALLOCATION_URL } from "../routes";
+import { PROJECT_ALLOCATION_URL, PROJECT_URL } from "../routes";
+import useData from "../hooks/useData";
 
 function ProjectDepartment() {
   const cookies = new Cookies();
   let user = cookies.get("user");
   let { projectId, departmentId } = useParams();
 
-  let rawDepartmentStats = useProjectDepartment(projectId, departmentId);
-  let rawProjectInfo = useProject(projectId);
+  let rawDepartmentStats = useData(
+    PROJECT_ALLOCATION_URL.GET_BY_PROJECT_ID_DEPARTMENT_ID(
+      projectId,
+      departmentId
+    )
+  );
+  let rawProjectInfo = useData(PROJECT_URL.GET(projectId));
   let urlBuilder = projectId + "/" + departmentId;
 
   let departmentStats = null;

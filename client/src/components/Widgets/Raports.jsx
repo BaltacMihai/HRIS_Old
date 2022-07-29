@@ -1,11 +1,11 @@
 import React from "react";
-import useUserLastReport from "../../hooks/getUserLastReport";
-import useUserReport from "../../hooks/getUserReports";
+import useData from "../../hooks/useData";
+import { USER_URL } from "../../routes";
 import ReportsAll from "./ReportsAll";
 
 function Raports({ userId }) {
-  let userStats = useUserReport(userId);
-  let userStatsLast = useUserLastReport(userId);
+  let userStats = useData(USER_URL.GET_REPORT(userId));
+  let userStatsLast = useData(USER_URL.GET_LAST_REPORT(userId));
   if (userStats && userStatsLast)
     return (
       <div className="row dashboard_content-row">

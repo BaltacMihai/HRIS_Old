@@ -1,17 +1,15 @@
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
-import createUser from "../hooks/createUser";
-import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import useUsers from "../hooks/getUsers";
-import useDeparmtent from "../hooks/useDepartment";
+import useData from "../hooks/useData";
+import { DEPARTMENT_URL } from "../routes";
 import useNavbarOption from "../utils/useNavbarOption";
 
 function SearchUser() {
   let { departmentId } = useParams();
   let user = useUsers(departmentId);
-  let departmentName = useDeparmtent(departmentId);
-  let departmentStats = useDepartmentsStats();
+  let departmentName = useData(DEPARTMENT_URL.GET(departmentId));
+  let departmentStats = useData(DEPARTMENT_URL.GET_STATS);
   let listOfDepartments;
   useNavbarOption("reports");
 

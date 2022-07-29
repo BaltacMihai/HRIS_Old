@@ -1,9 +1,11 @@
 import Navbar from "../components/Navbar";
 import React, { useEffect } from "react";
-import useFreeDays from "../hooks/useFreeDays";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import deleteFreeDay from "../hooks/deleteFreeDay";
 import useNavbarOption from "../utils/useNavbarOption";
+import useDelete from "../hooks/useDelete";
+import { EVENT_ALLOCATION_URL, EVENT_URL } from "../routes";
+import useData from "../hooks/useData";
 
 function FreeDayPage() {
   useNavbarOption("freeDay");
@@ -18,7 +20,7 @@ function FreeDayPage() {
 }
 
 function FreeDayCalendar() {
-  let freeDaysRaw = useFreeDays();
+  let freeDaysRaw = useData(EVENT_ALLOCATION_URL.GET_FREE_DAY);
   let freeDays = null;
 
   if (freeDaysRaw && freeDays == null) {

@@ -4,18 +4,18 @@ import TasksTable from "../components/TasksTable";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import TasksTableDepPj from "../components/TaskTableDepPj";
-import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 import usePostData from "../hooks/usePostData";
-import { EVENT_URL } from "../routes";
+import { EVENT_URL, PROJECT_ALLOCATION_URL } from "../routes";
+import useData from "../hooks/useData";
 
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
   let events = null;
 
-  let rawEvents = useUsersProjects(userId);
+  let rawEvents = useData(PROJECT_ALLOCATION_URL.GET_BY_USER(userId));
 
   if (rawEvents && events == null) {
     events = rawEvents.map((e) => {

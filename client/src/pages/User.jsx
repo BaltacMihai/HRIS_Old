@@ -4,23 +4,22 @@ import EventsCalendar from "../components/Widgets/EventsCalendar";
 import MyProjects from "../components/Widgets/MyProjects";
 import { useParams } from "react-router-dom";
 import Raports from "../components/Widgets/Raports";
-import useDepartmentsStats from "../hooks/getDepartmentsStats";
-import getUserById from "../hooks/User";
-import deleteUser from "../hooks/deleteUser";
 import resetPasswordUser from "../hooks/restPasswordUser";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
-import { USER_URL } from "../routes";
+import { DEPARTMENT_URL, USER_URL } from "../routes";
 import useModify from "../hooks/useModify";
+import useDelete from "../hooks/useDelete";
+import useData from "../hooks/useData";
 
 function User() {
   let { userId } = useParams();
-  const userInfo = getUserById(userId);
+  const userInfo = useData(USER_URL.GET(userId));
 
   const cookies = new Cookies();
   let user = cookies.get("user");
 
-  let departmentStats = useDepartmentsStats();
+  let departmentStats = useData(DEPARTMENT_URL.GET_STATS);
   let listOfDepartments;
 
   if (departmentStats) {
@@ -250,7 +249,7 @@ function returnDeleteModal(userId) {
           <p
             className="accept"
             onClick={(e) => {
-              deleteUser(userId);
+              useDelete(USER_URL.DELETE(userId));
             }}
           >
             Yes

@@ -3,18 +3,18 @@ import MeetingsTable from "../components/MeetingsTable";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import MeetingsTableDepPj from "../components/MeetingTableDepPj";
-import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
 import usePostData from "../hooks/usePostData";
-import { EVENT_URL } from "../routes";
+import { EVENT_URL, PROJECT_ALLOCATION_URL } from "../routes";
+import useData from "../hooks/useData";
 
 function Meetings({ userId }) {
   let { projectId, departmentId } = useParams();
   let tableDetails;
 
   let projects = null;
-  let rawProjects = useUsersProjects(userId);
+  let rawProjects = useData(PROJECT_ALLOCATION_URL.GET_BY_USER(userId));
 
   if (rawProjects && projects == null) {
     projects = rawProjects.map((e) => {

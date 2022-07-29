@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useTasks from "../hooks/findTasksByIntervalAndUser";
-import useUsersProjects from "../hooks/findUsersProjects";
 import formatDateForUser from "../utils/dates/formatDateForUser";
 import generateMonthDates from "../utils/dates/generateMonthDates";
 import Cookies from "universal-cookie";

@@ -1,17 +1,16 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { BarChart } from "../../components/Charts/BarCompare2Values";
-import Navbar from "../../components/Navbar";
-import deleteDepartment from "../../hooks/deleteDepartment";
-import useDepartmentStats from "../../hooks/getDepartmentStats";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../../utils/useNavbarOption";
 import useModify from "../../hooks/useModify";
 import { DEPARTMENT_URL } from "../../routes";
+import useDelete from "../../hooks/useDelete";
+import useData from "../../hooks/useData";
 
 function RepDepartments() {
   let { departmentId } = useParams();
-  let departmentStats = useDepartmentStats(departmentId);
+  let departmentStats = useData(DEPARTMENT_URL.GET_BY_ID(departmentId));
   const cookies = new Cookies();
   let user = cookies.get("user");
 
@@ -216,7 +215,7 @@ function returnDeleteModal(departmentId) {
           <p
             className="accept"
             onClick={(e) => {
-              deleteDepartment(departmentId);
+              useDelete(DEPARTMENT_URL.DELETE(departmentId));
             }}
           >
             Yes
