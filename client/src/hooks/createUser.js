@@ -1,5 +1,7 @@
+import { CREATE_USER_URL } from "../routes";
+
 export default async function createUser(body) {
-  const URL = "http://localhost:3031/api/users/create";
+  const URL = CREATE_USER_URL;
 
   await fetch(URL, {
     headers: {

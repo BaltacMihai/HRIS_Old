@@ -1,12 +1,13 @@
 import React from "react";
 import MeetingsTable from "../components/MeetingsTable";
-import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import MeetingsTableDepPj from "../components/MeetingTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
+import usePostData from "../hooks/usePostData";
+import { EVENT_URL } from "../routes";
 
 function Meetings({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -207,7 +208,7 @@ function returnAddModal(tableDetails) {
                 };
 
                 console.log(generateEvent);
-                submitNewMeeting(generateEvent);
+                usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
               }}
             >
               Submit
@@ -323,7 +324,7 @@ function returnAddModal(tableDetails) {
                 };
 
                 console.log(generateEvent);
-                submitNewMeeting(generateEvent);
+                usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
               }}
             >
               Submit

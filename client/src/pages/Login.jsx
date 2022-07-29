@@ -1,7 +1,9 @@
 import React from "react";
 import loginIllustration from "../assets/image/login.svg";
 import loginBackground from "../assets/image/loginBackground.svg";
+import Modal from "../components/Modal";
 import login from "../hooks/login";
+import displayStatusModal from "../utils/displayStatusModal";
 
 function Login() {
   return (
@@ -52,31 +54,11 @@ function Login() {
           Login
         </div>
       </div>
-      {returnForgotPasswordModal()}
-    </div>
-  );
-}
-
-function displayStatusModal(location, type) {
-  let statusModal = document.getElementById(location);
-
-  statusModal.style.display = type;
-}
-function returnForgotPasswordModal() {
-  return (
-    <div className="modal" id="seeForgotPasswordModal">
-      <div className="modal_content">
-        <span
-          className="icon-cross close"
-          onClick={(e) => {
-            displayStatusModal("seeForgotPasswordModal", "none");
-          }}
-        ></span>
-        <p className="title">Forgot Password</p>
-        <p className="text_body">
-          Please contact the support team to reset the password
-        </p>
-      </div>
+      <Modal
+        id="seeForgotPasswordModal"
+        title="Forgot Password"
+        text=" Please contact the support team to reset the password"
+      />
     </div>
   );
 }

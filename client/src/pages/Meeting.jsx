@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import useEvent from "../hooks/findEventsById";
 import formatDateForUser from "../utils/dates/formatDateForUser";
-import modifyTask from "../hooks/putEventLabel";
 import useMembers from "../hooks/findMembersOfEvent";
 import formatHourForUser from "../utils/dates/formatHourForUser";
-import submitNewMember from "../hooks/postEventAllocationUsername";
 import deleteEvent from "../hooks/deleteEventById";
 import deleteEventAllocation from "../hooks/deleteEventAllocation";
 import formatDateForInput from "../utils/dates/formatDateForInput";
-import putEvent from "../hooks/putEvent";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
+import useModify from "../hooks/useModify";
+import { EVENT_ALLOCATION_URL, EVENT_URL } from "../routes";
+import usePostData from "../hooks/usePostData";
 
 function Meeting({ userId }) {
   let { meetingId } = useParams();
@@ -322,7 +321,7 @@ function returnModifyMeeting(
                 type: "MEETING",
                 label: document.getElementById("meeting_link").value,
               };
-              putEvent(generateEvent);
+              useModify(EVENT_URL.PUT, generateEvent);
               console.log(generateEvent);
             }}
           >
@@ -372,7 +371,6 @@ function returnStatusModal(projectId, defaultValue) {
             onClick={(e) => {
               let select = document.getElementById("status");
               let option = select.options[select.selectedIndex];
-              let respounse = modifyTask(projectId, option.value);
             }}
           >
             Accept
@@ -423,7 +421,7 @@ function returnMembersModal(eventId, members) {
                 username: document.getElementById("add_memeber").value,
                 eventId: eventId,
               };
-              submitNewMember(body);
+              usePostData(EVENT_ALLOCATION_URL.POST, body);
             }}
           ></span>
         </div>

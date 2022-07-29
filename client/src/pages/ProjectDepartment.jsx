@@ -3,11 +3,12 @@ import { Link, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import deleteProjectAllocation from "../hooks/deleteProjectAllocation";
 import deleteProjectDepartment from "../hooks/deleteProjectDepartment";
-import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
 import useProject from "../hooks/useProject";
 import useProjectDepartment from "../hooks/useProjectDepartment";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
+import usePostData from "../hooks/usePostData";
+import { PROJECT_ALLOCATION_URL } from "../routes";
 
 function ProjectDepartment() {
   const cookies = new Cookies();
@@ -273,7 +274,7 @@ function returnMembersModal(members, projectId) {
                 projectId: projectId,
                 type: "EMPLOYEE",
               };
-              postProjectAllocationByUsername(body);
+              usePostData(PROJECT_ALLOCATION_URL.POST, body);
             }}
           ></span>
         </div>

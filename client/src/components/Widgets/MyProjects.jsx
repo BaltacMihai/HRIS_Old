@@ -1,8 +1,9 @@
 import React from "react";
 import useUsersProjects from "../../hooks/findUsersProjects";
 import ProjectCard from "../ProjectCard";
-import submitNewMeeting from "../../hooks/postEventAndAllocate";
 import { CustomDateFormat } from "../../utils/dates/CustomDateFormat";
+import usePostData from "../../hooks/usePostData";
+import { EVENT_URL } from "../../routes";
 
 function MyProjects({ id, text }) {
   let event = useUsersProjects(id);
@@ -167,7 +168,7 @@ function returnAddModal(userId, events) {
               };
 
               console.log(generateEvent);
-              submitNewMeeting(generateEvent);
+              usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
             }}
           >
             Submit
@@ -288,7 +289,7 @@ function returnAddTask(userId, events) {
               };
 
               console.log(generateEvent);
-              submitNewMeeting(generateEvent);
+              usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
             }}
           >
             Submit

@@ -1,23 +1,17 @@
 import React from "react";
-import Navbar from "../components/Navbar";
 import UserInfo from "../components/Widgets/UserInfo";
 import EventsCalendar from "../components/Widgets/EventsCalendar";
-import MyTasks from "../components/Widgets/MyTasks";
-import MyMeetings from "../components/Widgets/MyMeetings";
 import MyProjects from "../components/Widgets/MyProjects";
 import { useParams } from "react-router-dom";
-import ReportsAll from "../components/Widgets/ReportsAll";
-import useUserReport from "../hooks/getUserReports";
-import useUserLastReport from "../hooks/getUserLastReport";
 import Raports from "../components/Widgets/Raports";
-import displayModal from "../utils/displayModal";
 import useDepartmentsStats from "../hooks/getDepartmentsStats";
 import getUserById from "../hooks/User";
-import putUser from "../hooks/putUser";
 import deleteUser from "../hooks/deleteUser";
 import resetPasswordUser from "../hooks/restPasswordUser";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
+import { USER_URL } from "../routes";
+import useModify from "../hooks/useModify";
 
 function User() {
   let { userId } = useParams();
@@ -217,7 +211,7 @@ function returnModifyUser(listOfDepartments, userInfo) {
                 userInfoModified.phone.length > 9 &&
                 onlyNumbersRegex.test(userInfoModified.phone)
               )
-                putUser(userInfoModified);
+                useModify(USER_URL.PUT, userInfoModified);
               else {
                 alert("Please complete the form correctly");
               }

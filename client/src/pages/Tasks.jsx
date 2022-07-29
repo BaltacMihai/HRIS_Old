@@ -1,13 +1,14 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import TasksTable from "../components/TasksTable";
-import submitNewMeeting from "../hooks/postEventAndAllocate";
 import displayModal from "../utils/displayModal";
 import { useParams } from "react-router-dom";
 import TasksTableDepPj from "../components/TaskTableDepPj";
 import useUsersProjects from "../hooks/findUsersProjects";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
+import usePostData from "../hooks/usePostData";
+import { EVENT_URL } from "../routes";
 
 function Tasks({ userId }) {
   let { projectId, departmentId } = useParams();
@@ -213,7 +214,7 @@ function returnAddTask(tableDetails) {
                 };
 
                 console.log(generateEvent);
-                submitNewMeeting(generateEvent);
+                usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
               }}
             >
               Submit
@@ -334,7 +335,7 @@ function returnAddTask(tableDetails) {
                 };
 
                 console.log(generateEvent);
-                submitNewMeeting(generateEvent);
+                usePostData(EVENT_URL.POST_AND_ALLOCATE, generateEvent);
               }}
             >
               Submit

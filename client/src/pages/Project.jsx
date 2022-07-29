@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import deleteProject from "../hooks/deleteProject";
-import postProjectAllocationByUsername from "../hooks/postProjectAllocations";
-import modifyProject from "../hooks/putProject";
 import useProject from "../hooks/useProject";
 import useProjectDepartments from "../hooks/useProjectDepartments";
 import formatDateForInput from "../utils/dates/formatDateForInput";
@@ -12,6 +9,9 @@ import formatHourForUser from "../utils/dates/formatHourForUser";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
+import useModify from "../hooks/useModify";
+import { PROJECT_ALLOCATION_URL, PROJECT_URL } from "../routes";
+import usePostData from "../hooks/usePostData";
 
 function Project({ userId }) {
   let { projectId } = useParams();
@@ -336,7 +336,7 @@ function returnModifyMeeting(projectInfo, projectId) {
                 id: projectId,
                 color: document.getElementById("meeting_link").value,
               };
-              modifyProject(generateEvent);
+              useModify(PROJECT_URL.PUT, generateEvent);
               console.log(generateEvent);
             }}
           >
@@ -380,7 +380,7 @@ function returnMembersModal(projectId) {
                 projectId: projectId,
                 type: "PROJECT_MANAGER",
               };
-              postProjectAllocationByUsername(body);
+              useModify(PROJECT_URL.PUT, body);
             }}
           ></span>
         </div>
@@ -511,7 +511,7 @@ function returnDeparment(projectId) {
                 projectId: projectId,
                 type: "TEAM_LEAD",
               };
-              postProjectAllocationByUsername(body);
+              usePostData(PROJECT_ALLOCATION_URL.POST, body);
             }}
           ></span>
         </div>

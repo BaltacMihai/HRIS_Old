@@ -77,8 +77,10 @@ function Navbar() {
       break;
   }
 
-  console.log(navbarOptions);
+  return returnNavbar(navbarOptions, cookies);
+}
 
+function returnNavbar(navbarOptions, cookies) {
   return (
     <div className="navbar">
       <h1 className="navbar_title">Planner</h1>

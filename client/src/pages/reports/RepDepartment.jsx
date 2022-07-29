@@ -4,9 +4,10 @@ import { BarChart } from "../../components/Charts/BarCompare2Values";
 import Navbar from "../../components/Navbar";
 import deleteDepartment from "../../hooks/deleteDepartment";
 import useDepartmentStats from "../../hooks/getDepartmentStats";
-import putDepartment from "../../hooks/putDepartment";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../../utils/useNavbarOption";
+import useModify from "../../hooks/useModify";
+import { DEPARTMENT_URL } from "../../routes";
 
 function RepDepartments() {
   let { departmentId } = useParams();
@@ -177,7 +178,7 @@ function returnModifyDepartment(id, name, icon) {
                 name: document.getElementById("department_name").value,
                 icon: document.getElementById("department_icon").value,
               };
-              putDepartment(body);
+              useModify(DEPARTMENT_URL.PUT, body);
             }}
           >
             Submit

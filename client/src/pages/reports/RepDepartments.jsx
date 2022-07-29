@@ -1,11 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { BarChart } from "../../components/Charts/BarDepartments";
-import Navbar from "../../components/Navbar";
 import useDepartmentsStats from "../../hooks/getDepartmentsStats";
-import postDepartment from "../../hooks/postDepartment";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../../utils/useNavbarOption";
+import usePostData from "../../hooks/usePostData";
+import { DEPARTMENT_URL } from "../../routes";
 
 function RepDepartments() {
   let departmentStats = useDepartmentsStats();
@@ -122,7 +122,7 @@ function returnAddDepartment() {
                 name: document.getElementById("department_name").value,
                 icon: document.getElementById("department_icon").value,
               };
-              postDepartment(body);
+              usePostData(DEPARTMENT_URL.POST, body);
             }}
           >
             Submit

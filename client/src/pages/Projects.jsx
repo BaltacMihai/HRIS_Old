@@ -1,14 +1,13 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import Navbar from "../components/Navbar";
 import useOtherProjects from "../hooks/findOtherProjects";
 import useUsersProjects from "../hooks/findUsersProjects";
-import postProject from "../hooks/postProject";
 import formatDateForUser from "../utils/dates/formatDateForUser";
-import displayModal from "../utils/displayModal";
 import Cookies from "universal-cookie";
 import useNavbarOption from "../utils/useNavbarOption";
 import { CustomDateFormat } from "../utils/dates/CustomDateFormat";
+import usePostData from "../hooks/usePostData";
+import { PROJECT_URL } from "../routes";
 
 function Projects({ userId }) {
   let myProjects = GetMyProjects(userId);
@@ -309,7 +308,7 @@ function returnAddProject(user) {
                     " " +
                     document.getElementById("task_ending_hour").value,
                 };
-                postProject(generateProject);
+                usePostData(PROJECT_URL.POST, generateProject);
               }}
             >
               Submit
