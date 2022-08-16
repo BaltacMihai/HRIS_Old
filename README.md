@@ -1,4 +1,9 @@
 # HRIS 
+- [How to set-up](https://github.com/BaltacMihai/HRIS#how-to-set-up)
+- [How to open](https://github.com/BaltacMihai/HRIS#how-to-open)
+
+
+
 ## How to set-up
 
 ### Front-end
